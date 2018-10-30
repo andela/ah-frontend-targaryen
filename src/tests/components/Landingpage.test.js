@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import LandingPage from '../../components/LandingPage';
+import LandingPage from '../../components/landingPage/LandingPage';
 
 
 it('renders the LandingPage component correctly', () => {
