@@ -5,11 +5,17 @@ import Routes from './components/routes';
 import store from './store';
 import './assets/App.scss';
 import './assets/App.css';
+import Navbar from './components/landingPage/Navbar';
+import Footer from './components/landingPage/Footer';
 
 const App = () => (
   <Provider store={store}>
     <BrowserRouter>
-      <Routes />
+      <React.Fragment>
+        <Navbar />
+        <Routes />
+        <Footer />
+      </React.Fragment>
     </BrowserRouter>
   </Provider>
 );
