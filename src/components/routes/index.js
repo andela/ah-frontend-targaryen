@@ -3,9 +3,9 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import LandingPage from '../LandingPage';
-import Login from '../Login';
-import NotFound from '../NotFound';
+import LandingPage from '../landingPage/LandingPage';
+import Login from '../login/Login';
+import NotFound from '../notFound/NotFound';
 
 const Routes = () => (
   <Switch>
