@@ -1,10 +1,13 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import img from '../../assets/logo.png';
 
 const Navbar = () => (
-  <nav className="navbar container-fluid navbar-expand-lg nav-bg">
-    <a className="navbar-brand nav-text col-sm-10" href="#">Authors Haven</a>
+  <nav className="navbar fixed-top navbar-expand-lg nav-bg">
+    <img src={img} className="image-fluid" alt="" />
+    <h6 className="navbar-brand col-sm-10" href="#">Authors Haven</h6>
     <button
-      className="navbar-toggler  navbar-dark"
+      className="navbar-toggler  navbar-light"
       type="button"
       data-toggle="collapse"
       data-target="#navbarSupportedContent"
@@ -17,13 +20,12 @@ const Navbar = () => (
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav mr-auto">
         <li className="nav-item active">
-          <a className="nav-link nav-text" href="#">
+          <NavLink className="btn ah-btn ah-btn-nav js-scroll-trigger nav-link nav-text" to="signup">
             Signup
-            <span className="sr-only">(current)</span>
-          </a>
+          </NavLink>
         </li>
         <li className="nav-item">
-          <a className="nav-link nav-text" href="#">Login</a>
+          <NavLink className="btn ah-btn ah-btn-nav js-scroll-trigger nav-link nav-text" to="login">Login</NavLink>
         </li>
       </ul>
     </div>

@@ -13,7 +13,9 @@ const App = () => (
     <BrowserRouter>
       <React.Fragment>
         <Navbar />
-        <Routes />
+        <div className="content">
+          <Routes />
+        </div>
         <Footer />
       </React.Fragment>
     </BrowserRouter>

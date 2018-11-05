@@ -1,14 +1,49 @@
+a {
+  color: #070808;
+  text-decoration: none;
+  padding-left: 200px;
+  font-weight: bold;
+}
+a:hover {
+  color: #080808;
+}
+
+.content {
+  padding-top: 64px;
+}
+
+.ah-btn {
+  font-family: 'Lato', 'Helvetica', 'Arial', 'sans-serif';
+  letter-spacing: 2px;
+  text-transform: capitalize;
+  margin-left: 5px;
+  border: solid #24292e;
+  border-width: thin;
+}
+
+.ah-btn-nav {
+  font-size: 14px;
+  font-weight: bold;
+}
+img {
+  object-fit: cover;
+}
+.card {
+  width: 90%;
+  margin-bottom: 20px;
+}
 .head{
-    background-color: gainsboro
+    background-color: gainsboro;
 }
 .nav-bg {
-    background-color: #000080;
+    background-color: rgba(0, 0, 0, 0.295);
 }
-.nav-text {
-    color: white;
+.navbar-brand {
+  font-weight: bold;
+  font-family: cursive;
 }
 .footer-bg {
-    background-color: #000080;
+    background-color: #24292e;
     color: white;
     text-align: center;
     padding: 10px 20px 40px 20px;
@@ -19,6 +54,7 @@ header.uvp {
     padding-top: 150px;
     padding-bottom: 100px;
     color: black;
+    background-color: #24292e;
 }
 
 .uvp-content {
@@ -27,50 +63,38 @@ header.uvp {
   text-align: left;
 }
 
-.btn-outline:hover, .btn-outline:focus, .btn-outline:active, .btn-outline.active {
+.ah-btn:hover, .ah-btn:focus, .ah-btn:active, .ah-btn.active {
   color: white;
-  border-color: #1919da;
-  background-color: #1919da;
+  border-color: #24292e;
+  background-color: #24292e;
 }
-
-.btn {
-  border-radius: 300px;
-  font-family: 'Lato', 'Helvetica', 'Arial', 'sans-serif';
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.btn-xl {
-  font-size: 11px;
-  padding: 15px 45px;
-}
-.LP-list {
-  margin-top: 100px;
-  font-size: 32px;
-  text-decoration: none;
-}
-.LP-list :hover {
-  text-decoration: none;
-}
-.LP-content {
-  background-color: #000080;
-  color: #BDBEFF;
-  /* margin: 50px 50px 50px 50px;
-  padding: 20px; */
-  box-shadow: darkblue;
-  border-radius: 25px;
-}
-.LP-container {
-  margin-top: 100px;
-  width: 75%;
-  height: 75%;
+.lp-text{
+  font-size: 2.5rem;
+  font-family: 'Open Sans', sans-serif;
 }
 .join-us-text {
   font-size: 20px;
+  color: #121518;
 }
 .join-us-text :hover {
   background-color: black;
 }
 .display-articles {
+  margin-top: 50px;
   margin-bottom: 20%;
+  color: black;
+}
+.first-section{
+  background-image: url('../assets/bg-image.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 150%;
+  width: auto;
+  padding-bottom: 100px;
+  margin-top: -64px !important;
+  padding-top: 64px;
+}
+
+.lp-intro {
+  margin-top: 36px;
 }
