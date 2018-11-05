@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { mount } from 'enzyme';
 import LandingPage from '../../components/landingPage/LandingPage';
-import Login from '../../components/login/Login';
+import { Login } from '../../components/login/Login';
 import NotFound from '../../components/notFound/NotFound';
 
 describe('Routes component', () => {
