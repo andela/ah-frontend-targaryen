@@ -1,7 +1,12 @@
 import MockAdapter from 'axios-mock-adapter';
 import configureMockStore from 'redux-mock-store';
-import { fetchUsers } from '../../actions/userActions';
-import { REGISTER_USER_SUCCESS, REGISTER_USER_ERROR } from '../../actions/types';
+import { fetchUsers, loginUser } from '../../actions/userActions';
+import {
+  REGISTER_USER_SUCCESS,
+  REGISTER_USER_ERROR,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_ERROR,
+} from '../../actions/types';
 import axiosInstance from '../../config/axiosInstance';
 
 describe('userAction', () => {
@@ -44,5 +49,44 @@ describe('userAction', () => {
         { type: REGISTER_USER_ERROR, payload: errorMessage },
       ],
     );
+  });
+
+  it('should login a user', async () => {
+    const response = {
+      token: 'token',
+      user: {
+        email: 'toniks@gmail.com',
+        password: 'password1',
+      },
+    };
+    mock
+      .onPost('/api/users/login/')
+      .reply(200, response);
+    loginUser()(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual([
+      { type: LOGIN_USER_SUCCESS, payload: true },
+    ]);
+  });
+
+  it('should not login a user without a valid email or password', async () => {
+    const response = {
+      token: 'token',
+      errors: {
+        error: ['A user with this email and password was not found.'],
+      },
+    };
+    const errorResponse = response.errors.error[0];
+    mock
+      .onPost('/api/users/login/')
+      .reply(400, response);
+    loginUser()(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual([
+      {
+        type: LOGIN_USER_ERROR,
+        payload: errorResponse,
+      },
+    ]);
   });
 });

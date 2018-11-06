@@ -1,4 +1,3 @@
-// // this can be used for the landing page
 import React from 'react';
 
 
