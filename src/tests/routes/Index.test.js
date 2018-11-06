@@ -10,6 +10,8 @@ import LandingPage from '../../components/landingPage/LandingPage';
 import { Login } from '../../components/login/Login';
 import NotFound from '../../components/notFound/NotFound';
 import Dashboard from '../../components/dashboard/Dashboard';
+import { ForgotPasswordPage } from '../../components/resetPassword/ForgotPasswordPage';
+import { ResetPasswordPage } from '../../components/resetPassword/ResetPasswordPage';
 
 const mockStore = configureStore([]);
 let store;
@@ -62,5 +64,24 @@ describe('Routes component', () => {
       </MemoryRouter>,
     );
     expect(wrapper.find(Dashboard)).toHaveLength(1);
+  });
+  it('should return the ForgotPassword component for "forgot-password" path', () => {
+    const wrapper = mount(
+      <MemoryRouter initialEntries={['/forgot-password']}>
+        <ForgotPasswordPage />
+      </MemoryRouter>,
+    );
+    expect(wrapper.find(ForgotPasswordPage)).toHaveLength(1);
+  });
+  it('should return the RessetPaswordPage component for "forgot-password" path', () => {
+    const token = 'dosks';
+    const params = { token };
+    const match = { params };
+    const wrapper = mount(
+      <MemoryRouter initialEntries={['/reset-password/:token']}>
+        <ResetPasswordPage match={match} />
+      </MemoryRouter>,
+    );
+    expect(wrapper.find(ResetPasswordPage)).toHaveLength(1);
   });
 });
