@@ -5,7 +5,12 @@ import {
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
 } from './types';
+import {
+  socialLoginInitiated,
+  socialLoginSuccess,
+} from './actionCreators';
 import axiosInstance from '../config/axiosInstance';
+
 
 export const fetchUsers = (postData) => dispatch => {
   toast.dismiss();
@@ -59,5 +64,35 @@ export const loginUser = payload => async dispatch => {
           position: toast.POSITION.TOP_CENTER,
         },
       );
+    });
+};
+
+export const googleLoginUser = (serviceProvider, userData) => (dispatch) => {
+  dispatch(socialLoginInitiated(true));
+  return axiosInstance.post(serviceProvider, userData)
+    .then((res) => {
+      localStorage.setItem('auth_token', res.data.user.access_token);
+      dispatch(socialLoginSuccess(true));
+      toast.success('Signup successful', { autoClose: 3500, hideProgressBar: true });
+    })
+    .catch(() => {
+      toast.error('Connection error', { autoClose: 3500, hideProgressBar: true }, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    });
+};
+
+export const facebookLoginUser = (serviceProvider, userData) => (dispatch) => {
+  dispatch(socialLoginInitiated(true));
+  return axiosInstance.post(serviceProvider, userData)
+    .then((res) => {
+      localStorage.setItem('auth_token', res.data.user.access_token);
+      dispatch(socialLoginSuccess(true));
+      toast.success('Signup successful', { autoClose: 3500, hideProgressBar: true });
+    })
+    .catch(() => {
+      toast.error('Connection error', { autoClose: 3500, hideProgressBar: true }, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     });
 };

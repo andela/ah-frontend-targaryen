@@ -1,6 +1,8 @@
 import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  SOCIAL_LOGIN_INITIATED,
+  SOCIAL_LOGIN_SUCCESS,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
 } from '../../actions/types';
@@ -23,6 +25,8 @@ describe('userReducer', () => {
       isLoginSuccess: false,
       registerUserError: {},
       loginError: {},
+      isLoggedIn: false,
+      loading: false,
     };
     errorData = `${emailKey + emailValue}\n${passwordKey + passwordValue}\n${usernameKey + usernameValue}`;
   });
@@ -41,6 +45,8 @@ describe('userReducer', () => {
       registerUserSuccess: true,
       registerUserError: {},
       isLoginSuccess: false,
+      isLoggedIn: false,
+      loading: false,
       loginError: {},
     });
   });
@@ -56,6 +62,8 @@ describe('userReducer', () => {
       registerUserError: errorData,
       isLoginSuccess: false,
       loginError: {},
+      isLoggedIn: false,
+      loading: false,
     });
   });
 
@@ -70,6 +78,8 @@ describe('userReducer', () => {
       registerUserError: {},
       isLoginSuccess: true,
       loginError: {},
+      isLoggedIn: false,
+      loading: false,
     });
   });
 
@@ -85,6 +95,42 @@ describe('userReducer', () => {
       registerUserError: {},
       isLoginSuccess: false,
       loginError: loginErrorResponse,
+      isLoggedIn: false,
+      loading: false,
     });
   });
+  it('should start loading on sociallogin', () => {
+    loginErrorResponse = 'A user with this email and password was not found.';
+    const action = {
+      type: SOCIAL_LOGIN_INITIATED,
+      payload: true,
+    };
+    const currentState = userReducer(initialState, action);
+    expect(currentState).toEqual({
+      registerUserSuccess: false,
+      registerUserError: {},
+      isLoginSuccess: false,
+      loginError: {},
+      isLoggedIn: false,
+      loading: true,
+    });
+  });
+  it('should have logged in true', () => {
+    loginErrorResponse = 'A user with this email and password was not found.';
+    const action = {
+      type: SOCIAL_LOGIN_SUCCESS,
+      payload: true,
+    };
+    const currentState = userReducer(initialState, action);
+    expect(currentState).toEqual({
+      registerUserSuccess: false,
+      registerUserError: {},
+      isLoginSuccess: false,
+      loginError: {},
+      isLoggedIn: true,
+      loading: false,
+    });
+  });
+
+
 });
