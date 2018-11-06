@@ -8,6 +8,7 @@ import Login from '../login/Login';
 import NotFound from '../notFound/NotFound';
 import RegisterUser from '../register/RegisterUser';
 import Dashboard from '../dashboard/Dashboard';
+import Profile from '../profiles/Profile';
 
 const Routes = () => (
   <Switch>
@@ -15,6 +16,7 @@ const Routes = () => (
     <Route exact path="/login" component={Login} />
     <Route exact path="/signup" component={RegisterUser} />
     <Route exact path="/dashboard" component={Dashboard} />
+    <Route exact path="/profiles/:username" component={Profile} />
     <Route exact component={NotFound} />
   </Switch>
 );

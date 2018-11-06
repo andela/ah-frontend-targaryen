@@ -1,9 +1,13 @@
+import axios from 'axios';
 import { toast } from 'react-toastify';
 import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
+  GET_PROFILE_PAYLOAD,
+  GET_PROFILE_ERROR,
+  GET_PROFILE_INITIATED,
 } from './types';
 import {
   socialLoginInitiated,
@@ -94,5 +98,20 @@ export const facebookLoginUser = (serviceProvider, userData) => (dispatch) => {
       toast.error('Connection error', { autoClose: 3500, hideProgressBar: true }, {
         position: toast.POSITION.TOP_CENTER,
       });
+    });
+};
+export const getProfile = () => dispatch => {
+  dispatch({ type: GET_PROFILE_INITIATED, payload: true });
+  const auth_token = localStorage.getItem('auth_token');
+  const username = localStorage.getItem('username');
+
+  axios.defaults.headers.common.Authorization = `Token ${auth_token}`;
+  return axios
+    .get(`https://ah-backend-targaryen-staging.herokuapp.com/api/profiles/${username}/`, auth_token)
+    .then((response) => {
+      dispatch({ type: GET_PROFILE_PAYLOAD, payload: response.data.profile });
+    })
+    .catch(() => {
+      dispatch({ type: GET_PROFILE_ERROR, payload: 'This profile does not exist' });
     });
 };

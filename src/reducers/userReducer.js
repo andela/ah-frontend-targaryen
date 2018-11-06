@@ -5,6 +5,9 @@ import {
   LOGIN_USER_ERROR,
   SOCIAL_LOGIN_INITIATED,
   SOCIAL_LOGIN_SUCCESS,
+  GET_PROFILE_PAYLOAD,
+  GET_PROFILE_ERROR,
+  GET_PROFILE_INITIATED,
 } from '../actions/types';
 
 
@@ -15,6 +18,9 @@ const initialState = {
   loginError: {},
   isLoggedIn: false,
   loading: false,
+  getProfilePayload: {},
+  getProfileError: '',
+  getProfileInitiated: false,
 };
 
 
@@ -53,6 +59,21 @@ const userReducer = (state = initialState, action) => {
         loading: false,
       };
 
+    case GET_PROFILE_PAYLOAD:
+      return {
+        ...state,
+        getProfilePayload: action.payload,
+      };
+    case GET_PROFILE_ERROR:
+      return {
+        ...state,
+        getProfileError: action.payload,
+      };
+    case GET_PROFILE_INITIATED:
+      return {
+        ...state,
+        getProfileInitiated: action.payload,
+      };
     default:
       return state;
   }
