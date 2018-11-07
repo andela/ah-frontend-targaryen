@@ -1,4 +1,4 @@
-import { GET_ALL_ARTICLES_SUCCESS } from '../actions/types';
+import { GET_ALL_ARTICLES_SUCCESS, CREATE_ARTICLE_SUCCESS } from '../actions/types';
 
 const initialState = {
   loading: false,
@@ -6,8 +6,13 @@ const initialState = {
 };
 
 const articleReducer = (state = initialState, action) => {
-  switch (action.type){
+  switch (action.type) {
     case GET_ALL_ARTICLES_SUCCESS:
+      return {
+        ...state,
+        articlesPayload: action.payload,
+      };
+    case CREATE_ARTICLE_SUCCESS:
       return {
         ...state,
         articlesPayload: action.payload,

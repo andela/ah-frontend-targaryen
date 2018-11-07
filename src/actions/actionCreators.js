@@ -1,11 +1,15 @@
 import {
   GET_ALL_ARTICLES_INITIATED,
   GET_ALL_ARTICLES_SUCCESS,
+  CREATE_ARTICLE_SUCCESS,
 } from './types';
 
-const getAllArticles = (payload) => ({
+export const getAllArticles = (payload) => ({
   type: GET_ALL_ARTICLES_SUCCESS,
   payload,
 });
 
-export default getAllArticles;
+export const createArticle = (payload) => ({
+  type: CREATE_ARTICLE_SUCCESS,
+  payload,
+});

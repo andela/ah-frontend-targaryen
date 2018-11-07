@@ -7,32 +7,21 @@ import ArticlesList from './ArticlesList';
 
 class Articles extends Component {
   componentDidMount() {
-    // console.log(this.props);
     this.props.fetchArticles();
   }
 
-  componentWillReceiveProps(nextProps){
-    // console.log(nextProps)
-  }
-  
+  // componentWillReceiveProps(nextProps){
+  //   // console.log(nextProps)
+  // }
   render() {
-    const articles = this.props.articlesPayload;
-    // console.log(articles);
-
-    // const isEmpty = (obj) => Object.keys(obj).length;
-    // if (isEmpty(articles) === 0) {
-    //   console.log('empty');
-    // } else {
-    //   console.log(articles.results);
-    //   console.log(this.props.articlesPayload.results);
-    // }
+    const { articlesPayload } = this.props;
+    const articles = articlesPayload;
     return (
       <div>
         <h1>Articles</h1>
         {Object.keys(articles).length > 0
           && <ArticlesList articles={articles.results} />
         }
-        {/* <ArticlesList {this.props.articlesPayload.results} /> */}
       </div>
     );
   }
@@ -44,11 +33,11 @@ const mapStateToProps = (state) => ({
 
 const matchDispatchToProps = (dispatch) => bindActionCreators({
   fetchArticles,
-}, dispatch,
-);
+}, dispatch);
 
 Articles.propTypes = {
   fetchArticles: PropTypes.func.isRequired,
+  articlesPayload: PropTypes.object.isRequired,
 };
 
 export default connect(

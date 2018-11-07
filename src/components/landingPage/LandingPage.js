@@ -1,22 +1,24 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import Articles from '../Articles/Articles';
 
-const DisplayArticles = () => (
-  <div className="card">
-    {/* <img class="card-img-top" src="..." alt="Card image cap"> */}
-    <div className="card-body">
-      <h5 className="card-title">Nisi cupidatat</h5>
-      <p className="card-text">
-        Nisi cupidatat magna dolor nulla.
-        Incididunt labore aliqua cillum mollit quis tempor do pariatur veniam adipisicing.
-        Commodo sit voluptate est laboris irure ex dolor fugiat esse ea mollit.
-        Pariatur elit cillum commodo occaecat tempor non mollit eu enim velit
-        <br />
-        . . .
-      </p>
-      <a href="#" className="btn ah-btn">View more</a>
-    </div>
-  </div>
-);
+// const DisplayArticles = () => (
+//   <div className="card">
+//     {/* <img class="card-img-top" src="..." alt="Card image cap"> */}
+//     <div className="card-body">
+//       <h5 className="card-title">Nisi cupidatat</h5>
+//       <p className="card-text">
+//         Nisi cupidatat magna dolor nulla.
+//         Incididunt labore aliqua cillum mollit quis tempor do pariatur veniam adipisicing.
+//         Commodo sit voluptate est laboris irure ex dolor fugiat esse ea mollit.
+//         Pariatur elit cillum commodo occaecat tempor non mollit eu enim velit
+//         <br />
+//         . . .
+//       </p>
+//       <a href="#" className="btn ah-btn">View more</a>
+//     </div>
+//   </div>
+// );
 
 const LandingPage = () => (
   <React.Fragment>
@@ -35,11 +37,17 @@ const LandingPage = () => (
       </div>
     </div>
     <div className="container">
-      <div className="display-articles mx-auto row">
-        <div className="col-sm-12 col-4 col-md-6"><DisplayArticles /></div>
-        <div className="col-sm-12 col-4 col-md-6"><DisplayArticles /></div>
-        <div className="col-sm-12 col-4 col-md-6"><DisplayArticles /></div>
+      <div>
+        <li>
+          <NavLink to="new-article">New Article</NavLink>
+        </li>
       </div>
+      <Articles />
+      {/* <div className="display-articles mx-auto row">
+        <div className="col-sm-12 col-4 col-md-6"><DisplayArticles /></div>
+        <div className="col-sm-12 col-4 col-md-6"><DisplayArticles /></div>
+        <div className="col-sm-12 col-4 col-md-6"><DisplayArticles /></div>
+      </div> */}
     </div>
   </React.Fragment>
 );

@@ -1,12 +1,12 @@
 import React from 'react';
 import a_200 from '../../assets/a_200.png';
 import user from '../../assets/user.jpeg';
+import { NavLink } from 'react-router-dom';
 
-const SingleArticle = ({article}) => (
-
+const SingleArticle = ({ article }) => (
   <div className="container">
     <div className="row">
-      <div className="col-sm-2 col-md-1">
+      <div className="col-sm-2 col-md-2">
         <img src={user} className="img-thumbnail" alt="" />
       </div>
       <div className="col-sm-11">
@@ -51,9 +51,7 @@ const SingleArticle = ({article}) => (
           <div className="card-block px-2">
             <h4 className="card-title">{article.title}</h4>
             <p className="card-text">{article.description}</p>
-            <a href="#" className="">
-              View More
-            </a>
+            <NavLink to='article'>View More</NavLink>
           </div>
         </div>
       </div>
