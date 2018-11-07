@@ -13,6 +13,7 @@ export const fetchUsers = (postData) => dispatch => {
     .post('/api/users/', postData)
     .then((response) => {
       localStorage.setItem('auth_token', response.data.user.auth_token);
+      localStorage.setItem('username', response.data.user.username);
       dispatch({ type: REGISTER_USER_SUCCESS, payload: true });
       toast.success('Signup successful', { autoClose: 3500, hideProgressBar: true });
     })
@@ -35,7 +36,8 @@ export const loginUser = payload => async dispatch => {
   axiosInstance
     .post('/api/users/login/', payload)
     .then(response => {
-      localStorage.setItem('token', response.data.user.auth_token);
+      localStorage.setItem('auth_token', response.data.user.auth_token);
+      localStorage.setItem('username', response.data.user.username);
       dispatch({ type: LOGIN_USER_SUCCESS, payload: true });
       toast.success(
         'Logged In!',
