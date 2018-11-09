@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import fetchArticles from '../../actions/articleActions';
+import { fetchArticles } from '../../actions/articleActions';
 import ArticlesList from './ArticlesList';
 
 export class Articles extends Component {

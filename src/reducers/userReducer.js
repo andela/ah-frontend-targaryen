@@ -10,7 +10,6 @@ import {
   GET_PROFILE_INITIATED,
 } from '../actions/types';
 
-
 const initialState = {
   registerUserSuccess: false,
   isLoginSuccess: false,

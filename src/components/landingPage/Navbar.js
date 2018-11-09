@@ -48,6 +48,7 @@ export class Navbar extends Component {
                           <i className="fas fa-user" />
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <NavLink className="dropdown-item" to="/create-article/">New Article</NavLink>
                           <NavLink className="dropdown-item" to={`/profiles/${username}`}>Profile</NavLink>
                           <div className="dropdown-divider" />
                           <a className="dropdown-item" href="#">Logout</a>

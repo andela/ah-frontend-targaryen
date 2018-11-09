@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Articles from '../Articles/Articles';
 
 const Dashboard = () => (
@@ -14,9 +15,11 @@ const Dashboard = () => (
                 <span className="writing">Writing.</span>
                 <span className="intro-text">You are home</span>
               </p>
-              <button className="btn btn-success dash-btn" type="button">
-                { "Let's Write" }
-              </button>
+              <Link to="/create-article/">
+                <button className="btn btn-success dash-btn" type="button">
+                  { "Let's Write" }
+                </button>
+              </Link>
             </div>
           </div>
         </div>

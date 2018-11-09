@@ -13,8 +13,8 @@ import {
   socialLoginInitiated,
   socialLoginSuccess,
 } from './actionCreators';
-import axiosInstance from '../config/axiosInstance';
 
+import axiosInstance from '../config/axiosInstance';
 
 export const fetchUsers = (postData) => dispatch => {
   toast.dismiss();

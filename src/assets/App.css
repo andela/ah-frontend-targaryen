@@ -42,10 +42,13 @@ img {
   font-family: cursive;
 }
 .footer-bg {
+  position: fixed;
   background-color: #24292e;
   color: white;
   text-align: center;
-  padding: 10px 20px 40px 20px;
+  padding: 5px 20px 5px 20px;
+  width: 100%;
+  bottom: 0;
 }
 header.uvp {
   position: relative;
@@ -96,12 +99,13 @@ header.uvp {
   margin-top: -64px !important;
   padding-top: 64px;
 }
-
 .lp-intro {
   margin-top: 36px;
   background-color: rgba(255, 255, 255, 1);
 }
-
+.lp-intro {
+  margin-top: 36px;
+}
 .registerForm {
   margin: 120px auto;
   width: 400px;
@@ -151,6 +155,9 @@ header.uvp {
 }
 .article{
   margin: 0 100px;
+}
+.forgot-password{
+  color: firebrick;
 }
 .article-img{
   width: 75%;
@@ -321,4 +328,38 @@ header.uvp {
 .profile-username {
   font-weight: bold;
   font-size: 30px;
+}
+
+.btn-long{
+  width: 100%;
+}
+.quill-height{
+  height: 350px;
+}
+.clear-box{
+  border: none;
+  width: 100%;
+}
+.clear-box:focus{
+  outline: none;
+  border-bottom: 2px solid #ece9e9;
+}
+.very-big-font{
+  font-size: 40px;
+}
+.bigger-font{
+  font-size: 20px;
+}
+.m-r-10{
+  margin-right: 10px;
+}
+::placeholder {
+  opacity: 0.3;
+}
+.my-img p img{
+ height: 40%;
+ width: 40%;
+}
+.m-t-10{
+  margin-top: 100px;
 }
