@@ -47,6 +47,6 @@ describe('Login component', () => {
 
   it('should redirect on successful login', () => {
     wrapper.setProps({ ...nextProps });
-    expect(props.history.push).toBeCalledWith('/');
+    expect(props.history.push).toBeCalledWith('/dashboard');
   });
 });

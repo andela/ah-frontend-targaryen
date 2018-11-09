@@ -1,11 +1,15 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { mount } from 'enzyme';
+import {
+  mount,
+  shallow,
+} from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import LandingPage from '../../components/landingPage/LandingPage';
 import { Login } from '../../components/login/Login';
 import NotFound from '../../components/notFound/NotFound';
+import Dashboard from '../../components/dashboard/Dashboard';
 
 const mockStore = configureStore([]);
 let store;
@@ -21,7 +25,7 @@ describe('Routes component', () => {
   });
 
   it('should return app component for the root path', () => {
-    const wrapper = mount(
+    const wrapper = shallow(
       <MemoryRouter initialEntries={['/']}>
         <LandingPage />
       </MemoryRouter>,
@@ -50,5 +54,13 @@ describe('Routes component', () => {
       </MemoryRouter>,
     );
     expect(wrapper.find(NotFound)).toHaveLength(1);
+  });
+  it('should return the dashboard for the "/dashboard" route path', () => {
+    const wrapper = shallow(
+      <MemoryRouter initialEntries={['/dashboard']}>
+        <Dashboard />
+      </MemoryRouter>,
+    );
+    expect(wrapper.find(Dashboard)).toHaveLength(1);
   });
 });

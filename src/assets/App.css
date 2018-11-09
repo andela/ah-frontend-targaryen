@@ -88,7 +88,7 @@ header.uvp {
   color: black;
 }
 .first-section {
-  background-image: url("../assets/bg-image.jpg");
+  background-image: url("../assets/images/bg-image.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   height: 150%;
@@ -111,7 +111,6 @@ header.uvp {
   box-shadow: 0 15px 25px rgba(0, 0, 0, .5);
   border-radius: 10px;
 }
-
 .forgot-password{
   color: firebrick;
 }
@@ -150,4 +149,109 @@ header.uvp {
   background-color: #4c69ba;
   display: inline-block;
   border:solid 1px #4c69ba;
+}
+.article{
+  margin: 0 100px;
+}
+.article-img{
+  width: 75%;
+}
+.article-list{
+  margin-top: 20px;
+  background-color: #e2e2e236;
+}
+.author-thumbnail {
+  border-radius: 50%;
+}
+.article-description{
+  font-family: "Open Sans", sans-serif;
+}
+.article-essentials{
+  border-bottom: solid 0.5px #e3e9ef;
+  padding-left: 0px;
+}
+.article-time{
+  color: #8c96a0;
+  font-size: 12px;
+  padding: none;
+}
+.entire-article{
+  margin-top:40px;
+}
+.author-name{
+  font-size:18px;
+}
+.icon{
+  float: right;
+  padding-right: 6px;
+}
+.card{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  width: 100%;
+}
+.card-block{
+  line-height: 1.7;
+}
+.card-title{
+  font-family: "Merriweather", sans-serif;
+  color: #2C3E50;
+  padding-top: 15px;
+}
+.card-footer{
+  border-top:none;
+}
+.dashboard-section{
+  background-image: url('./images/dashboard.jpg');
+  margin-top: -83px !important;
+  background-attachment: fixed;
+  background-size: cover;
+  height: 360px;
+  position: fixed;
+  padding-top: 45px;
+  z-index: 1;
+  width:100%;
+}
+.inner-dash{
+  background-color: #000000c9;
+  margin-top: 1.1rem;
+  height: 300px;
+  width: 100%;
+  color: #d0cfcf;
+  position: fixed;
+  z-index: 1;
+}
+.dash-intro{
+  border-radius: .3rem;
+  padding-top: 90px;
+}
+.dash{
+  z-index: 2;
+  position: relative;
+  top: 300px;
+  background-color: white;
+}
+.dash-btn{
+  padding: 5px 90px;
+  font-family: 'KoHo';
+  font-size: 20px;
+}
+.reading{
+  font-family: 'Cookie';
+  padding: 0 0 0 0;
+  font-weight: bold;
+  font-size: 45px;
+}.writing{
+  font-family: 'Indie Flower';
+  padding: 0 0 0 0;
+  font-weight: bold;
+  font-size: 45px;
+}
+.intro-text{
+  font-family: 'KoHo';
+  font-size: 40px;
+  letter-spacing: -4px;
+  word-spacing: 5px;
+  padding: 0 0 0 20px;
 }

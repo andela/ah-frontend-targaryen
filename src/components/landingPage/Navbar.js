@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import img from '../../assets/logo.png';
+import img from '../../assets/images/logo.png';
 
 const Navbar = () => (
   <nav className="navbar fixed-top navbar-expand-lg nav-bg">

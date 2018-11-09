@@ -23,7 +23,7 @@ export class Login extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoginSuccess === true) {
       const { history } = this.props;
-      history.push('/');
+      history.push('/dashboard');
     }
   }
 
