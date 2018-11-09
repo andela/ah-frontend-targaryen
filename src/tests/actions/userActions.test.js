@@ -1,3 +1,4 @@
+import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
@@ -6,6 +7,7 @@ import {
   loginUser,
   googleLoginUser,
   facebookLoginUser,
+  getProfile,
 } from '../../actions/userActions';
 import {
   REGISTER_USER_SUCCESS,
@@ -14,16 +16,21 @@ import {
   LOGIN_USER_ERROR,
   SOCIAL_LOGIN_INITIATED,
   SOCIAL_LOGIN_SUCCESS,
+  GET_PROFILE_PAYLOAD,
+  GET_PROFILE_ERROR,
+  GET_PROFILE_INITIATED,
 } from '../../actions/types';
 import axiosInstance from '../../config/axiosInstance';
 
 describe('userAction', () => {
   let store;
   let mock;
+  let mockRealAxios;
   const flushAllPromises = () => new Promise(resolve => setImmediate(resolve));
 
   beforeEach(() => {
     mock = new MockAdapter(axiosInstance);
+    mockRealAxios = new MockAdapter(axios);
     const mockStore = configureMockStore([thunk]);
     store = mockStore({});
   });
@@ -142,6 +149,7 @@ describe('userAction', () => {
         expect(store.getActions()).toEqual(expectedActions);
       });
   });
+
   it('should have social login successful facebook', () => {
     const response = {
       user: {
@@ -163,6 +171,68 @@ describe('userAction', () => {
     store.dispatch(facebookLoginUser('/api/auth/facebook/', user_data))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should set get profile initiated to true', () => {
+    getProfile()(store.dispatch);
+    expect(store.getActions()).toEqual(
+      [
+        { type: GET_PROFILE_INITIATED, payload: true },
+      ],
+    );
+  });
+
+  it('should return user profile details', () => {
+    const username = 'user1';
+    const response_data = {
+      token: 'my secret token',
+      profile: {
+        username: 'user1',
+        bio: 'My bio',
+        avatar: 'avatar image',
+        following: ['user2'],
+        followers: ['user2'],
+      },
+    };
+    localStorage.setItem('username', username);
+    mockRealAxios.onGet(`https://ah-backend-targaryen-staging.herokuapp.com/api/profiles/${username}/`).reply(200, response_data);
+    store.dispatch(getProfile())
+      .then(() => {
+        expect(store.getActions()).toEqual(
+          [
+            { payload: true, type: GET_PROFILE_INITIATED },
+            {
+              payload: {
+                avatar: 'avatar image', bio: 'My bio', followers: ['user2'], following: ['user2'], username: 'user1',
+              },
+              type: GET_PROFILE_PAYLOAD,
+            },
+          ],
+        );
+      });
+  });
+
+  it('should not return user profile details if not authorized', () => {
+    const response_data = {
+      token: 'my secret token',
+      profile: {
+        username: 'user1',
+        bio: 'My bio',
+        avatar: 'https://pixabay.com/en/user-person-people-profile-account-1633249/',
+        following: ['user2'],
+        followers: ['user2'],
+      },
+    };
+    mockRealAxios.onGet('https://ah-backend-targaryen-staging.herokuapp.com/api/profiles/user1/').reply(403, response_data);
+    store.dispatch(getProfile())
+      .then(() => {
+        expect(store.getActions()).toEqual(
+          [
+            { type: GET_PROFILE_INITIATED, payload: true },
+            { type: GET_PROFILE_ERROR, payload: 'This profile does not exist' },
+          ],
+        );
       });
   });
 });

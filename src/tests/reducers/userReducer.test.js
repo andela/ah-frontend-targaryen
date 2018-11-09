@@ -5,6 +5,9 @@ import {
   SOCIAL_LOGIN_SUCCESS,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
+  GET_PROFILE_PAYLOAD,
+  GET_PROFILE_ERROR,
+  GET_PROFILE_INITIATED,
 } from '../../actions/types';
 import userReducer from '../../reducers/userReducer';
 
@@ -24,9 +27,12 @@ describe('userReducer', () => {
       registerUserSuccess: false,
       isLoginSuccess: false,
       registerUserError: {},
-      loginError: {},
       isLoggedIn: false,
       loading: false,
+      loginError: {},
+      getProfilePayload: {},
+      getProfileError: '',
+      getProfileInitiated: false,
     };
     errorData = `${emailKey + emailValue}\n${passwordKey + passwordValue}\n${usernameKey + usernameValue}`;
   });
@@ -48,6 +54,9 @@ describe('userReducer', () => {
       isLoggedIn: false,
       loading: false,
       loginError: {},
+      getProfilePayload: {},
+      getProfileError: '',
+      getProfileInitiated: false,
     });
   });
 
@@ -64,6 +73,9 @@ describe('userReducer', () => {
       loginError: {},
       isLoggedIn: false,
       loading: false,
+      getProfilePayload: {},
+      getProfileError: '',
+      getProfileInitiated: false,
     });
   });
 
@@ -80,6 +92,9 @@ describe('userReducer', () => {
       loginError: {},
       isLoggedIn: false,
       loading: false,
+      getProfilePayload: {},
+      getProfileError: '',
+      getProfileInitiated: false,
     });
   });
 
@@ -97,6 +112,70 @@ describe('userReducer', () => {
       loginError: loginErrorResponse,
       isLoggedIn: false,
       loading: false,
+      getProfilePayload: {},
+      getProfileError: '',
+      getProfileInitiated: false,
+    });
+  });
+
+  it('should add profile when GET_PROFILE_PAYLOAD is passed', () => {
+    const profileDetails = {
+      username: 'user1', bio: 'My bio', avatar: 'avatar', following: ['user2'], followers: ['user2'],
+    };
+    const action = {
+      type: GET_PROFILE_PAYLOAD,
+      payload: profileDetails,
+    };
+    const currentState = userReducer(initialState, action);
+    expect(currentState).toEqual({
+      registerUserSuccess: false,
+      getProfilePayload: profileDetails,
+      registerUserError: {},
+      isLoginSuccess: false,
+      isLoggedIn: false,
+      loading: false,
+      loginError: {},
+      getProfileError: '',
+      getProfileInitiated: false,
+    });
+  });
+
+  it('should set getProfileInitiated to true when GET_PROFILE_INITIATED is passed', () => {
+    const action = {
+      type: GET_PROFILE_INITIATED,
+      payload: true,
+    };
+    const currentState = userReducer(initialState, action);
+    expect(currentState).toEqual({
+      registerUserSuccess: false,
+      registerUserError: {},
+      isLoginSuccess: false,
+      isLoggedIn: false,
+      loading: false,
+      loginError: {},
+      getProfilePayload: {},
+      getProfileError: '',
+      getProfileInitiated: true,
+    });
+  });
+
+  it('should add getProfileError when GET_PROFILE_ERROR is passed', () => {
+    const profileError = 'The profile error';
+    const action = {
+      type: GET_PROFILE_ERROR,
+      payload: profileError,
+    };
+    const currentState = userReducer(initialState, action);
+    expect(currentState).toEqual({
+      registerUserSuccess: false,
+      registerUserError: {},
+      isLoginSuccess: false,
+      isLoggedIn: false,
+      loading: false,
+      loginError: {},
+      getProfilePayload: {},
+      getProfileError: profileError,
+      getProfileInitiated: false,
     });
   });
   it('should start loading on sociallogin', () => {
@@ -113,6 +192,9 @@ describe('userReducer', () => {
       loginError: {},
       isLoggedIn: false,
       loading: true,
+      getProfilePayload: {},
+      getProfileError: '',
+      getProfileInitiated: false,
     });
   });
   it('should have logged in true', () => {
@@ -129,8 +211,9 @@ describe('userReducer', () => {
       loginError: {},
       isLoggedIn: true,
       loading: false,
+      getProfilePayload: {},
+      getProfileError: '',
+      getProfileInitiated: false,
     });
   });
-
-
 });

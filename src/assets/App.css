@@ -1,7 +1,6 @@
 a {
   color: #070808;
   text-decoration: none;
-  /* padding-left: 200px; */
   font-weight: bold;
 }
 a:hover {
@@ -100,6 +99,7 @@ header.uvp {
 
 .lp-intro {
   margin-top: 36px;
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .registerForm {
@@ -132,7 +132,6 @@ header.uvp {
   font-family: Roboto;
   transition: background-color .3s,border-color .3s;
 }
-
 .facebook{
   font-family: Roboto;
   font-weight: bold;
@@ -254,4 +253,72 @@ header.uvp {
   letter-spacing: -4px;
   word-spacing: 5px;
   padding: 0 0 0 20px;
+}
+.ah-nav-profile {
+  border-radius: 50%;
+  border-color: #606060;
+}
+.profile-contents {
+  margin-left: 5%;
+  margin-bottom: 5%;
+}
+.profile-image {
+  margin-bottom: 5%;
+  border-radius: 50%;
+  height: 200px;
+  border: solid;
+  border-color: rgb(132, 153, 175);
+}
+.inline-block {
+  display:inline-block;margin-right:10px;
+}
+.top-buffer {
+  margin-top:28px;
+}
+.profile-header {
+  border-bottom: solid;
+  border-width: thin;
+  border-color: rgb(130, 168, 208);
+  margin-bottom: 10px;
+}
+.big-font {
+  font-size: 20px;
+}
+.bottom-filler {
+  margin-bottom: 175px;
+}
+.followers {
+  border-right: solid;
+  border-width: thin;
+  border-color: rgb(130, 168, 208);
+}
+.bio {
+  background: rgb(132, 153, 175);
+  border-radius: 5px 5px 0px 0px;
+  padding: 10px 20px;
+}
+.bio-body {
+  border-left: solid;
+  border-right: solid;
+  border-bottom: solid;
+  border-width: medium;
+  border-radius: 0px 0px 5px 5px;
+  border-color: rgb(132, 153, 175);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding: 20px 40px;
+  word-spacing: 4px;
+  line-height: 32px;
+  font-family: 'open sans';
+  font-size: 17px;
+}
+.ah-container {
+  background: #fbfbfb;
+}
+.followers-following {
+  color: #656565;
+}
+.profile-username {
+  font-weight: bold;
+  font-size: 30px;
 }
