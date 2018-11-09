@@ -16,7 +16,8 @@
       "no-unused-expressions": [2, { "allowTernary": true }],
       "arrow-parens":0,
       "implicit-arrow-linebreak":"off",
-      "jsx-a11y/label-has-associated-control":0
+      "jsx-a11y/label-has-associated-control":0,
+      "no-shadow":"warn"
     },
     "parser": "babel-eslint",
     "plugins": [

@@ -4,7 +4,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../../assets/App.css';
-import { loginUser } from '../../actions/userActions';
+import {
+  loginUser,
+  facebookLoginUser,
+} from '../../actions/userActions';
+import GoogleButton from './GoogleButton';
+import FacebookButton from './FacebookButton';
 
 export class Login extends Component {
   constructor(props) {
@@ -91,6 +96,14 @@ export class Login extends Component {
               </button>
               <div className="form-group">
                 <Link className="forgot-password" to="/forgotPassword">Forgot password?</Link>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <GoogleButton />
+                </div>
+                <div className="col-md-6 ">
+                  <FacebookButton facebookLoginUserAction={facebookLoginUser} />
+                </div>
               </div>
             </form>
           </div>

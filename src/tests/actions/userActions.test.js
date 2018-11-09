@@ -1,11 +1,19 @@
 import MockAdapter from 'axios-mock-adapter';
+import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
-import { fetchUsers, loginUser } from '../../actions/userActions';
+import {
+  fetchUsers,
+  loginUser,
+  googleLoginUser,
+  facebookLoginUser,
+} from '../../actions/userActions';
 import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
+  SOCIAL_LOGIN_INITIATED,
+  SOCIAL_LOGIN_SUCCESS,
 } from '../../actions/types';
 import axiosInstance from '../../config/axiosInstance';
 
@@ -16,7 +24,7 @@ describe('userAction', () => {
 
   beforeEach(() => {
     mock = new MockAdapter(axiosInstance);
-    const mockStore = configureMockStore();
+    const mockStore = configureMockStore([thunk]);
     store = mockStore({});
   });
 
@@ -88,5 +96,73 @@ describe('userAction', () => {
         payload: errorResponse,
       },
     ]);
+  });
+  it('should have social login initiated with google', async () => {
+    const user_data = {
+      user: {
+        access_token: 'token',
+      },
+    };
+    const type = [{ type: SOCIAL_LOGIN_INITIATED }];
+    googleLoginUser('/api/auth/google/', user_data)(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(type);
+  });
+  it('should have social login initiated with facebook', async () => {
+    const user_data = {
+      user: {
+        access_token: 'token',
+      },
+    };
+    const type = [{ type: SOCIAL_LOGIN_INITIATED }];
+    facebookLoginUser('/api/auth/facebook/', user_data)(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(type);
+  });
+  it('should have social login successful google', () => {
+    const response = {
+      user: {
+        access_token: 'token',
+      },
+    };
+    const user_data = {
+      user: {
+        access_token: 'token',
+      },
+    };
+    const expectedActions = [
+      { type: SOCIAL_LOGIN_INITIATED },
+      { type: SOCIAL_LOGIN_SUCCESS },
+    ];
+    mock
+      .onPost('/api/auth/google/', user_data)
+      .reply(200, response);
+    store.dispatch(googleLoginUser('/api/auth/google/', user_data))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+  it('should have social login successful facebook', () => {
+    const response = {
+      user: {
+        access_token: 'token',
+      },
+    };
+    const user_data = {
+      user: {
+        access_token: 'token',
+      },
+    };
+    const expectedActions = [
+      { type: SOCIAL_LOGIN_INITIATED },
+      { type: SOCIAL_LOGIN_SUCCESS },
+    ];
+    mock
+      .onPost('/api/auth/facebook/', user_data)
+      .reply(200, response);
+    store.dispatch(facebookLoginUser('/api/auth/facebook/', user_data))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
   });
 });
