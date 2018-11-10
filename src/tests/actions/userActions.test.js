@@ -8,6 +8,7 @@ import {
   googleLoginUser,
   facebookLoginUser,
   getProfile,
+  updateLoginStatus,
 } from '../../actions/userActions';
 import {
   REGISTER_USER_SUCCESS,
@@ -17,7 +18,6 @@ import {
   SOCIAL_LOGIN_INITIATED,
   SOCIAL_LOGIN_SUCCESS,
   GET_PROFILE_PAYLOAD,
-  GET_PROFILE_ERROR,
   GET_PROFILE_INITIATED,
 } from '../../actions/types';
 import axiosInstance from '../../config/axiosInstance';
@@ -213,7 +213,7 @@ describe('userAction', () => {
       });
   });
 
-  it('should not return user profile details if not authorized', () => {
+  it('should redirect to login page is token is invalid', () => {
     const response_data = {
       token: 'my secret token',
       profile: {
@@ -230,9 +230,29 @@ describe('userAction', () => {
         expect(store.getActions()).toEqual(
           [
             { type: GET_PROFILE_INITIATED, payload: true },
-            { type: GET_PROFILE_ERROR, payload: 'This profile does not exist' },
+            { type: LOGOUT_USER, payload: false },
           ],
         );
       });
+  });
+
+  it('should keep user logged in if token is not expired', () => {
+    localStorage.setItem('auth_token', 'my athentication token');
+    store.dispatch(updateLoginStatus());
+    expect(store.getActions()).toEqual(
+      [
+        { type: LOGIN_USER_SUCCESS, payload: true },
+      ],
+    );
+  });
+
+  it('should logout user if token is expired', () => {
+    localStorage.setItem('auth_token', '');
+    store.dispatch(updateLoginStatus());
+    expect(store.getActions()).toEqual(
+      [
+        { type: LOGIN_USER_SUCCESS, payload: false },
+      ],
+    );
   });
 });

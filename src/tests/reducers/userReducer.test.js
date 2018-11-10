@@ -6,7 +6,7 @@ import {
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
   GET_PROFILE_PAYLOAD,
-  GET_PROFILE_ERROR,
+  LOGOUT_USER,
   GET_PROFILE_INITIATED,
 } from '../../actions/types';
 import userReducer from '../../reducers/userReducer';
@@ -25,14 +25,11 @@ describe('userReducer', () => {
   beforeEach(() => {
     initialState = {
       registerUserSuccess: false,
-      isLoginSuccess: false,
-      registerUserError: {},
       isLoggedIn: false,
+      registerUserError: {},
       loading: false,
       loginError: {},
-      getProfilePayload: {},
-      getProfileError: '',
-      getProfileInitiated: false,
+      profilePayload: {},
     };
     errorData = `${emailKey + emailValue}\n${passwordKey + passwordValue}\n${usernameKey + usernameValue}`;
   });
@@ -50,13 +47,10 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       registerUserSuccess: true,
       registerUserError: {},
-      isLoginSuccess: false,
       isLoggedIn: false,
       loading: false,
       loginError: {},
-      getProfilePayload: {},
-      getProfileError: '',
-      getProfileInitiated: false,
+      profilePayload: {},
     });
   });
 
@@ -69,13 +63,10 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       registerUserSuccess: false,
       registerUserError: errorData,
-      isLoginSuccess: false,
-      loginError: {},
       isLoggedIn: false,
+      loginError: {},
       loading: false,
-      getProfilePayload: {},
-      getProfileError: '',
-      getProfileInitiated: false,
+      profilePayload: {},
     });
   });
 
@@ -88,13 +79,10 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       registerUserSuccess: false,
       registerUserError: {},
-      isLoginSuccess: true,
+      isLoggedIn: true,
       loginError: {},
-      isLoggedIn: false,
       loading: false,
-      getProfilePayload: {},
-      getProfileError: '',
-      getProfileInitiated: false,
+      profilePayload: {},
     });
   });
 
@@ -108,13 +96,10 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       registerUserSuccess: false,
       registerUserError: {},
-      isLoginSuccess: false,
-      loginError: loginErrorResponse,
       isLoggedIn: false,
+      loginError: loginErrorResponse,
       loading: false,
-      getProfilePayload: {},
-      getProfileError: '',
-      getProfileInitiated: false,
+      profilePayload: {},
     });
   });
 
@@ -129,18 +114,15 @@ describe('userReducer', () => {
     const currentState = userReducer(initialState, action);
     expect(currentState).toEqual({
       registerUserSuccess: false,
-      getProfilePayload: profileDetails,
+      profilePayload: profileDetails,
       registerUserError: {},
-      isLoginSuccess: false,
       isLoggedIn: false,
       loading: false,
       loginError: {},
-      getProfileError: '',
-      getProfileInitiated: false,
     });
   });
 
-  it('should set getProfileInitiated to true when GET_PROFILE_INITIATED is passed', () => {
+  it('should set loading to true when GET_PROFILE_INITIATED is passed', () => {
     const action = {
       type: GET_PROFILE_INITIATED,
       payload: true,
@@ -149,33 +131,26 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       registerUserSuccess: false,
       registerUserError: {},
-      isLoginSuccess: false,
       isLoggedIn: false,
-      loading: false,
+      loading: true,
       loginError: {},
-      getProfilePayload: {},
-      getProfileError: '',
-      getProfileInitiated: true,
+      profilePayload: {},
     });
   });
 
-  it('should add getProfileError when GET_PROFILE_ERROR is passed', () => {
-    const profileError = 'The profile error';
+  it('should set isLoggedIn to false when LOGOUT_USER is passed', () => {
     const action = {
-      type: GET_PROFILE_ERROR,
-      payload: profileError,
+      type: LOGOUT_USER,
+      payload: false,
     };
     const currentState = userReducer(initialState, action);
     expect(currentState).toEqual({
       registerUserSuccess: false,
       registerUserError: {},
-      isLoginSuccess: false,
       isLoggedIn: false,
       loading: false,
       loginError: {},
-      getProfilePayload: {},
-      getProfileError: profileError,
-      getProfileInitiated: false,
+      profilePayload: {},
     });
   });
   it('should start loading on sociallogin', () => {
@@ -188,13 +163,10 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       registerUserSuccess: false,
       registerUserError: {},
-      isLoginSuccess: false,
-      loginError: {},
       isLoggedIn: false,
+      loginError: {},
       loading: true,
-      getProfilePayload: {},
-      getProfileError: '',
-      getProfileInitiated: false,
+      profilePayload: {},
     });
   });
   it('should have logged in true', () => {
@@ -207,13 +179,10 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       registerUserSuccess: false,
       registerUserError: {},
-      isLoginSuccess: false,
-      loginError: {},
       isLoggedIn: true,
+      loginError: {},
       loading: false,
-      getProfilePayload: {},
-      getProfileError: '',
-      getProfileInitiated: false,
+      profilePayload: {},
     });
   });
 });

@@ -2,7 +2,9 @@ import { NavLink } from 'react-router-dom';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 import img from '../../assets/images/logo.png';
+import { updateLoginStatus } from '../../actions/userActions';
 
 export class Navbar extends Component {
   constructor(props) {
@@ -12,15 +14,20 @@ export class Navbar extends Component {
     };
   }
 
+  componentDidMount() {
+    const { updateLoginStatus } = this.props;
+    updateLoginStatus();
+  }
+
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isLoginSuccess === true) {
+    if (nextProps.isLoggedIn === true) {
       this.state.isLoggedIn = true;
     }
   }
 
   render() {
     const username = localStorage.getItem('username');
-    const { isLoggedIn } = this.state;
+    const { isLoggedIn } = this.props;
     return (
       <nav className="navbar fixed-top navbar-expand-lg nav-bg">
         <div className="container">
@@ -51,7 +58,7 @@ export class Navbar extends Component {
                           <NavLink className="dropdown-item" to="/create-article/">New Article</NavLink>
                           <NavLink className="dropdown-item" to={`/profiles/${username}`}>Profile</NavLink>
                           <div className="dropdown-divider" />
-                          <a className="dropdown-item" href="#">Logout</a>
+                          <NavLink className="dropdown-item" to="#">Logout</NavLink>
                         </div>
                       </div>
                     </li>
@@ -79,15 +86,20 @@ export class Navbar extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLoginSuccess: state.user.isLoginSuccess,
+  isLoggedIn: state.user.isLoggedIn,
 });
 
+const matchDispatchToProps = (dispatch) => bindActionCreators({
+  updateLoginStatus,
+}, dispatch);
+
 Navbar.propTypes = {
-  isLoginSuccess: PropTypes.bool,
+  isLoggedIn: PropTypes.bool,
+  updateLoginStatus: PropTypes.func.isRequired,
 };
 
 Navbar.defaultProps = {
-  isLoginSuccess: false,
+  isLoggedIn: false,
 };
 
-export default connect(mapStateToProps, {})(Navbar);
+export default connect(mapStateToProps, matchDispatchToProps)(Navbar);

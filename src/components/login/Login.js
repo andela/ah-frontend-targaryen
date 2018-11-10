@@ -21,7 +21,7 @@ export class Login extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isLoginSuccess === true) {
+    if (nextProps.isLoggedIn === true) {
       const { history } = this.props;
       history.push('/dashboard');
     }
@@ -115,17 +115,17 @@ export class Login extends Component {
 
 Login.propTypes = {
   signIn: PropTypes.func.isRequired,
-  isLoginSuccess: PropTypes.bool,
+  isLoggedIn: PropTypes.bool,
   history: PropTypes.object.isRequired,
 };
 
 Login.defaultProps = {
-  isLoginSuccess: false,
+  isLoggedIn: false,
 };
 
 const mapStateToProps = state => ({
   isLoginPending: state.user.isLoginPending,
-  isLoginSuccess: state.user.isLoginSuccess,
+  isLoggedIn: state.user.isLoggedIn,
   loginError: state.user.loginError,
 });
 

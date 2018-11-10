@@ -10,6 +10,7 @@
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
     "history": "^4.7.2",
+    "jwt-decode": "^2.2.0",
     "node-sass": "^4.9.4",
     "prop-types": "^15.6.2",
     "react": "^16.6.0",
@@ -58,5 +59,11 @@
     "jest": "^23.6.0",
     "jest-cli": "^20.0.4",
     "redux-mock-store": "^1.5.3"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,mjs}",
+      "!src/setupTests.js"
+    ]
   }
 }

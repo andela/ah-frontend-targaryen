@@ -3,38 +3,33 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Loader from 'react-loader';
 import PropTypes from 'prop-types';
-import 'react-toastify/dist/ReactToastify.css';
 import profileImage from '../../assets/images/profileImage.png';
 import { getProfile } from '../../actions/userActions';
 
 export class Profile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loaded: false,
-    };
-  }
-
   componentDidMount() {
     const { getProfile } = this.props;
     getProfile();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.getProfileInitiated === true) {
-      this.setState({ loaded: true });
+    if (nextProps.isLoggedIn === false) {
+      const { history } = this.props;
+      history.push('/login');
     }
   }
 
   render() {
-    const { loaded } = this.state;
-    const { getProfilePayload } = this.props;
-    const profileData = getProfilePayload;
+    const {
+      loading, profilePayload: {
+        followers, following, username, bio,
+      },
+    } = this.props;
     let followersNumber;
     let followingNumber;
-    if (profileData.followers) {
-      followersNumber = profileData.followers.length;
-      followingNumber = profileData.following.length;
+    if (followers) {
+      followersNumber = followers.length;
+      followingNumber = following.length;
     } else {
       followersNumber = 'loading';
       followingNumber = 'loading';
@@ -45,7 +40,7 @@ export class Profile extends Component {
         <div className="container-fluid ah-container">
           <div>
             <div className="col-9 mx-auto lp-intro">
-              <Loader loaded={loaded}>
+              <Loader loaded={!loading}>
                 <div className="row profile-header ah-container">
                   <div className="col-4">
                     <img className="img-thumbnail profile-image" src={profileImage} alt="avatar" />
@@ -53,7 +48,7 @@ export class Profile extends Component {
                   <div className="col-6 top-buffer">
                     <div className="row">
                       <div className="col-12">
-                        <h3 className="profile-username">{ profileData.username }</h3>
+                        <h3 className="profile-username">{ username }</h3>
                       </div>
                     </div>
                     <div className="row followers-following">
@@ -83,7 +78,7 @@ export class Profile extends Component {
                 </div>
                 <div className="row bottom-filler bio-body">
                   <p align="justify">
-                    { profileData.bio }
+                    { bio }
                   </p>
                 </div>
               </Loader>
@@ -96,8 +91,9 @@ export class Profile extends Component {
 }
 
 const mapStateToProps = state => ({
-  getProfilePayload: state.user.getProfilePayload,
-  getProfileInitiated: state.user.getProfileInitiated,
+  profilePayload: state.user.profilePayload,
+  isLoggedIn: state.user.isLoggedIn,
+  loading: state.user.loading,
 });
 
 const matchDispatchToProps = (dispatch) => bindActionCreators({
@@ -105,14 +101,16 @@ const matchDispatchToProps = (dispatch) => bindActionCreators({
 }, dispatch);
 
 Profile.propTypes = {
-  getProfilePayload: PropTypes.object,
+  profilePayload: PropTypes.object,
   getProfile: PropTypes.func.isRequired,
-  getProfileInitiated: PropTypes.bool,
+  isLoggedIn: PropTypes.bool,
+  history: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 Profile.defaultProps = {
-  getProfilePayload: false,
-  getProfileInitiated: false,
+  profilePayload: {},
+  isLoggedIn: true,
 };
 
 export default connect(mapStateToProps, matchDispatchToProps)(Profile);

@@ -1,13 +1,14 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import jwt_decode from 'jwt-decode';
 import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
   GET_PROFILE_PAYLOAD,
-  GET_PROFILE_ERROR,
   GET_PROFILE_INITIATED,
+  LOGOUT_USER,
 } from './types';
 import {
   socialLoginInitiated,
@@ -24,7 +25,7 @@ export const fetchUsers = (postData) => dispatch => {
       localStorage.setItem('auth_token', response.data.user.auth_token);
       localStorage.setItem('username', response.data.user.username);
       dispatch({ type: REGISTER_USER_SUCCESS, payload: true });
-      toast.success('Signup successful', { autoClose: 3500, hideProgressBar: true });
+      toast.success('Signup successful. Please proceed to login', { autoClose: 3500, hideProgressBar: true });
     })
     .catch((error) => {
       let errorMessage = '';
@@ -100,6 +101,19 @@ export const facebookLoginUser = (serviceProvider, userData) => (dispatch) => {
       });
     });
 };
+
+export const updateLoginStatus = () => dispatch => {
+  const auth_token = localStorage.getItem('auth_token');
+  if (auth_token) {
+    const decoded_auth_token = jwt_decode(auth_token);
+    const current_time = new Date().getTime() / 1000;
+    if (current_time < decoded_auth_token.exp) {
+      return dispatch({ type: LOGIN_USER_SUCCESS, payload: true });
+    }
+  }
+  return dispatch({ type: LOGIN_USER_SUCCESS, payload: false });
+};
+
 export const getProfile = () => dispatch => {
   dispatch({ type: GET_PROFILE_INITIATED, payload: true });
   const auth_token = localStorage.getItem('auth_token');
@@ -112,6 +126,7 @@ export const getProfile = () => dispatch => {
       dispatch({ type: GET_PROFILE_PAYLOAD, payload: response.data.profile });
     })
     .catch(() => {
-      dispatch({ type: GET_PROFILE_ERROR, payload: 'This profile does not exist' });
+      localStorage.removeItem('auth_token');
+      dispatch({ type: LOGOUT_USER, payload: false });
     });
 };

@@ -8,7 +8,7 @@ describe('Login component', () => {
   const mockStore = configureMockStore();
   let wrapper;
   const nextProps = {
-    isLoginSuccess: true,
+    isLoggedIn: true,
   };
   const props = {
     history: { push: jest.fn() },
@@ -40,8 +40,8 @@ describe('Login component', () => {
     expect(wrapper.state().email).toEqual('toniks@gmail.com');
   });
 
-  it('should not redirect if isLoginSuccess is false', () => {
-    wrapper.setProps({ isLoginSuccess: false });
+  it('should not redirect if isLoggedIn is false', () => {
+    wrapper.setProps({ isLoggedIn: false });
     expect(props.history.push).toBeCalledTimes(0);
   });
 

@@ -8,13 +8,16 @@ describe('Profile component', () => {
   const mockStore = configureMockStore();
   const getProfile = jest.fn();
   const nextProps = {
-    getProfileInitiated: true,
-    getProfilePayload: { followers: ['user2'], following: ['user2'] },
+    isLoggedIn: true,
+    profilePayload: { followers: ['user2'], following: ['user2'] },
+  };
+  const props = {
+    history: { push: jest.fn() },
   };
 
   beforeEach(() => {
     mockStore({});
-    wrapper = shallow(<Profile getProfile={getProfile} />);
+    wrapper = shallow(<Profile getProfile={getProfile} {...props} />);
   });
 
   it('should render correctly', () => {
@@ -25,13 +28,13 @@ describe('Profile component', () => {
     expect(getProfile).toBeCalled();
   });
 
-  it('should not set loaded to true if getProfileInitiated is false', () => {
-    wrapper.setProps({ getProfileInitiated: false });
-    expect(wrapper.state('loaded')).toEqual(false);
+  it('should not redirect if isLoggedIn is false', () => {
+    wrapper.setProps({ ...nextProps });
+    expect(props.history.push).toBeCalledTimes(0);
   });
 
-  it('should set loaded to true on retreival of data', () => {
-    wrapper.setProps({ ...nextProps });
-    expect(wrapper.state('loaded')).toEqual(true);
+  it('should redirect to login page if user is not authenticated', () => {
+    wrapper.setProps({ isLoggedIn: false });
+    expect(props.history.push).toBeCalledWith('/login');
   });
 });
