@@ -59,12 +59,12 @@ export class Navbar extends Component {
                 : (
                   <React.Fragment>
                     <li className="nav-item active">
-                      <NavLink className="btn ah-btn ah-btn-nav js-scroll-trigger nav-link nav-text" to="signup">
+                      <NavLink className="btn ah-btn ah-btn-nav js-scroll-trigger nav-link nav-text" exact to="/signup">
                         Signup
                       </NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink className="btn ah-btn ah-btn-nav js-scroll-trigger nav-link nav-text" to="login">Login</NavLink>
+                      <NavLink className="btn ah-btn ah-btn-nav js-scroll-trigger nav-link nav-text" exact to="/login">Login</NavLink>
                     </li>
                   </React.Fragment>
                 )

@@ -8,6 +8,10 @@ import {
   GET_PROFILE_PAYLOAD,
   GET_PROFILE_ERROR,
   GET_PROFILE_INITIATED,
+  SEND_RESET_LINK_SUCCESS,
+  SEND_RESET_LINK_ERROR,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_ERROR,
 } from '../actions/types';
 
 
@@ -21,6 +25,10 @@ const initialState = {
   getProfilePayload: {},
   getProfileError: '',
   getProfileInitiated: false,
+  sendLinkSuccess: false,
+  sendLinkError: {},
+  resetPasswordSuccess: false,
+  resetPasswordError: {},
 };
 
 
@@ -41,12 +49,12 @@ const userReducer = (state = initialState, action) => {
         ...state,
         isLoginSuccess: action.payload,
       };
-
     case LOGIN_USER_ERROR:
       return {
         ...state,
         loginError: action.payload,
       };
+
     case SOCIAL_LOGIN_INITIATED:
       return {
         ...state,
@@ -73,6 +81,27 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         getProfileInitiated: action.payload,
+      };
+
+    case SEND_RESET_LINK_SUCCESS:
+      return {
+        ...state,
+        sendLinkSuccess: action.payload,
+      };
+    case SEND_RESET_LINK_ERROR:
+      return {
+        ...state,
+        sendLinkError: action.payload,
+      };
+    case RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        resetPasswordSuccess: action.payload,
+      };
+    case RESET_PASSWORD_ERROR:
+      return {
+        ...state,
+        resetPasswordError: action.payload,
       };
     default:
       return state;
