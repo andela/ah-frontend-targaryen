@@ -350,6 +350,9 @@ header.uvp {
 .bigger-font{
   font-size: 20px;
 }
+.quill-height-comments {
+  height: 80px;
+}
 .m-r-10{
   margin-right: 10px;
 }
@@ -362,4 +365,16 @@ header.uvp {
 }
 .m-t-10{
   margin-top: 100px;
+}
+.quill-div {
+  border: solid;
+  border-width: thin;
+  border-radius: 10px;
+}
+
+.comment{
+  margin: 0 160px;
+}
+.no-gutters-comments {
+  margin-left: 5%;
 }

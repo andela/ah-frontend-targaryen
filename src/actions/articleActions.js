@@ -5,6 +5,10 @@ import {
   createArticleSuccess,
   createArticleError,
   createArticleInititated,
+  addCommentSuccess,
+  getCommentInititated,
+  getCommentsSuccess,
+  logoutUser,
 } from './actionCreators';
 
 export const fetchArticles = () => dispatch => {
@@ -32,5 +36,27 @@ export const postArticle = postData => dispatch => {
       const errorMessage = 'Re-login and try again';
       dispatch(createArticleError(errorMessage));
       toast.error(errorMessage, { autoClose: false, hideProgressBar: true });
+    });
+};
+
+export const addComment = (postData, article) => dispatch => {
+  axiosInstance
+    .post(`/api/articles/${article}/comments/`, postData)
+    .then(() => {
+      dispatch(addCommentSuccess(true));
+    });
+};
+
+export const fetchComments = article => dispatch => {
+  dispatch(getCommentInititated(true));
+  axiosInstance
+    .get(`/api/articles/${article}/comments/`)
+    .then((response) => {
+      dispatch(getCommentsSuccess(response.data));
+    })
+    .catch(() => {
+      localStorage.removeItem('auth_token');
+      dispatch(logoutUser(false));
+      toast.error('Please login to view comments', { autoClose: false, hideProgressBar: true });
     });
 };
