@@ -14,7 +14,7 @@ class FacebookButton extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isLoggedIn) {
+    if (nextProps.isLoginSuccess) {
       this.setState({
         redirect: true,
       });
@@ -39,7 +39,7 @@ class FacebookButton extends PureComponent {
   render() {
     const value = this.state;
     if (value.redirect) {
-      const to = { pathname: '/' };
+      const to = { pathname: '/dashboard' };
       return (
         <Redirect to={to} />
       );
@@ -59,12 +59,12 @@ class FacebookButton extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-  isLoggedIn: state.user.isLoggedIn,
+  isLoginSuccess: state.user.isLoginSuccess,
   loading: state.user.loading,
 });
 
 FacebookButton.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
+  isLoginSuccess: PropTypes.bool.isRequired,
   facebookLoginUser: PropTypes.func.isRequired,
 };
 export { FacebookButton as FacebookTest };

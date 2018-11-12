@@ -5,7 +5,7 @@ import { GoogleTest } from '../../components/login/GoogleButton';
 describe('Googlelogin Component', () => {
   let wrapper;
   const props = {
-    isLoggedIn: true,
+    isLoginSuccess: false,
     googleLoginUser: jest.fn(),
   };
 
@@ -17,7 +17,7 @@ describe('Googlelogin Component', () => {
     expect(wrapper).toMatchSnapshot();
   });
   it('should set redirect to true in the state when isLoggedIn prop is true', () => {
-    wrapper.setProps({ isLoggedIn: true });
+    wrapper.setProps({ isLoginSuccess: true });
     expect(wrapper.state().redirect).toBe(true);
   });
   describe('signup method', () => {

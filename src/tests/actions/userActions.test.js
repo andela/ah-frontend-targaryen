@@ -139,7 +139,7 @@ describe('userAction', () => {
     };
     const expectedActions = [
       { type: SOCIAL_LOGIN_INITIATED },
-      { type: SOCIAL_LOGIN_SUCCESS },
+      { type: LOGIN_USER_SUCCESS, payload: true },
     ];
     mock
       .onPost('/api/auth/google/', user_data)
@@ -163,7 +163,8 @@ describe('userAction', () => {
     };
     const expectedActions = [
       { type: SOCIAL_LOGIN_INITIATED },
-      { type: SOCIAL_LOGIN_SUCCESS },
+      { type: LOGIN_USER_SUCCESS, payload: true },
+
     ];
     mock
       .onPost('/api/auth/facebook/', user_data)

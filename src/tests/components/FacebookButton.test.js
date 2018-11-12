@@ -5,7 +5,7 @@ import { FacebookTest } from '../../components/login/FacebookButton';
 describe('facebooklogin component', () => {
   let wrapper;
   const props = {
-    isLoggedIn: true,
+    isLoginSuccess: false,
     facebookLoginUser: jest.fn(),
   };
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe('facebooklogin component', () => {
     expect(wrapper).toMatchSnapshot();
   });
   it('should set reditect to true when isLoggedIn is true', () => {
-    wrapper.setProps({ isLoggedIn: true });
+    wrapper.setProps({ isLoginSuccess: true });
     expect(wrapper.state().redirect).toBe(true);
   });
   describe('signup method', () => {
