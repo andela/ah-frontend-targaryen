@@ -42,13 +42,10 @@ img {
   font-family: cursive;
 }
 .footer-bg {
-  position: fixed;
   background-color: #24292e;
   color: white;
   text-align: center;
-  padding: 5px 20px 5px 20px;
-  width: 100%;
-  bottom: 0;
+  padding: 10px 20px 40px 20px;
 }
 header.uvp {
   position: relative;
@@ -325,19 +322,3 @@ header.uvp {
   font-weight: bold;
   font-size: 30px;
 }
-
-/* Reset password styles */
-.resetPasswordForm {
-  margin: 0 auto;
-  width: 400px;
-  padding: 40px;
-  background: #f5f5f5;
-  box-sizing: border-box;
-  box-shadow: 0 15px 25px rgba(0, 0, 0, .5);
-  border-radius: 10px;
-}
-
-.reset-container {
-  margin-top: 40px;
-}
-
