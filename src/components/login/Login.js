@@ -95,7 +95,7 @@ export class Login extends Component {
                 Login
               </button>
               <div className="form-group">
-                <Link className="forgot-password" to="/forgot-password">Forgot password?</Link>
+                <Link className="forgot-password" to="/forgotPassword">Forgot password?</Link>
               </div>
               <div className="row">
                 <div className="col-md-6">

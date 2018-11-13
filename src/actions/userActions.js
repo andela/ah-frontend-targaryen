@@ -8,10 +8,6 @@ import {
   GET_PROFILE_PAYLOAD,
   GET_PROFILE_ERROR,
   GET_PROFILE_INITIATED,
-  SEND_RESET_LINK_SUCCESS,
-  SEND_RESET_LINK_ERROR,
-  RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_ERROR,
 } from './types';
 import {
   socialLoginInitiated,
@@ -119,30 +115,3 @@ export const getProfile = () => dispatch => {
       dispatch({ type: GET_PROFILE_ERROR, payload: 'This profile does not exist' });
     });
 };
-
-export const sendResetLink = (userDetails) => dispatch => axiosInstance
-  .post('/api/users/password_reset/', userDetails)
-  .then(response => {
-    dispatch({ type: SEND_RESET_LINK_SUCCESS, payload: true });
-    toast.dismiss();
-    return toast.success(response.data.user.message, { autoClose: 3500, hideProgressBar: true });
-  })
-  .catch(() => {
-    dispatch({ type: SEND_RESET_LINK_ERROR, payload: 'Please enter a valid email' });
-    toast.dismiss();
-    toast.error('Please enter a valid email', { autoClose: 3500, hideProgressBar: true });
-  });
-
-
-export const resetPassword = (passwordDetails) => dispatch => axiosInstance
-  .put('/api/users/password_update/', passwordDetails)
-  .then(response => {
-    dispatch({ type: RESET_PASSWORD_SUCCESS, payload: true });
-    toast.dismiss();
-    toast.success(response.data.user.message, { autoClose: 3500, hideProgressBar: true });
-  })
-  .catch(() => {
-    dispatch({ type: RESET_PASSWORD_ERROR, payload: 'Please enter a valid password' });
-    toast.dismiss();
-    toast.error('Please enter a valid password', { autoClose: 3500, hideProgressBar: true });
-  });
