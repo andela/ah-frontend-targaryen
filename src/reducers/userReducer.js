@@ -8,6 +8,11 @@ import {
   GET_PROFILE_PAYLOAD,
   GET_PROFILE_INITIATED,
   LOGOUT_USER,
+  SEND_RESET_LINK_INITIATED,
+  SEND_RESET_LINK_SUCCESS,
+  SEND_RESET_LINK_ERROR,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_ERROR,
 } from '../actions/types';
 
 const initialState = {
@@ -17,6 +22,11 @@ const initialState = {
   loginError: {},
   loading: false,
   profilePayload: {},
+  resetPasswordloading: false,
+  sendLinkSuccess: false,
+  sendLinkError: {},
+  resetPasswordSuccess: false,
+  resetPasswordError: {},
 };
 
 
@@ -71,6 +81,34 @@ const userReducer = (state = initialState, action) => {
         ...state,
         isLoggedIn: action.payload,
         loading: false,
+      };
+
+    case SEND_RESET_LINK_INITIATED:
+      return {
+        ...state,
+        resetPasswordloading: action.payload,
+      };
+    case SEND_RESET_LINK_SUCCESS:
+      return {
+        ...state,
+        sendLinkSuccess: action.payload,
+        resetPasswordloading: false,
+      };
+    case SEND_RESET_LINK_ERROR:
+      return {
+        ...state,
+        sendLinkError: action.payload,
+        resetPasswordloading: false,
+      };
+    case RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        resetPasswordSuccess: action.payload,
+      };
+    case RESET_PASSWORD_ERROR:
+      return {
+        ...state,
+        resetPasswordError: action.payload,
       };
     default:
       return state;
