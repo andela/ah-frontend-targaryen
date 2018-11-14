@@ -11,6 +11,7 @@ import {
   fetchUserArticles,
   likeDislike,
   deleteArticle,
+  updateArticle,
 } from '../../actions/articleActions';
 import {
   CREATE_ARTICLE_SUCCESS,
@@ -22,22 +23,45 @@ import {
   LOGOUT_USER,
   GET_ALL_ARTICLES_SUCCESS,
   GET_SPECIFIC_ARTICLE_SUCCESS,
+  GET_SPECIFIC_ARTICLE_INITIATED,
   GET_USER_ARTICLES_SUCCESS,
-  GET_ALL_ARTICLES_INITIATED,
   LIKE_DISLIKE_SUCCESS,
   LIKE_DISLIKE_ERROR,
   DELETE_ARTICLE_SUCCESS,
+  EDIT_ARTICLE_SUCCESS,
+  EDIT_ARTICLE_ERROR,
+  EDIT_ARTICLE_INITIATED,
+  GET_ALL_ARTICLES_INITIATED,
 } from '../../actions/types';
 
 let store;
-let mock;
 const flushAllPromises = () => new Promise(resolve => setImmediate(resolve));
+const middleware = [thunk];
+const mock = new MockAdapter(axiosInstance);
+const mockStore = configureMockStore(middleware);
+
+beforeEach(() => {
+  store = mockStore({});
+});
 
 describe('articleActions', () => {
-  beforeEach(() => {
-    mock = new MockAdapter(axiosInstance);
-    const mockStore = configureMockStore();
-    store = mockStore({});
+  it('should return a specific article', async () => {
+    const res_data = {
+      article: {
+        author: { bio: 'Nice' },
+        body: 'Plain and simple',
+      },
+    };
+    const slug = 'an-article';
+    mock.onGet('/api/articles/an-article/')
+      .reply(200, res_data);
+    fetchSpecificArticle(slug)(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(
+      [
+        { type: GET_SPECIFIC_ARTICLE_INITIATED, payload: true },
+        { type: GET_SPECIFIC_ARTICLE_SUCCESS, payload: res_data }],
+    );
   });
 
   it('should return all articles', async () => {
@@ -60,24 +84,6 @@ describe('articleActions', () => {
         { type: GET_ALL_ARTICLES_INITIATED, payload: true },
         { type: GET_ALL_ARTICLES_SUCCESS, payload: response_data.article },
       ],
-    );
-  });
-
-  it('should return a specific article', async () => {
-    const res_data = {
-      article: {
-        author: { bio: 'Nice' },
-        body: 'Plain and simple',
-      },
-    };
-    const slug = 'an-article';
-    mock.onGet(`/api/articles/${slug}/`)
-      .reply(200, res_data);
-    fetchSpecificArticle(slug)(store.dispatch);
-
-    await flushAllPromises();
-    expect(store.getActions()).toEqual(
-      [{ type: GET_SPECIFIC_ARTICLE_SUCCESS, payload: res_data }]
     );
   });
 
@@ -218,13 +224,13 @@ describe('likeDislikeAction', () => {
   localStorage.setItem('auth_token', 'token');
   const payload = { reaction: 'Like' };
   const slug = 'testing-1-2-3';
-
-  beforeEach(() => {
-    mock = new MockAdapter(axiosInstance);
-    const middleware = [thunk];
-    const mockStore = configureMockStore(middleware);
-    store = mockStore({});
-  });
+  const article_data = {
+    article: {
+      body: '<p>I like to use ReactJS components!</p>',
+      title: 'Testing 1 2 3',
+      description: 'Testing',
+    },
+  };
 
   it('should like an article', async () => {
     const response = {
@@ -265,5 +271,43 @@ describe('likeDislikeAction', () => {
     expect(store.getActions()).toEqual([
       { type: LIKE_DISLIKE_ERROR, payload: detail },
     ]);
+  });
+
+  it('should update an article', async () => {
+    mock.onPut(`/api/articles/${slug}/`).reply(200, article_data);
+    updateArticle(slug, article_data)(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(
+      [
+        { type: EDIT_ARTICLE_INITIATED, payload: true },
+        { type: EDIT_ARTICLE_SUCCESS, payload: true },
+      ],
+    );
+  });
+
+  it('should not update an article with invalid data', async () => {
+    const error = 'Please enter valid text in the body';
+    mock.onPut(`api/articles/${slug}`).reply(404);
+    updateArticle()(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(
+      [
+        { type: EDIT_ARTICLE_INITIATED, payload: true },
+        { type: EDIT_ARTICLE_ERROR, payload: error },
+      ],
+    );
+  });
+
+  it('should not update an article if token is expired/missing', async () => {
+    const error = 'Re-login and try again';
+    mock.onPut(`/api/articles/${slug}/`).reply(403, article_data);
+    updateArticle(slug, article_data)(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(
+      [
+        { type: EDIT_ARTICLE_INITIATED, payload: true },
+        { type: EDIT_ARTICLE_ERROR, payload: error },
+      ],
+    );
   });
 });

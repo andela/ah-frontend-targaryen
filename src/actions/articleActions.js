@@ -2,6 +2,7 @@ import { toast } from 'react-toastify';
 import axiosInstance from '../config/axiosInstance';
 import {
   getAllArticles,
+  getArticlesInitiated,
   createArticleSuccess,
   createArticleError,
   createArticleInititated,
@@ -11,10 +12,13 @@ import {
   logoutUser,
   getSpecificArticle,
   getUserArticles,
-  getArticlesInitiated,
   likeDislikeSuccess,
   likeDislikeError,
   deleteArticleSuccess,
+  editArticleInititated,
+  editArticleSuccess,
+  editArticleError,
+  getSpecificArticleInitiated,
 } from './actionCreators';
 
 export const postArticle = postData => dispatch => {
@@ -71,7 +75,8 @@ export const fetchArticles = () => dispatch => {
 };
 
 export const fetchSpecificArticle = slug => dispatch => {
-  axiosInstance
+  dispatch(getSpecificArticleInitiated(true));
+  return axiosInstance
     .get(`/api/articles/${slug}/`)
     .then((response) => {
       dispatch(getSpecificArticle(response.data));
@@ -123,5 +128,30 @@ export const deleteArticle = slug => dispatch => {
         'The article was deleted!',
         { autoClose: 3500, hideProgressBar: true },
       );
+    });
+};
+
+export const updateArticle = (slug, newData) => dispatch => {
+  toast.dismiss();
+  dispatch(editArticleInititated(true));
+  return axiosInstance
+    .put(`/api/articles/${slug}/`, newData)
+    .then(response => {
+      dispatch(editArticleSuccess(true));
+      toast.success(
+        response.data.message,
+        { autoClose: 3500, hideProgressBar: true },
+      );
+    })
+    .catch((error) => {
+      let errorMessage = '';
+      if (error.response.status === 403) {
+        errorMessage = 'Re-login and try again';
+      }
+      if (error.response.status === 404) {
+        errorMessage = 'Please enter valid text in the body';
+      }
+      dispatch(editArticleError(errorMessage));
+      toast.error(errorMessage, { autoClose: false, hideProgressBar: true });
     });
 };

@@ -6,9 +6,9 @@ import NotFound from '../notFound/NotFound';
 import RegisterUser from '../register/RegisterUser';
 import Dashboard from '../dashboard/Dashboard';
 import Profile from '../profiles/Profile';
-import NewArticle from '../Articles/NewArticle';
+import CreateArticle from '../Articles/CreateArticle';
 import Comments from '../comments/Comments';
-import ViewArticle from '../Articles/ViewArticle';
+import EditArticle from '../Articles/EditArticle';
 
 const Routes = () => (
   <Switch>
@@ -17,9 +17,9 @@ const Routes = () => (
     <Route exact path="/signup" component={RegisterUser} />
     <Route exact path="/dashboard" component={Dashboard} />
     <Route exact path="/profiles/:username" component={Profile} />
-    <Route exact path="/create-article" component={NewArticle} />
+    <Route exact path="/create-article" component={CreateArticle} />
     <Route exact path="/articles/:article/comments/" component={Comments} />
-    <Route exact path="/article/:slug" component={ViewArticle} />
+    <Route exact path="/article/:slug" component={EditArticle} />
     <Route exact component={NotFound} />
   </Switch>
 );

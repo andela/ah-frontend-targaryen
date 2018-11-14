@@ -17,13 +17,13 @@ const getAuthor = author => {
   return 'btn-no-display';
 };
 
-const ReadArticle = ({ article, slug }) => (
+const Article = ({ article, slug, toggleEdit }) => (
   <div className="container view-article">
     <div className="row">
       <div className="col-1">
         <img src={user} alt="name" className="img-thumbnail author-thumbnail" />
       </div>
-      <div className="col-8 offset-1">
+      <div className="col-11 offset-1">
         <div className="row">
           <div className="col-3 author-name">
             <p>
@@ -52,7 +52,7 @@ const ReadArticle = ({ article, slug }) => (
           </div>
           <div className="col-5">
             <div id="buttons" className={getAuthor(article.author.username)}>
-              <input type="button" value="Edit" className="btn-edit" />
+              <input id="toggleEdit" type="button" value="Edit" className="btn-edit" onClick={toggleEdit} />
               <input type="button" value="Delete" className="btn-delete" data-toggle="modal" data-target="#deleteModal" />
             </div>
             <div>
@@ -63,8 +63,8 @@ const ReadArticle = ({ article, slug }) => (
       </div>
     </div>
     <div className="row">
-      <div className="col-12 article-view-description">
-        <div className="article-description">{article.description}</div>
+      <div className="col-12 article-view-title">
+        <div className="card-title">{article.title}</div>
       </div>
     </div>
     <div className="row">
@@ -76,8 +76,10 @@ const ReadArticle = ({ article, slug }) => (
 
 );
 
-ReadArticle.propTypes = {
+Article.propTypes = {
   article: PropTypes.object.isRequired,
+  toggleEdit: PropTypes.func.isRequired,
+  slug: PropTypes.string.isRequired,
 };
 
-export default ReadArticle;
+export default Article;
