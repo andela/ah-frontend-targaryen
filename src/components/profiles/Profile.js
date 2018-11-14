@@ -5,11 +5,14 @@ import Loader from 'react-loader';
 import PropTypes from 'prop-types';
 import profileImage from '../../assets/images/profileImage.png';
 import { getProfile } from '../../actions/userActions';
+import { fetchUserArticles } from '../../actions/articleActions';
+import ArticlesList from '../Articles/ArticlesList';
 
 export class Profile extends Component {
   componentDidMount() {
-    const { getProfile } = this.props;
+    const { getProfile, fetchUserArticles } = this.props;
     getProfile();
+    fetchUserArticles();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -23,8 +26,9 @@ export class Profile extends Component {
     const {
       loading, profilePayload: {
         followers, following, username, bio,
-      },
+      }, userArticlesPayload,
     } = this.props;
+
     let followersNumber;
     let followingNumber;
     if (followers) {
@@ -84,6 +88,11 @@ export class Profile extends Component {
               </Loader>
             </div>
           </div>
+          <div>
+            {Object.keys(userArticlesPayload).length > 0
+              && <ArticlesList articles={userArticlesPayload.article} />
+            }
+          </div>
         </div>
       </div>
     );
@@ -93,11 +102,13 @@ export class Profile extends Component {
 const mapStateToProps = state => ({
   profilePayload: state.user.profilePayload,
   isLoggedIn: state.user.isLoggedIn,
+  userArticlesPayload: state.article.userArticlesPayload,
   loading: state.user.loading,
 });
 
-const matchDispatchToProps = (dispatch) => bindActionCreators({
+const matchDispatchToProps = dispatch => bindActionCreators({
   getProfile,
+  fetchUserArticles,
 }, dispatch);
 
 Profile.propTypes = {
@@ -106,6 +117,8 @@ Profile.propTypes = {
   isLoggedIn: PropTypes.bool,
   history: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
+  userArticlesPayload: PropTypes.object.isRequired,
+  fetchUserArticles: PropTypes.func.isRequired,
 };
 
 Profile.defaultProps = {

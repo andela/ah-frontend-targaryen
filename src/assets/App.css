@@ -378,3 +378,67 @@ header.uvp {
 .no-gutters-comments {
   margin-left: 5%;
 }
+.article-body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  line-height: 35px;
+  letter-spacing: 1px;
+}
+.article-bio{
+  font-family: 'Indie Flower';
+  font-size: 20px;
+}
+.article-view-description{
+  background-color: #dcdcdc36;
+  padding: 20px;
+  line-height: 24px;
+  word-spacing: 5px;
+  margin-top: 20px;
+}
+.btn-follow{
+  padding: 5px;
+  border: 2px solid rgb(141, 189, 67);
+  background-color: #eceff1;
+  color: black;
+  font-size: 12px;
+}
+.btn-follow:hover{
+  background-color: rgb(141, 189, 67);
+}
+.view-article{
+  padding:10px 150px;
+}
+.btn-display{
+  display: block;
+}
+.btn-no-display{
+  display: none;
+}
+.article-body p img{
+  height: 50%;
+  width: 50%;
+  display: block;
+}
+.btn-edit{
+  padding: 5px 25px;
+  border: 2px solid rgb(141, 189, 67);
+  background-color: #eceff1;
+  color: black;
+  font-size: 14px;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+.btn-edit:hover{
+  background-color: rgb(141, 189, 67);
+}
+.btn-delete{
+  padding: 5px 25px;
+  border: 2px solid rgb(243, 68, 68);
+  background-color: #eceff1;
+  color: black;
+  font-size: 14px;
+  border-radius: 6px;
+}
+.btn-delete:hover{
+  background-color: rgb(243, 68, 68);
+}

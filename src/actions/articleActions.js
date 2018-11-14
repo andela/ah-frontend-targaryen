@@ -9,13 +9,10 @@ import {
   getCommentInititated,
   getCommentsSuccess,
   logoutUser,
+  getSpecificArticle,
+  getUserArticles,
+  getArticlesInitiated,
 } from './actionCreators';
-
-export const fetchArticles = () => dispatch => {
-  axiosInstance.get('/api/article/').then(response => {
-    dispatch(getAllArticles(response.data.article));
-  });
-};
 
 export const postArticle = postData => dispatch => {
   toast.dismiss();
@@ -58,5 +55,31 @@ export const fetchComments = article => dispatch => {
       localStorage.removeItem('auth_token');
       dispatch(logoutUser(false));
       toast.error('Please login to view comments', { autoClose: false, hideProgressBar: true });
+    });
+};
+
+export const fetchArticles = () => dispatch => {
+  dispatch(getArticlesInitiated(true));
+  return axiosInstance
+    .get('/api/article/')
+    .then((response) => {
+      dispatch(getAllArticles(response.data.article));
+    });
+};
+
+export const fetchSpecificArticle = slug => dispatch => {
+  dispatch(getArticlesInitiated(true));
+  return axiosInstance
+    .get(`/api/articles/${slug}`)
+    .then((response) => {
+      dispatch(getSpecificArticle(response.data));
+    });
+};
+
+export const fetchUserArticles = () => dispatch => {
+  axiosInstance
+    .get('/api/article/my-articles/')
+    .then(response => {
+      dispatch(getUserArticles(response.data.article));
     });
 };

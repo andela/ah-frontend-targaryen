@@ -32,7 +32,11 @@ export class Navbar extends Component {
       <nav className="navbar fixed-top navbar-expand-lg nav-bg">
         <div className="container">
           <img src={img} className="image-fluid" alt="" />
-          <h6 className="navbar-brand" href="#">Authors Haven</h6>
+          {isLoggedIn
+            ? (<NavLink className="navbar-brand" exact to="/dashboard">Authors Haven</NavLink>) : (
+              <NavLink className="navbar-brand" exact to="/">Authors Haven</NavLink>
+            )
+          }
           <button
             className="navbar-toggler  navbar-light"
             type="button"
