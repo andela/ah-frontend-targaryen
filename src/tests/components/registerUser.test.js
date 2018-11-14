@@ -70,6 +70,6 @@ describe('RegisterUser component', () => {
 
   it('should redirect on successful registration', () => {
     wrapper.setProps({ ...nextProps });
-    expect(props.history.push).toBeCalledWith('/');
+    expect(props.history.push).toBeCalledWith('/login');
   });
 });

@@ -17,7 +17,7 @@ export class RegisterUser extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.registerUserSuccess === true) {
       const { history } = this.props;
-      history.push('/');
+      history.push('/login');
     }
   }
 

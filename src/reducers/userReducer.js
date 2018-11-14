@@ -6,20 +6,17 @@ import {
   SOCIAL_LOGIN_INITIATED,
   SOCIAL_LOGIN_SUCCESS,
   GET_PROFILE_PAYLOAD,
-  GET_PROFILE_ERROR,
   GET_PROFILE_INITIATED,
+  LOGOUT_USER,
 } from '../actions/types';
 
 const initialState = {
   registerUserSuccess: false,
-  isLoginSuccess: false,
+  isLoggedIn: false,
   registerUserError: {},
   loginError: {},
-  isLoggedIn: false,
   loading: false,
-  getProfilePayload: {},
-  getProfileError: '',
-  getProfileInitiated: false,
+  profilePayload: {},
 };
 
 
@@ -38,7 +35,7 @@ const userReducer = (state = initialState, action) => {
     case LOGIN_USER_SUCCESS:
       return {
         ...state,
-        isLoginSuccess: action.payload,
+        isLoggedIn: action.payload,
       };
 
     case LOGIN_USER_ERROR:
@@ -61,17 +58,19 @@ const userReducer = (state = initialState, action) => {
     case GET_PROFILE_PAYLOAD:
       return {
         ...state,
-        getProfilePayload: action.payload,
-      };
-    case GET_PROFILE_ERROR:
-      return {
-        ...state,
-        getProfileError: action.payload,
+        profilePayload: action.payload,
+        loading: false,
       };
     case GET_PROFILE_INITIATED:
       return {
         ...state,
-        getProfileInitiated: action.payload,
+        loading: action.payload,
+      };
+    case LOGOUT_USER:
+      return {
+        ...state,
+        isLoggedIn: action.payload,
+        loading: false,
       };
     default:
       return state;

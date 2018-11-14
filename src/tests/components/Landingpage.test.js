@@ -12,13 +12,14 @@ it('renders the LandingPage component correctly', () => {
 describe('Navbar component', () => {
   let wrapper;
   const mockStore = configureMockStore();
+  const updateLoginStatus = jest.fn();
   const nextProps = {
-    isLoginSuccess: true,
+    isLoggedIn: true,
   };
 
   beforeEach(() => {
     mockStore({});
-    wrapper = shallow(<Navbar />);
+    wrapper = shallow(<Navbar updateLoginStatus={updateLoginStatus} />);
   });
 
   it('should render correctly', () => {
@@ -26,7 +27,7 @@ describe('Navbar component', () => {
   });
 
   it('should not set isLoggedIn to true if login is unsuccessful', () => {
-    wrapper.setProps({ isLoginSuccess: false });
+    wrapper.setProps({ isLoggedIn: false });
     expect(wrapper.state('isLoggedIn')).toEqual(false);
   });
 
