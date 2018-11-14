@@ -42,6 +42,7 @@ const SingleArticle = ({ article }) => (
             <div className="card-block px-2">
               <h5 className="card-title">{article.title}</h5>
               <p className="card-text article-description">{article.description}</p>
+              <p dangerouslySetInnerHTML={{ __html: article.body }} className="my-img" />
             </div>
           </div>
         </div>
