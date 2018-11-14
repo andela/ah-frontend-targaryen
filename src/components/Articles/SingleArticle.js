@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
-import articleImg from '../../assets/images/articleImg.jpeg';
-import user from '../../assets/images/user.png';
+import LikeDislike from './LikeDislike';
 
 const articleCreated = articleDate => {
   const dateTime = new Date(articleDate);
@@ -52,11 +50,10 @@ const SingleArticle = ({ article }) => {
             </div>
           </div>
           <div className="card-footer w-100 text-muted">
-            <i className="far fa-thumbs-down icon" />
-            <i className="far fa-thumbs-up icon" />
-            <i className="far fa-star icon" />
-            <i className="far fa-bookmark icon" />
-            <i className="fas fa-share-alt icon" />
+            <LikeDislike slug={article.slug} />
+            <i className="reaction far fa-star icon" />
+            <i className="reaction far fa-bookmark icon" />
+            <i className="reaction fas fa-share-alt icon" />
             <Link to={returnArticleURL(article.slug)}><i className="far fa-comment icon" /></Link>
           </div>
         </div>

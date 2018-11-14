@@ -12,6 +12,8 @@ import {
   GET_SPECIFIC_ARTICLE_SUCCESS,
   GET_USER_ARTICLES_SUCCESS,
   GET_ALL_ARTICLES_INITIATED,
+  LIKE_DISLIKE_SUCCESS,
+  LIKE_DISLIKE_ERROR,
 } from './types';
 
 export const socialLoginInitiated = () => ({
@@ -69,5 +71,13 @@ export const getUserArticles = payload => ({
 
 export const getArticlesInitiated = payload => ({
   type: GET_ALL_ARTICLES_INITIATED,
+  payload,
+});
+export const likeDislikeSuccess = payload => ({
+  type: LIKE_DISLIKE_SUCCESS,
+  payload,
+});
+export const likeDislikeError = payload => ({
+  type: LIKE_DISLIKE_ERROR,
   payload,
 });
