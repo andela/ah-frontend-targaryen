@@ -1,12 +1,21 @@
 import MockAdapter from 'axios-mock-adapter';
 import configureMockStore from 'redux-mock-store';
 import axiosInstance from '../../config/axiosInstance';
-import { fetchArticles, postArticle } from '../../actions/articleActions';
+import {
+  fetchArticles,
+  postArticle,
+  fetchComments,
+  addComment,
+} from '../../actions/articleActions';
 import {
   GET_ALL_ARTICLES_SUCCESS,
   CREATE_ARTICLE_SUCCESS,
   CREATE_ARTICLE_INITIATED,
   CREATE_ARTICLE_ERROR,
+  GET_COMMENT_INITIATED,
+  GET_COMMENTS_SUCCESS,
+  ADD_COMMENT_SUCCESS,
+  LOGOUT_USER,
 } from '../../actions/types';
 
 
@@ -66,4 +75,80 @@ describe('articleActions', () => {
       ],
     );
   });
+
+  it('should retrieve comments', async () => {
+    const article = 'react-redux';
+    const response_data = {
+      comments: {
+        id: 14,
+        author: 3,
+        article: 139,
+        body: 'Backend comment react redux',
+        parent: null,
+        created_at: '2018-11-14T18:17:23.209744Z',
+        updated_at: '2018-11-14T18:17:23.209796Z',
+        thread_count: 0,
+      },
+    };
+    mock.onGet('/api/articles/react-redux/comments/').reply(200, response_data);
+    fetchComments(article)(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(
+      [
+        { type: GET_COMMENT_INITIATED, payload: true },
+        { type: GET_COMMENTS_SUCCESS, payload: response_data },
+      ],
+    );
+  });
+
+  it('should logout a user token is expired', async () => {
+    const article = 'react-redux';
+    const response_data = {
+      comments: {
+        id: 14,
+        author: 3,
+        article: 139,
+        body: 'Backend comment react redux',
+        parent: null,
+        created_at: '2018-11-14T18:17:23.209744Z',
+        updated_at: '2018-11-14T18:17:23.209796Z',
+        thread_count: 0,
+      },
+    };
+    mock.onGet('/api/articles/react-redux/comments/').reply(403, response_data);
+    fetchComments(article)(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(
+      [
+        { type: GET_COMMENT_INITIATED, payload: true },
+        { type: LOGOUT_USER, payload: false },
+      ],
+    );
+  });
+
+  it('should post a comment', async () => {
+    const article = 'react-redux';
+    const response_data = {
+      comments: {
+        id: 14,
+        author: 3,
+        article: 139,
+        body: 'Backend comment react redux',
+        parent: null,
+        created_at: '2018-11-14T18:17:23.209744Z',
+        updated_at: '2018-11-14T18:17:23.209796Z',
+        thread_count: 0,
+      },
+    };
+    mock.onPost('/api/articles/react-redux/comments/').reply(201, response_data);
+    addComment(response_data, article)(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(
+      [
+        { type: ADD_COMMENT_SUCCESS, payload: true },
+      ],
+    );
+  });
+
+  
 });

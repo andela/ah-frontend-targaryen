@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { Articles } from '../../components/Articles/Articles';
 
 describe('Articles Component', () => {
@@ -12,7 +12,7 @@ describe('Articles Component', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(
+    wrapper = shallow(
       <Articles fetchArticles={fetchArticles} articlesPayload={articlesPayload} />,
     );
   });

@@ -4,6 +4,9 @@ import {
   CREATE_ARTICLE_SUCCESS,
   CREATE_ARTICLE_ERROR,
   CREATE_ARTICLE_INITIATED,
+  ADD_COMMENT_SUCCESS,
+  GET_COMMENTS_SUCCESS,
+  GET_COMMENT_INITIATED,
 } from '../../actions/types';
 
 describe('articlesReducer', () => {
@@ -14,6 +17,8 @@ describe('articlesReducer', () => {
       articlesPayload: {},
       createArticleSuccess: false,
       loading: false,
+      addCommentSuccess: false,
+      commentsPayload: {},
     };
   });
 
@@ -31,6 +36,8 @@ describe('articlesReducer', () => {
       articlesPayload: action.payload,
       createArticleSuccess: false,
       loading: false,
+      addCommentSuccess: false,
+      commentsPayload: {},
     });
   });
 
@@ -44,6 +51,8 @@ describe('articlesReducer', () => {
       articlesPayload: {},
       createArticleSuccess: true,
       loading: false,
+      addCommentSuccess: false,
+      commentsPayload: {},
     });
   });
 
@@ -59,6 +68,8 @@ describe('articlesReducer', () => {
       createArticleSuccess: false,
       createArticleError: postError,
       loading: false,
+      addCommentSuccess: false,
+      commentsPayload: {},
     });
   });
 
@@ -72,6 +83,53 @@ describe('articlesReducer', () => {
       articlesPayload: {},
       createArticleSuccess: false,
       loading: true,
+      addCommentSuccess: false,
+      commentsPayload: {},
+    });
+  });
+
+  it('should set the loader when GET_COMMENT_INITIATED is true', () => {
+    const action = {
+      type: GET_COMMENT_INITIATED,
+      payload: true,
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      articlesPayload: {},
+      createArticleSuccess: false,
+      loading: true,
+      addCommentSuccess: false,
+      commentsPayload: {},
+    });
+  });
+
+  it('should set addCommentSuccess to true when ADD_COMMENT_SUCCESS is true', () => {
+    const action = {
+      type: ADD_COMMENT_SUCCESS,
+      payload: true,
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      articlesPayload: {},
+      createArticleSuccess: false,
+      loading: false,
+      addCommentSuccess: true,
+      commentsPayload: {},
+    });
+  });
+
+  it('should add a comment payload when GET_COMMENTS_SUCCESS is true', () => {
+    const action = {
+      type: GET_COMMENTS_SUCCESS,
+      payload: [{ comment: 1 }],
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      articlesPayload: {},
+      createArticleSuccess: false,
+      loading: false,
+      addCommentSuccess: false,
+      commentsPayload: action.payload,
     });
   });
 });

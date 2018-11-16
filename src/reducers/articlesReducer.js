@@ -3,6 +3,9 @@ import {
   CREATE_ARTICLE_SUCCESS,
   CREATE_ARTICLE_INITIATED,
   CREATE_ARTICLE_ERROR,
+  ADD_COMMENT_SUCCESS,
+  GET_COMMENTS_SUCCESS,
+  GET_COMMENT_INITIATED,
 } from '../actions/types';
 
 const initialState = {
@@ -10,6 +13,8 @@ const initialState = {
   articlesPayload: {},
   createArticleSuccess: false,
   createArticleError: {},
+  addCommentSuccess: false,
+  commentsPayload: {},
 };
 
 export const articlesReducer = (state = initialState, action) => {
@@ -36,6 +41,22 @@ export const articlesReducer = (state = initialState, action) => {
         ...state,
         loading: action.payload,
         createArticleSuccess: false,
+      };
+    case ADD_COMMENT_SUCCESS:
+      return {
+        ...state,
+        addCommentSuccess: action.payload,
+      };
+    case GET_COMMENT_INITIATED:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case GET_COMMENTS_SUCCESS:
+      return {
+        ...state,
+        commentsPayload: action.payload,
+        loading: false,
       };
     default:
       return state;
