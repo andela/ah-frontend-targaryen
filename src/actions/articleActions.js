@@ -12,6 +12,8 @@ import {
   getSpecificArticle,
   getUserArticles,
   getArticlesInitiated,
+  likeDislikeSuccess,
+  likeDislikeError,
 } from './actionCreators';
 
 export const postArticle = postData => dispatch => {
@@ -81,5 +83,33 @@ export const fetchUserArticles = () => dispatch => {
     .get('/api/article/my-articles/')
     .then(response => {
       dispatch(getUserArticles(response.data.article));
+    });
+};
+
+export const likeDislike = (payload, slug) => dispatch => {
+  toast.dismiss();
+  return axiosInstance
+    .post(`/api/articles/${slug}/reaction/`, payload)
+    .then(response => {
+      dispatch(likeDislikeSuccess(true));
+      toast.success(
+        response.data.Message,
+        { autoClose: 3500, hideProgressBar: true },
+      );
+    })
+    .catch((error) => {
+      if (error.response.data.detail === `You have already ${payload.reaction}d this article.`) {
+        return axiosInstance
+          .delete(`/api/articles/${slug}/reaction/`, { data: payload })
+          .then(() => {
+            dispatch(likeDislikeSuccess(true));
+            toast.success(
+              `You have removed your ${`${payload.reaction}`.toLocaleLowerCase()} from this article.`,
+              { autoClose: 3500, hideProgressBar: true },
+            );
+          });
+      }
+      dispatch(likeDislikeError(error.response.data.detail));
+      return toast.error(error.response.data.detail, { autoClose: false, hideProgressBar: true });
     });
 };

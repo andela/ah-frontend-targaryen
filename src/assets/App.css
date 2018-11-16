@@ -442,3 +442,21 @@ header.uvp {
 .btn-delete:hover{
   background-color: rgb(243, 68, 68);
 }
+/* like dislike buttons styling */
+
+.reaction {
+  padding: 0 10px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+.reaction:active {
+  fill: #24292e;
+  border-color: none;
+  outline: 0;
+}
+button:focus {
+  fill: #24292e;
+  outline: 0;
+  color: #24292e;
+}

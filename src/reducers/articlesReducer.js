@@ -9,6 +9,8 @@ import {
   GET_SPECIFIC_ARTICLE_SUCCESS,
   GET_USER_ARTICLES_SUCCESS,
   GET_ALL_ARTICLES_INITIATED,
+  LIKE_DISLIKE_ERROR,
+  LIKE_DISLIKE_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -20,6 +22,8 @@ const initialState = {
   commentsPayload: {},
   userArticlesPayload: {},
   articlePayload: {},
+  likeDislikeSuccess: false,
+  likeDislikeError: {},
 };
 
 export const articlesReducer = (state = initialState, action) => {
@@ -78,6 +82,16 @@ export const articlesReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: action.payload,
+      };
+    case LIKE_DISLIKE_SUCCESS:
+      return {
+        ...state,
+        likeDislikeSuccess: action.payload,
+      };
+    case LIKE_DISLIKE_ERROR:
+      return {
+        ...state,
+        likeDislikeError: action.payload,
       };
     default:
       return state;
