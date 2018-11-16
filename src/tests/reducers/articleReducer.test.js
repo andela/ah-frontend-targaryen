@@ -1,12 +1,14 @@
 import articlesReducer from '../../reducers/articlesReducer';
 import {
-  GET_ALL_ARTICLES_SUCCESS,
   CREATE_ARTICLE_SUCCESS,
   CREATE_ARTICLE_ERROR,
   CREATE_ARTICLE_INITIATED,
   ADD_COMMENT_SUCCESS,
   GET_COMMENTS_SUCCESS,
   GET_COMMENT_INITIATED,
+  GET_ALL_ARTICLES_SUCCESS,
+  GET_SPECIFIC_ARTICLE_SUCCESS,
+  GET_USER_ARTICLES_SUCCESS,
 } from '../../actions/types';
 
 describe('articlesReducer', () => {
@@ -19,6 +21,8 @@ describe('articlesReducer', () => {
       loading: false,
       addCommentSuccess: false,
       commentsPayload: {},
+      articlePayload: {},
+      userArticlesPayload: {},
     };
   });
 
@@ -34,10 +38,12 @@ describe('articlesReducer', () => {
     const currentState = articlesReducer(initialState, action);
     expect(currentState).toEqual({
       articlesPayload: action.payload,
+      articlePayload: {},
       createArticleSuccess: false,
       loading: false,
       addCommentSuccess: false,
       commentsPayload: {},
+      userArticlesPayload: {},
     });
   });
 
@@ -53,6 +59,8 @@ describe('articlesReducer', () => {
       loading: false,
       addCommentSuccess: false,
       commentsPayload: {},
+      userArticlesPayload: {},
+      articlePayload: {},
     });
   });
 
@@ -70,6 +78,8 @@ describe('articlesReducer', () => {
       loading: false,
       addCommentSuccess: false,
       commentsPayload: {},
+      userArticlesPayload: {},
+      articlePayload: {},
     });
   });
 
@@ -85,6 +95,8 @@ describe('articlesReducer', () => {
       loading: true,
       addCommentSuccess: false,
       commentsPayload: {},
+      userArticlesPayload: {},
+      articlePayload: {},
     });
   });
 
@@ -100,6 +112,8 @@ describe('articlesReducer', () => {
       loading: true,
       addCommentSuccess: false,
       commentsPayload: {},
+      userArticlesPayload: {},
+      articlePayload: {},
     });
   });
 
@@ -115,6 +129,8 @@ describe('articlesReducer', () => {
       loading: false,
       addCommentSuccess: true,
       commentsPayload: {},
+      userArticlesPayload: {},
+      articlePayload: {},
     });
   });
 
@@ -130,6 +146,42 @@ describe('articlesReducer', () => {
       loading: false,
       addCommentSuccess: false,
       commentsPayload: action.payload,
+      userArticlesPayload: {},
+      articlePayload: {},
+    });
+  });
+
+  it('should return a single article', () => {
+    const action = {
+      type: GET_SPECIFIC_ARTICLE_SUCCESS,
+      payload: { body: 'sweet and simple' },
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      articlePayload: action.payload,
+      articlesPayload: {},
+      userArticlesPayload: {},
+      createArticleSuccess: false,
+      loading: false,
+      addCommentSuccess: false,
+      commentsPayload: {},
+    });
+  });
+
+  it("should return a user's articles", () => {
+    const action = {
+      type: GET_USER_ARTICLES_SUCCESS,
+      payload: { article: { article: { body: 'Nice' } } },
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      articlePayload: {},
+      articlesPayload: {},
+      userArticlesPayload: action.payload,
+      createArticleSuccess: false,
+      loading: false,
+      addCommentSuccess: false,
+      commentsPayload: {},
     });
   });
 });

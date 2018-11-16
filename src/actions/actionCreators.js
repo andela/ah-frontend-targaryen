@@ -9,6 +9,9 @@ import {
   ADD_COMMENT_SUCCESS,
   GET_COMMENTS_SUCCESS,
   LOGOUT_USER,
+  GET_SPECIFIC_ARTICLE_SUCCESS,
+  GET_USER_ARTICLES_SUCCESS,
+  GET_ALL_ARTICLES_INITIATED,
 } from './types';
 
 export const socialLoginInitiated = () => ({
@@ -21,6 +24,11 @@ export const socialLoginSuccess = () => ({
 
 export const getAllArticles = payload => ({
   type: GET_ALL_ARTICLES_SUCCESS,
+  payload,
+});
+
+export const getSpecificArticle = payload => ({
+  type: GET_SPECIFIC_ARTICLE_SUCCESS,
   payload,
 });
 export const createArticleSuccess = payload => ({
@@ -52,5 +60,14 @@ export const getCommentsSuccess = payload => ({
 });
 export const logoutUser = payload => ({
   type: LOGOUT_USER,
+  payload,
+});
+export const getUserArticles = payload => ({
+  type: GET_USER_ARTICLES_SUCCESS,
+  payload,
+});
+
+export const getArticlesInitiated = payload => ({
+  type: GET_ALL_ARTICLES_INITIATED,
   payload,
 });

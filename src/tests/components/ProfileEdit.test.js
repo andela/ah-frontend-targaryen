@@ -14,10 +14,19 @@ describe('Profile component', () => {
   const props = {
     history: { push: jest.fn() },
   };
+  const fetchUserArticles = jest.fn();
+  const userArticlesPayload = {};
 
   beforeEach(() => {
     mockStore({});
-    wrapper = shallow(<Profile getProfile={getProfile} {...props} />);
+    wrapper = shallow(
+      <Profile
+        getProfile={getProfile}
+        fetchUserArticles={fetchUserArticles}
+        userArticlesPayload={userArticlesPayload}
+        {...props}
+      />,
+    );
   });
 
   it('should render correctly', () => {

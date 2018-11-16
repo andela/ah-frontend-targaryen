@@ -8,6 +8,7 @@ import Dashboard from '../dashboard/Dashboard';
 import Profile from '../profiles/Profile';
 import NewArticle from '../Articles/NewArticle';
 import Comments from '../comments/Comments';
+import ViewArticle from '../Articles/ViewArticle';
 
 const Routes = () => (
   <Switch>
@@ -18,6 +19,7 @@ const Routes = () => (
     <Route exact path="/profiles/:username" component={Profile} />
     <Route exact path="/create-article" component={NewArticle} />
     <Route exact path="/articles/:article/comments/" component={Comments} />
+    <Route exact path="/article/:slug" component={ViewArticle} />
     <Route exact component={NotFound} />
   </Switch>
 );

@@ -1,11 +1,14 @@
 import {
-  GET_ALL_ARTICLES_SUCCESS,
   CREATE_ARTICLE_SUCCESS,
   CREATE_ARTICLE_INITIATED,
   CREATE_ARTICLE_ERROR,
   ADD_COMMENT_SUCCESS,
   GET_COMMENTS_SUCCESS,
   GET_COMMENT_INITIATED,
+  GET_ALL_ARTICLES_SUCCESS,
+  GET_SPECIFIC_ARTICLE_SUCCESS,
+  GET_USER_ARTICLES_SUCCESS,
+  GET_ALL_ARTICLES_INITIATED,
 } from '../actions/types';
 
 const initialState = {
@@ -15,6 +18,8 @@ const initialState = {
   createArticleError: {},
   addCommentSuccess: false,
   commentsPayload: {},
+  userArticlesPayload: {},
+  articlePayload: {},
 };
 
 export const articlesReducer = (state = initialState, action) => {
@@ -23,6 +28,7 @@ export const articlesReducer = (state = initialState, action) => {
       return {
         ...state,
         articlesPayload: action.payload,
+        loading: false,
       };
     case CREATE_ARTICLE_SUCCESS:
       return {
@@ -57,6 +63,21 @@ export const articlesReducer = (state = initialState, action) => {
         ...state,
         commentsPayload: action.payload,
         loading: false,
+      };
+    case GET_SPECIFIC_ARTICLE_SUCCESS:
+      return {
+        ...state,
+        articlePayload: action.payload,
+      };
+    case GET_USER_ARTICLES_SUCCESS:
+      return {
+        ...state,
+        userArticlesPayload: action.payload,
+      };
+    case GET_ALL_ARTICLES_INITIATED:
+      return {
+        ...state,
+        loading: action.payload,
       };
     default:
       return state;

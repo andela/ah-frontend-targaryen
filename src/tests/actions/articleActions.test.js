@@ -6,9 +6,10 @@ import {
   postArticle,
   fetchComments,
   addComment,
+  fetchSpecificArticle,
+  fetchUserArticles,
 } from '../../actions/articleActions';
 import {
-  GET_ALL_ARTICLES_SUCCESS,
   CREATE_ARTICLE_SUCCESS,
   CREATE_ARTICLE_INITIATED,
   CREATE_ARTICLE_ERROR,
@@ -16,8 +17,11 @@ import {
   GET_COMMENTS_SUCCESS,
   ADD_COMMENT_SUCCESS,
   LOGOUT_USER,
+  GET_ALL_ARTICLES_SUCCESS,
+  GET_SPECIFIC_ARTICLE_SUCCESS,
+  GET_USER_ARTICLES_SUCCESS,
+  GET_ALL_ARTICLES_INITIATED,
 } from '../../actions/types';
-
 
 describe('articleActions', () => {
   let store;
@@ -47,7 +51,29 @@ describe('articleActions', () => {
     await flushAllPromises();
     expect(store.getActions()).toEqual(
       [
+        { type: GET_ALL_ARTICLES_INITIATED, payload: true },
         { type: GET_ALL_ARTICLES_SUCCESS, payload: response_data.article },
+      ],
+    );
+  });
+
+  it('should return a specific article', async () => {
+    const res_data = {
+      article: {
+        author: { bio: 'Nice' },
+        body: 'Plain and simple',
+      },
+    };
+    const slug = 'an-article';
+    mock.onGet(`api/articles/${slug}`)
+      .reply(200, res_data);
+    fetchSpecificArticle(slug)(store.dispatch);
+
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(
+      [
+        { type: GET_ALL_ARTICLES_INITIATED, payload: true },
+        { type: GET_SPECIFIC_ARTICLE_SUCCESS, payload: res_data },
       ],
     );
   });
@@ -151,4 +177,24 @@ describe('articleActions', () => {
   });
 
   
+  it('should return user artciles', async () => {
+    const response_data = {
+      article: {
+        article: [
+          { author: 10, title: 'React Redux' },
+        ],
+      },
+    };
+
+    mock.onGet('/api/article/my-articles/')
+      .reply(200, response_data);
+    fetchUserArticles()(store.dispatch);
+
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(
+      [
+        { type: GET_USER_ARTICLES_SUCCESS, payload: response_data.article },
+      ],
+    );
+  });
 });

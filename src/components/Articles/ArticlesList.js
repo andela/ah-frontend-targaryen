@@ -5,7 +5,7 @@ import SingleArticle from './SingleArticle';
 const ArticlesList = ({ articles }) => (
   <div>
     {articles.map(article => (
-      <SingleArticle key={article.id} article={article} />
+      <SingleArticle key={article.slug} article={article} />
     ))}
   </div>
 );
