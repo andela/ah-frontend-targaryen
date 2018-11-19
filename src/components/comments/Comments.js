@@ -64,9 +64,19 @@ export class Comments extends Component {
 
   render() {
     const { body } = this.state;
-    const { loading, commentsPayload } = this.props;
+    const {
+      match: {
+        params: { article },
+      },
+      loading, commentsPayload,
+    } = this.props;
     return (
       <div>
+        <div className="row comment-title">
+          <h3>
+            {`Comments for ${article}`}
+          </h3>
+        </div>
         <CreateCommentForm
           onSubmit={this.handleSubmit}
           onChange={this.handleEditorChange}
