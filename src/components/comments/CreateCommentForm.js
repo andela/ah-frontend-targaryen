@@ -9,7 +9,7 @@ export const CreateCommentForm = ({
   onClick,
   body,
 }) => (
-  <div className="container quill-container" style={{ paddingTop: '50px' }}>
+  <div className="container quill-container" style={{ paddingTop: '20px' }}>
     <div className="row">
       <div className="col-12">
         <form id="add-comment-form" onSubmit={onSubmit}>
