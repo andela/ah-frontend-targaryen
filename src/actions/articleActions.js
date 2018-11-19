@@ -14,6 +14,7 @@ import {
   getArticlesInitiated,
   likeDislikeSuccess,
   likeDislikeError,
+  deleteArticleSuccess,
 } from './actionCreators';
 
 export const postArticle = postData => dispatch => {
@@ -70,9 +71,8 @@ export const fetchArticles = () => dispatch => {
 };
 
 export const fetchSpecificArticle = slug => dispatch => {
-  dispatch(getArticlesInitiated(true));
-  return axiosInstance
-    .get(`/api/articles/${slug}`)
+  axiosInstance
+    .get(`/api/articles/${slug}/`)
     .then((response) => {
       dispatch(getSpecificArticle(response.data));
     });
@@ -111,5 +111,17 @@ export const likeDislike = (payload, slug) => dispatch => {
       }
       dispatch(likeDislikeError(error.response.data.detail));
       return toast.error(error.response.data.detail, { autoClose: false, hideProgressBar: true });
+    });
+};
+
+export const deleteArticle = slug => dispatch => {
+  axiosInstance
+    .delete(`/api/articles/${slug}/`)
+    .then(() => {
+      dispatch(deleteArticleSuccess(true));
+      toast.success(
+        'The article was deleted!',
+        { autoClose: 3500, hideProgressBar: true },
+      );
     });
 };

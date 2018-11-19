@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import user from '../../assets/images/user.png';
+import DeleteModal from './DeleteModal';
 
 const articleCreated = articleDate => {
   const dateTime = new Date(articleDate);
@@ -16,7 +17,7 @@ const getAuthor = author => {
   return 'btn-no-display';
 };
 
-const ReadArticle = ({ article }) => (
+const ReadArticle = ({ article, slug }) => (
   <div className="container view-article">
     <div className="row">
       <div className="col-1">
@@ -52,7 +53,10 @@ const ReadArticle = ({ article }) => (
           <div className="col-5">
             <div id="buttons" className={getAuthor(article.author.username)}>
               <input type="button" value="Edit" className="btn-edit" />
-              <input type="button" value="Delete" className="btn-delete" />
+              <input type="button" value="Delete" className="btn-delete" data-toggle="modal" data-target="#deleteModal" />
+            </div>
+            <div>
+              <DeleteModal slug={slug} />
             </div>
           </div>
         </div>

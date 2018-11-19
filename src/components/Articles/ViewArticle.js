@@ -12,12 +12,16 @@ export class ViewArticle extends Component {
   }
 
   render() {
-    const { articlePayload, articlePayload: { article } } = this.props;
+    const {
+      articlePayload,
+      articlePayload: { article },
+      match: { params: { slug } },
+    } = this.props;
 
     return (
       <div>
         {Object.keys(articlePayload).length > 0
-          && <ReadArticle article={article} />
+          && <ReadArticle article={article} slug={slug} />
         }
       </div>
     );

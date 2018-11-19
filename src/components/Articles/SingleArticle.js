@@ -24,19 +24,17 @@ const SingleArticle = ({ article }) => {
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-3 article-time">
-              <p>
-                <span>{articleCreated(article.createdAt)}</span>
-                |
-                <span>{article.reading_time}</span>
-              </p>
-            </div>
-            <div className="row">
-              <div className="col-sm-8">
-                <i className="fas fa-tags" />
-              </div>
-            </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6 article-time">
+            <p>
+              <span>{articleCreated(article.createdAt)}</span>
+              |
+              <span>{article.reading_time}</span>
+            </p>
+          </div>
+          <div className="col-sm-4">
+            <i className="fas fa-tags" />
           </div>
         </div>
       </div>

@@ -10,6 +10,7 @@ import {
   fetchSpecificArticle,
   fetchUserArticles,
   likeDislike,
+  deleteArticle,
 } from '../../actions/articleActions';
 import {
   CREATE_ARTICLE_SUCCESS,
@@ -25,6 +26,7 @@ import {
   GET_ALL_ARTICLES_INITIATED,
   LIKE_DISLIKE_SUCCESS,
   LIKE_DISLIKE_ERROR,
+  DELETE_ARTICLE_SUCCESS,
 } from '../../actions/types';
 
 let store;
@@ -69,16 +71,13 @@ describe('articleActions', () => {
       },
     };
     const slug = 'an-article';
-    mock.onGet(`api/articles/${slug}`)
+    mock.onGet(`/api/articles/${slug}/`)
       .reply(200, res_data);
     fetchSpecificArticle(slug)(store.dispatch);
 
     await flushAllPromises();
     expect(store.getActions()).toEqual(
-      [
-        { type: GET_ALL_ARTICLES_INITIATED, payload: true },
-        { type: GET_SPECIFIC_ARTICLE_SUCCESS, payload: res_data },
-      ],
+      [{ type: GET_SPECIFIC_ARTICLE_SUCCESS, payload: res_data }]
     );
   });
 
@@ -87,11 +86,10 @@ describe('articleActions', () => {
     mock.onPost('/api/articles/').reply(403);
     postArticle()(store.dispatch);
     await flushAllPromises();
-    expect(store.getActions()).toEqual(
-      [{ type: CREATE_ARTICLE_INITIATED, payload: true },
-        { type: CREATE_ARTICLE_ERROR, payload: 'Re-login and try again' },
-      ],
-    );
+    expect(store.getActions()).toEqual([
+      { type: CREATE_ARTICLE_INITIATED, payload: true },
+      { type: CREATE_ARTICLE_ERROR, payload: 'Re-login and try again' },
+    ]);
   });
 
   it('should post an article', async () => {
@@ -179,19 +177,6 @@ describe('articleActions', () => {
       ],
     );
   });
-});
-
-describe('likeDislikeAction', () => {
-  localStorage.setItem('auth_token', 'token');
-  const payload = { reaction: 'Like' };
-  const slug = 'testing-1-2-3';
-
-  beforeEach(() => {
-    mock = new MockAdapter(axiosInstance);
-    const middleware = [thunk];
-    const mockStore = configureMockStore(middleware);
-    store = mockStore({});
-  });
 
   it('should return user artciles', async () => {
     const response_data = {
@@ -213,6 +198,34 @@ describe('likeDislikeAction', () => {
       ],
     );
   });
+
+  it('should delete an article', async () => {
+    const slug = 'react-redux';
+    mock
+      .onDelete(`/api/articles/${slug}/`)
+      .reply(204);
+    deleteArticle(slug)(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(
+      [
+        { type: DELETE_ARTICLE_SUCCESS, payload: true },
+      ],
+    );
+  });
+});
+
+describe('likeDislikeAction', () => {
+  localStorage.setItem('auth_token', 'token');
+  const payload = { reaction: 'Like' };
+  const slug = 'testing-1-2-3';
+
+  beforeEach(() => {
+    mock = new MockAdapter(axiosInstance);
+    const middleware = [thunk];
+    const mockStore = configureMockStore(middleware);
+    store = mockStore({});
+  });
+
   it('should like an article', async () => {
     const response = {
       data: {
