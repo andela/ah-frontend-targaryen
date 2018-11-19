@@ -20,12 +20,23 @@ export class Login extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isLoggedIn === true) {
-      const { history } = this.props;
-      history.push('/dashboard');
+  componentDidMount() {
+    const { isLoggedIn } = this.props;
+    if (isLoggedIn === true) {
+      this.redirectHome();
     }
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isLoggedIn === true) {
+      this.redirectHome();
+    }
+  }
+
+  redirectHome = () => {
+    const { history } = this.props;
+    history.push('/dashboard');
+  };
 
   handleInput = event => {
     const { name } = event.target;
@@ -95,7 +106,7 @@ export class Login extends Component {
                 Login
               </button>
               <div className="form-group">
-                <Link className="forgot-password" to="/forgot-Password">Forgot password?</Link>
+                <Link className="forgot-password" exact to="/forgotPassword">Forgot password?</Link>
               </div>
               <div className="row">
                 <div className="col-md-6">

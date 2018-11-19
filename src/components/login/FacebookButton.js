@@ -39,7 +39,7 @@ class FacebookButton extends PureComponent {
   render() {
     const value = this.state;
     if (value.redirect) {
-      const to = { pathname: '/' };
+      const to = { pathname: '/dashboard' };
       return (
         <Redirect to={to} />
       );
