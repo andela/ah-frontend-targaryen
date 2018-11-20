@@ -371,6 +371,10 @@ header.uvp {
   border-width: thin;
   border-radius: 10px;
 }
+.comment-title {
+  margin: 5% 0% 0% 12.5%;
+  position: relative;
+}
 
 .comment{
   margin: 0 160px;
@@ -442,8 +446,8 @@ header.uvp {
 .btn-delete:hover{
   background-color: rgb(243, 68, 68);
 }
-/* like dislike buttons styling */
 
+/* like dislike buttons styling */
 .reaction {
   padding: 0 10px;
   cursor: pointer;
