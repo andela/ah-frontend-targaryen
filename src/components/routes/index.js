@@ -11,6 +11,7 @@ import Comments from '../comments/Comments';
 import EditArticle from '../Articles/EditArticle';
 import ResetPassword from '../resetPassword/ResetPasswordPage';
 import ForgotPassword from '../resetPassword/ForgotPasswordPage';
+import UpdateComment from '../comments/UpdateComment';
 
 const Routes = () => (
   <Switch>
@@ -24,6 +25,7 @@ const Routes = () => (
     <Route exact path="/create-article" component={CreateArticle} />
     <Route exact path="/articles/:article/comments/" component={Comments} />
     <Route exact path="/article/:slug" component={EditArticle} />
+    <Route exact path="/articles/:article/comments/:id/" component={UpdateComment} />
     <Route exact component={NotFound} />
   </Switch>
 );
