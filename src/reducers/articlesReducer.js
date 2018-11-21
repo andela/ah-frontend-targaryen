@@ -11,6 +11,7 @@ import {
   GET_ALL_ARTICLES_INITIATED,
   LIKE_DISLIKE_ERROR,
   LIKE_DISLIKE_SUCCESS,
+  DELETE_ARTICLE_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -24,6 +25,7 @@ const initialState = {
   articlePayload: {},
   likeDislikeSuccess: false,
   likeDislikeError: {},
+  confirmDelete: false,
 };
 
 export const articlesReducer = (state = initialState, action) => {
@@ -72,6 +74,7 @@ export const articlesReducer = (state = initialState, action) => {
       return {
         ...state,
         articlePayload: action.payload,
+        loading: false,
       };
     case GET_USER_ARTICLES_SUCCESS:
       return {
@@ -92,6 +95,12 @@ export const articlesReducer = (state = initialState, action) => {
       return {
         ...state,
         likeDislikeError: action.payload,
+      };
+    case DELETE_ARTICLE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        confirmDelete: action.payload,
       };
     default:
       return state;

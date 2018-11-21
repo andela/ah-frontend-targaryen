@@ -45,12 +45,8 @@ describe('userReducer', () => {
     };
     const currentState = userReducer(initialState, action);
     expect(currentState).toEqual({
+      ...initialState,
       registerUserSuccess: true,
-      registerUserError: {},
-      isLoggedIn: false,
-      loading: false,
-      loginError: {},
-      profilePayload: {},
     });
   });
 
@@ -61,12 +57,8 @@ describe('userReducer', () => {
     };
     const currentState = userReducer(initialState, action);
     expect(currentState).toEqual({
-      registerUserSuccess: false,
+      ...initialState,
       registerUserError: errorData,
-      isLoggedIn: false,
-      loginError: {},
-      loading: false,
-      profilePayload: {},
     });
   });
 
@@ -77,12 +69,8 @@ describe('userReducer', () => {
     };
     const currentState = userReducer(initialState, action);
     expect(currentState).toEqual({
-      registerUserSuccess: false,
-      registerUserError: {},
+      ...initialState,
       isLoggedIn: true,
-      loginError: {},
-      loading: false,
-      profilePayload: {},
     });
   });
 
@@ -94,12 +82,8 @@ describe('userReducer', () => {
     };
     const currentState = userReducer(initialState, action);
     expect(currentState).toEqual({
-      registerUserSuccess: false,
-      registerUserError: {},
-      isLoggedIn: false,
+      ...initialState,
       loginError: loginErrorResponse,
-      loading: false,
-      profilePayload: {},
     });
   });
 
@@ -113,12 +97,8 @@ describe('userReducer', () => {
     };
     const currentState = userReducer(initialState, action);
     expect(currentState).toEqual({
-      registerUserSuccess: false,
+      ...initialState,
       profilePayload: profileDetails,
-      registerUserError: {},
-      isLoggedIn: false,
-      loading: false,
-      loginError: {},
     });
   });
 
@@ -129,12 +109,8 @@ describe('userReducer', () => {
     };
     const currentState = userReducer(initialState, action);
     expect(currentState).toEqual({
-      registerUserSuccess: false,
-      registerUserError: {},
-      isLoggedIn: false,
+      ...initialState,
       loading: true,
-      loginError: {},
-      profilePayload: {},
     });
   });
 
@@ -145,12 +121,8 @@ describe('userReducer', () => {
     };
     const currentState = userReducer(initialState, action);
     expect(currentState).toEqual({
-      registerUserSuccess: false,
-      registerUserError: {},
+      ...initialState,
       isLoggedIn: false,
-      loading: false,
-      loginError: {},
-      profilePayload: {},
     });
   });
   it('should start loading on sociallogin', () => {
@@ -161,12 +133,8 @@ describe('userReducer', () => {
     };
     const currentState = userReducer(initialState, action);
     expect(currentState).toEqual({
-      registerUserSuccess: false,
-      registerUserError: {},
-      isLoggedIn: false,
-      loginError: {},
+      ...initialState,
       loading: true,
-      profilePayload: {},
     });
   });
   it('should have logged in true', () => {
@@ -177,12 +145,8 @@ describe('userReducer', () => {
     };
     const currentState = userReducer(initialState, action);
     expect(currentState).toEqual({
-      registerUserSuccess: false,
-      registerUserError: {},
+      ...initialState,
       isLoggedIn: true,
-      loginError: {},
-      loading: false,
-      profilePayload: {},
     });
   });
 });

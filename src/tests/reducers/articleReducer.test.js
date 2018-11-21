@@ -11,6 +11,7 @@ import {
   GET_USER_ARTICLES_SUCCESS,
   LIKE_DISLIKE_SUCCESS,
   LIKE_DISLIKE_ERROR,
+  DELETE_ARTICLE_SUCCESS,
 } from '../../actions/types';
 
 describe('articlesReducer', () => {
@@ -28,6 +29,7 @@ describe('articlesReducer', () => {
       userArticlesPayload: {},
       likeDislikeSuccess: false,
       likeDislikeError: {},
+      confirmDelete: false,
     };
   });
 
@@ -42,16 +44,9 @@ describe('articlesReducer', () => {
     };
     const currentState = articlesReducer(initialState, action);
     expect(currentState).toEqual({
+      ...initialState,
       articlesPayload: action.payload,
-      articlePayload: {},
-      createArticleSuccess: false,
-      createArticleError: {},
-      loading: false,
-      addCommentSuccess: false,
-      commentsPayload: {},
-      userArticlesPayload: {},
-      likeDislikeSuccess: false,
-      likeDislikeError: {},
+
     });
   });
 
@@ -62,16 +57,8 @@ describe('articlesReducer', () => {
     };
     const currentState = articlesReducer(initialState, action);
     expect(currentState).toEqual({
-      articlesPayload: {},
+      ...initialState,
       createArticleSuccess: true,
-      createArticleError: {},
-      loading: false,
-      addCommentSuccess: false,
-      commentsPayload: {},
-      userArticlesPayload: {},
-      articlePayload: {},
-      likeDislikeSuccess: false,
-      likeDislikeError: {},
     });
   });
 
@@ -83,16 +70,8 @@ describe('articlesReducer', () => {
     };
     const currentState = articlesReducer(initialState, action);
     expect(currentState).toEqual({
-      articlesPayload: {},
-      createArticleSuccess: false,
+      ...initialState,
       createArticleError: postError,
-      loading: false,
-      addCommentSuccess: false,
-      commentsPayload: {},
-      userArticlesPayload: {},
-      articlePayload: {},
-      likeDislikeSuccess: false,
-      likeDislikeError: {},
     });
   });
 
@@ -103,16 +82,8 @@ describe('articlesReducer', () => {
     };
     const currentState = articlesReducer(initialState, action);
     expect(currentState).toEqual({
-      articlesPayload: {},
-      createArticleSuccess: false,
-      createArticleError: {},
+      ...initialState,
       loading: true,
-      addCommentSuccess: false,
-      commentsPayload: {},
-      userArticlesPayload: {},
-      articlePayload: {},
-      likeDislikeSuccess: false,
-      likeDislikeError: {},
     });
   });
 
@@ -123,16 +94,8 @@ describe('articlesReducer', () => {
     };
     const currentState = articlesReducer(initialState, action);
     expect(currentState).toEqual({
-      articlesPayload: {},
-      createArticleSuccess: false,
-      createArticleError: {},
+      ...initialState,
       loading: true,
-      addCommentSuccess: false,
-      commentsPayload: {},
-      userArticlesPayload: {},
-      articlePayload: {},
-      likeDislikeSuccess: false,
-      likeDislikeError: {},
     });
   });
 
@@ -143,16 +106,8 @@ describe('articlesReducer', () => {
     };
     const currentState = articlesReducer(initialState, action);
     expect(currentState).toEqual({
-      articlesPayload: {},
-      createArticleSuccess: false,
-      createArticleError: {},
-      loading: false,
+      ...initialState,
       addCommentSuccess: true,
-      commentsPayload: {},
-      userArticlesPayload: {},
-      articlePayload: {},
-      likeDislikeSuccess: false,
-      likeDislikeError: {},
     });
   });
 
@@ -163,16 +118,8 @@ describe('articlesReducer', () => {
     };
     const currentState = articlesReducer(initialState, action);
     expect(currentState).toEqual({
-      articlesPayload: {},
-      createArticleSuccess: false,
-      createArticleError: {},
-      loading: false,
-      addCommentSuccess: false,
+      ...initialState,
       commentsPayload: action.payload,
-      userArticlesPayload: {},
-      articlePayload: {},
-      likeDislikeSuccess: false,
-      likeDislikeError: {},
     });
   });
 
@@ -183,16 +130,8 @@ describe('articlesReducer', () => {
     };
     const currentState = articlesReducer(initialState, action);
     expect(currentState).toEqual({
+      ...initialState,
       articlePayload: action.payload,
-      articlesPayload: {},
-      userArticlesPayload: {},
-      createArticleSuccess: false,
-      loading: false,
-      addCommentSuccess: false,
-      commentsPayload: {},
-      likeDislikeSuccess: false,
-      likeDislikeError: {},
-      createArticleError: {},
     });
   });
 
@@ -203,16 +142,8 @@ describe('articlesReducer', () => {
     };
     const currentState = articlesReducer(initialState, action);
     expect(currentState).toEqual({
-      createArticleError: {},
-      articlePayload: {},
-      articlesPayload: {},
+      ...initialState,
       userArticlesPayload: action.payload,
-      createArticleSuccess: false,
-      loading: false,
-      addCommentSuccess: false,
-      commentsPayload: {},
-      likeDislikeSuccess: false,
-      likeDislikeError: {},
     });
   });
 
@@ -223,16 +154,8 @@ describe('articlesReducer', () => {
     };
     const currentState = articlesReducer(initialState, action);
     expect(currentState).toEqual({
-      articlePayload: {},
-      userArticlesPayload: {},
-      articlesPayload: {},
-      createArticleSuccess: false,
-      createArticleError: {},
-      loading: false,
-      addCommentSuccess: false,
-      commentsPayload: {},
+      ...initialState,
       likeDislikeSuccess: true,
-      likeDislikeError: {},
     });
   });
 
@@ -244,16 +167,20 @@ describe('articlesReducer', () => {
     };
     const currentState = articlesReducer(initialState, action);
     expect(currentState).toEqual({
-      userArticlesPayload: {},
-      articlePayload: {},
-      articlesPayload: {},
-      createArticleSuccess: false,
-      createArticleError: {},
-      loading: false,
-      addCommentSuccess: false,
-      commentsPayload: {},
-      likeDislikeSuccess: false,
+      ...initialState,
       likeDislikeError: connectionError,
+    });
+  });
+
+  it('should set DELETE_ARTICLE_SUCCESS to true when article has been deleted', () => {
+    const action = {
+      type: DELETE_ARTICLE_SUCCESS,
+      payload: true,
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      confirmDelete: true,
     });
   });
 });
