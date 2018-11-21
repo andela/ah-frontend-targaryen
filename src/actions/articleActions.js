@@ -19,6 +19,8 @@ import {
   editArticleSuccess,
   editArticleError,
   getSpecificArticleInitiated,
+  rateSuccess,
+  rateError,
 } from './actionCreators';
 
 export const postArticle = postData => dispatch => {
@@ -153,5 +155,23 @@ export const updateArticle = (slug, newData) => dispatch => {
       }
       dispatch(editArticleError(errorMessage));
       toast.error(errorMessage, { autoClose: false, hideProgressBar: true });
+    });
+};
+
+export const rate = (payload, slug) => dispatch => {
+  toast.dismiss();
+  return axiosInstance
+    .post(`/api/articles/${slug}/rate/`, payload)
+    .then(response => {
+      dispatch(fetchSpecificArticle(slug));
+      dispatch(rateSuccess(true));
+      toast.success(
+        `You have given this article a rating of ${response.data.data.rating}`,
+        { autoClose: 3500, hideProgressBar: true },
+      );
+    })
+    .catch((error) => {
+      dispatch(rateError(error.response.data.detail));
+      toast.error(error.response.data.detail, { autoClose: false, hideProgressBar: true });
     });
 };

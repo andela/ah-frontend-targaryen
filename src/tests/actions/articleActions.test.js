@@ -12,6 +12,7 @@ import {
   likeDislike,
   deleteArticle,
   updateArticle,
+  rate,
 } from '../../actions/articleActions';
 import {
   CREATE_ARTICLE_SUCCESS,
@@ -32,6 +33,8 @@ import {
   EDIT_ARTICLE_ERROR,
   EDIT_ARTICLE_INITIATED,
   GET_ALL_ARTICLES_INITIATED,
+  RATE_SUCCESS,
+  RATE_ERROR,
 } from '../../actions/types';
 
 let store;
@@ -39,6 +42,7 @@ const flushAllPromises = () => new Promise(resolve => setImmediate(resolve));
 const middleware = [thunk];
 const mock = new MockAdapter(axiosInstance);
 const mockStore = configureMockStore(middleware);
+localStorage.setItem('auth_token', 'token');
 
 beforeEach(() => {
   store = mockStore({});
@@ -221,7 +225,6 @@ describe('articleActions', () => {
 });
 
 describe('likeDislikeAction', () => {
-  localStorage.setItem('auth_token', 'token');
   const payload = { reaction: 'Like' };
   const slug = 'testing-1-2-3';
   const article_data = {
@@ -309,5 +312,39 @@ describe('likeDislikeAction', () => {
         { type: EDIT_ARTICLE_ERROR, payload: error },
       ],
     );
+  });
+});
+
+describe('likeDislikeAction', () => {
+  const payload = { rate: 4 };
+  const slug = 'testing-1-2-3';
+
+  it('should rate an article', async () => {
+    const response = {
+      data: {
+        data: {
+          rating: 4,
+        },
+      },
+    };
+    mock
+      .onPost(`/api/articles/${slug}/rate/`, payload)
+      .reply(201, response);
+    await store.dispatch(rate(payload, slug));
+    expect(store.getActions()).toEqual([
+      { type: GET_SPECIFIC_ARTICLE_INITIATED, payload: true },
+      { type: RATE_SUCCESS, payload: true },
+    ]);
+  });
+
+  it('should not rate an article more than once', async () => {
+    const error = { detail: 'You do not have permission to rate this article' };
+    mock
+      .onPost(`/api/articles/${slug}/rate/`, payload)
+      .reply(400, error);
+    await store.dispatch(rate(payload, slug));
+    expect(store.getActions()).toEqual([
+      { type: RATE_ERROR, payload: error.detail },
+    ]);
   });
 });

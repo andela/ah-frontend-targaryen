@@ -16,6 +16,8 @@ import {
   EDIT_ARTICLE_SUCCESS,
   EDIT_ARTICLE_ERROR,
   EDIT_ARTICLE_INITIATED,
+  RATE_SUCCESS,
+  RATE_ERROR,
 } from '../actions/types';
 
 const initialState = {
@@ -33,6 +35,8 @@ const initialState = {
   editArticleSuccess: false,
   editArticleInitiated: false,
   editArticleError: {},
+  rateSuccessful: false,
+  rateError: {},
 };
 
 export const articlesReducer = (state = initialState, action) => {
@@ -133,6 +137,16 @@ export const articlesReducer = (state = initialState, action) => {
         ...state,
         loading: action.payload,
         editArticleSuccess: false,
+      };
+    case RATE_SUCCESS:
+      return {
+        ...state,
+        rateSuccessful: action.payload,
+      };
+    case RATE_ERROR:
+      return {
+        ...state,
+        rateError: action.payload,
       };
     default:
       return state;

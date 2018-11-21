@@ -454,7 +454,7 @@ header.uvp {
 
 /* like dislike buttons styling */
 .reaction {
-  padding: 0 10px;
+  padding: 10px 10px;
   cursor: pointer;
   background: transparent;
   border: none;
@@ -496,4 +496,23 @@ button:focus {
 
 .reset-container {
   margin-top: 40px;
+}
+
+.rating {
+  overflow: visible !important;
+  z-index: 1;
+  display: block;
+  padding: 6px;
+}
+.vertical-article-buttons {
+  position: fixed;
+  z-index: 1;
+  top: 30%;
+  left: 10%;
+}
+
+.rating-number {
+  padding: 20px;
+  font-size: 12px;
+  color: rgb(107, 117, 126);
 }
