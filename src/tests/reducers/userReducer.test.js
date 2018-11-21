@@ -8,6 +8,8 @@ import {
   GET_PROFILE_PAYLOAD,
   LOGOUT_USER,
   GET_PROFILE_INITIATED,
+  UPDATE_PROFILE_INITIATED,
+  UPDATE_PROFILE_SUCCESS,
 } from '../../actions/types';
 import userReducer from '../../reducers/userReducer';
 
@@ -30,6 +32,7 @@ describe('userReducer', () => {
       loading: false,
       loginError: {},
       profilePayload: {},
+      profileUpdateSuccessful: false,
     };
     errorData = `${emailKey + emailValue}\n${passwordKey + passwordValue}\n${usernameKey + usernameValue}`;
   });
@@ -47,6 +50,12 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       registerUserSuccess: true,
+      registerUserError: {},
+      isLoggedIn: false,
+      loading: false,
+      loginError: {},
+      profilePayload: {},
+      profileUpdateSuccessful: false,
     });
   });
 
@@ -59,6 +68,11 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       registerUserError: errorData,
+      isLoggedIn: false,
+      loginError: {},
+      loading: false,
+      profilePayload: {},
+      profileUpdateSuccessful: false,
     });
   });
 
@@ -71,6 +85,10 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       isLoggedIn: true,
+      loginError: {},
+      loading: false,
+      profilePayload: {},
+      profileUpdateSuccessful: false,
     });
   });
 
@@ -84,6 +102,9 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       loginError: loginErrorResponse,
+      loading: false,
+      profilePayload: {},
+      profileUpdateSuccessful: false,
     });
   });
 
@@ -99,6 +120,11 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       profilePayload: profileDetails,
+      registerUserError: {},
+      isLoggedIn: false,
+      loading: false,
+      loginError: {},
+      profileUpdateSuccessful: false,
     });
   });
 
@@ -111,6 +137,9 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       loading: true,
+      loginError: {},
+      profilePayload: {},
+      profileUpdateSuccessful: false,
     });
   });
 
@@ -123,6 +152,10 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       isLoggedIn: false,
+      loading: false,
+      loginError: {},
+      profilePayload: {},
+      profileUpdateSuccessful: false,
     });
   });
   it('should start loading on sociallogin', () => {
@@ -135,6 +168,8 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       loading: true,
+      profilePayload: {},
+      profileUpdateSuccessful: false,
     });
   });
   it('should have logged in true', () => {
@@ -147,6 +182,31 @@ describe('userReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       isLoggedIn: true,
+      loginError: {},
+      loading: false,
+      profilePayload: {},
+      profileUpdateSuccessful: false,
+    });
+  });
+  it('should set loading to true when profile update is initiated', () => {
+    const action = {
+      type: UPDATE_PROFILE_INITIATED,
+    };
+    const currentState = userReducer(initialState, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      loading: true,
+    });
+  });
+  it('should set profileUpdateSuccessful to true when profile update is successful', () => {
+    const action = {
+      type: UPDATE_PROFILE_SUCCESS,
+    };
+    const currentState = userReducer(initialState, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      loading: false,
+      profileUpdateSuccessful: true,
     });
   });
 });

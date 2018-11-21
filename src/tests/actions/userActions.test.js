@@ -9,6 +9,7 @@ import {
   facebookLoginUser,
   getProfile,
   updateLoginStatus,
+  updateProfile,
 } from '../../actions/userActions';
 import {
   REGISTER_USER_SUCCESS,
@@ -19,6 +20,8 @@ import {
   SOCIAL_LOGIN_SUCCESS,
   GET_PROFILE_PAYLOAD,
   GET_PROFILE_INITIATED,
+  UPDATE_PROFILE_INITIATED,
+  UPDATE_PROFILE_SUCCESS,
 } from '../../actions/types';
 import axiosInstance from '../../config/axiosInstance';
 
@@ -254,5 +257,60 @@ describe('userAction', () => {
         { type: LOGIN_USER_SUCCESS, payload: false },
       ],
     );
+  });
+  it('should update the profile', () => {
+    const profileData = {
+      profile: {
+        username: 'userTwo',
+        bio: 'updated bio',
+        avatar: 'https://pixabay.com/en/user-person-people-profile-account-1633249/',
+        following: ['userOne'],
+        followers: ['userOne'],
+      },
+    };
+    const expectedActions = [
+      { type: UPDATE_PROFILE_INITIATED },
+      { type: UPDATE_PROFILE_SUCCESS },
+      { type: GET_PROFILE_PAYLOAD },
+    ];
+    const response = {
+      profile: {
+        username: 'user1',
+        bio: 'My bio',
+        avatar: 'https://pixabay.com/en/user-person-people-profile-account-1633249/',
+      },
+    };
+    mock.onPut('https://ah-backend-targaryen-staging.herokuapp.com/api/profiles/update/', profileData)
+      .reply(200, response);
+    store.dispatch(updateProfile(profileData))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+  it('should should not update profile if there is an error', () => {
+    const profileData = {
+      profile: {
+        username: 'user1',
+        bio: 'My bio',
+        avatar: 'https://pixabay.com/en/user-person-people-profile-account-1633249/',
+        following: ['user2'],
+        followers: ['user2'],
+      },
+    };
+    const expectedActions = [
+      { type: UPDATE_PROFILE_INITIATED },
+    ];
+    const response = {
+      profile: {
+        username: 'user1',
+        bio: 'My bio',
+      },
+    };
+    mock.onPut('https://ah-backend-targaryen-staging.herokuapp.com/api/profiles/update/', profileData)
+      .reply(400, response);
+    store.dispatch(updateProfile(profileData))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
   });
 });

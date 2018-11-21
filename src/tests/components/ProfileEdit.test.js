@@ -13,6 +13,7 @@ describe('Profile component', () => {
   };
   const props = {
     history: { push: jest.fn() },
+    loading: false,
   };
   const fetchUserArticles = jest.fn();
   const userArticlesPayload = {};
