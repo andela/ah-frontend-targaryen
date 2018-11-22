@@ -14,6 +14,7 @@ import {
   getUserArticles,
   likeDislikeSuccess,
   likeDislikeError,
+  likeArticle,
   deleteArticleSuccess,
   editArticleInititated,
   editArticleSuccess,
@@ -91,19 +92,28 @@ export const fetchUserArticles = () => dispatch => {
     });
 };
 
-export const likeDislike = (payload, slug) => dispatch => {
+export const likeDislike = (payload, slug, reaction) => dispatch => {
   toast.dismiss();
   return axiosInstance
     .post(`/api/articles/${slug}/reaction/`, payload)
     .then(response => {
+      dispatch(likeArticle(slug, reaction, true));
       dispatch(likeDislikeSuccess(true));
-      toast.success(
-        response.data.Message,
-        { autoClose: 3500, hideProgressBar: true },
-      );
+      if (response.data.Message === 'You have disliked this article') {
+        toast.warn(
+          response.data.Message,
+          { autoClose: 3500, hideProgressBar: true },
+        );
+      } else {
+        toast.success(
+          response.data.Message,
+          { autoClose: 3500, hideProgressBar: true },
+        );
+      }
     })
     .catch((error) => {
       if (error.response.data.detail === `You have already ${payload.reaction}d this article.`) {
+        dispatch(likeArticle(slug, reaction, false));
         return axiosInstance
           .delete(`/api/articles/${slug}/reaction/`, { data: payload })
           .then(() => {

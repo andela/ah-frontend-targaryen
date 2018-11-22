@@ -50,7 +50,7 @@ const SingleArticle = ({ article }) => {
             </div>
           </div>
           <div className="card-footer w-100 text-muted">
-            <LikeDislike slug={article.slug} />
+            <LikeDislike slug={article.slug} likes={article.likes} dislikes={article.dislikes} />
             <i className="reaction far fa-star icon" />
             <i className="reaction far fa-bookmark icon" />
             <i className="reaction fas fa-share-alt icon" />

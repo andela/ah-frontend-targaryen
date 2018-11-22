@@ -24,6 +24,7 @@ import {
   SEND_RESET_LINK_ERROR,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_ERROR,
+  DISPLAY_ARTICLE_REACTION,
 } from './types';
 
 export const socialLoginInitiated = () => ({
@@ -131,4 +132,11 @@ export const ResetPasswordSuccess = payload => ({
 export const ResetPasswordError = payload => ({
   type: RESET_PASSWORD_ERROR,
   payload,
+});
+
+export const likeArticle = (slug, reaction, interaction) => ({
+  type: DISPLAY_ARTICLE_REACTION,
+  payload: slug,
+  reaction,
+  interaction,
 });
