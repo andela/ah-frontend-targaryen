@@ -9,6 +9,8 @@ import Profile from '../profiles/Profile';
 import CreateArticle from '../Articles/CreateArticle';
 import Comments from '../comments/Comments';
 import EditArticle from '../Articles/EditArticle';
+import ResetPassword from '../resetPassword/ResetPasswordPage';
+import ForgotPassword from '../resetPassword/ForgotPasswordPage';
 
 const Routes = () => (
   <Switch>
@@ -16,6 +18,8 @@ const Routes = () => (
     <Route exact path="/login" component={Login} />
     <Route exact path="/signup" component={RegisterUser} />
     <Route exact path="/dashboard" component={Dashboard} />
+    <Route exact path="/forgot-password" component={ForgotPassword} />
+    <Route exact path="/reset-password/:token" component={ResetPassword} />
     <Route exact path="/profiles/:username" component={Profile} />
     <Route exact path="/create-article" component={CreateArticle} />
     <Route exact path="/articles/:article/comments/" component={Comments} />

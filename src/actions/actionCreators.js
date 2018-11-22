@@ -19,6 +19,11 @@ import {
   EDIT_ARTICLE_ERROR,
   EDIT_ARTICLE_INITIATED,
   GET_SPECIFIC_ARTICLE_INITIATED,
+  SEND_RESET_LINK_INITIATED,
+  SEND_RESET_LINK_SUCCESS,
+  SEND_RESET_LINK_ERROR,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_ERROR,
 } from './types';
 
 export const socialLoginInitiated = () => ({
@@ -104,5 +109,26 @@ export const editArticleError = payload => ({
 });
 export const editArticleInititated = payload => ({
   type: EDIT_ARTICLE_INITIATED,
+  payload,
+});
+
+export const sendResetLinkInitiated = payload => ({
+  type: SEND_RESET_LINK_INITIATED,
+  payload,
+});
+export const sendResetLinkSuccess = payload => ({
+  type: SEND_RESET_LINK_SUCCESS,
+  payload,
+});
+export const sendResetLinkError = payload => ({
+  type: SEND_RESET_LINK_ERROR,
+  payload,
+});
+export const ResetPasswordSuccess = payload => ({
+  type: RESET_PASSWORD_SUCCESS,
+  payload,
+});
+export const ResetPasswordError = payload => ({
+  type: RESET_PASSWORD_ERROR,
   payload,
 });

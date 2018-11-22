@@ -13,6 +13,11 @@ import {
 import {
   socialLoginInitiated,
   socialLoginSuccess,
+  sendResetLinkInitiated,
+  sendResetLinkSuccess,
+  sendResetLinkError,
+  ResetPasswordSuccess,
+  ResetPasswordError,
 } from './actionCreators';
 
 import axiosInstance from '../config/axiosInstance';
@@ -128,5 +133,43 @@ export const getProfile = () => dispatch => {
     .catch(() => {
       localStorage.removeItem('auth_token');
       dispatch({ type: LOGOUT_USER, payload: false });
+    });
+};
+
+export const sendResetLink = (userDetails) => dispatch => {
+  toast.dismiss();
+  dispatch(sendResetLinkInitiated(true));
+  return axiosInstance
+    .post('/api/users/password_reset/', userDetails)
+    .then(response => {
+      dispatch(sendResetLinkSuccess(true));
+      toast.success(response.data.user.message, { autoClose: 3500, hideProgressBar: true });
+    })
+    .catch(() => {
+      dispatch(sendResetLinkError('Please enter a valid email'));
+      toast.error('Please enter a valid email', { autoClose: 3500, hideProgressBar: true });
+    });
+};
+
+export const resetPassword = (passwordDetails) => dispatch => {
+  toast.dismiss();
+  const token = localStorage.getItem('reset_password_token');
+  axios.defaults.headers.common.Authorization = `Token ${token}`;
+  return axios
+    .put('https://ah-backend-targaryen-staging.herokuapp.com/api/users/password_update/', passwordDetails)
+    .then(response => {
+      dispatch(ResetPasswordSuccess(true));
+      toast.success(response.data.user.message, { autoClose: 3500, hideProgressBar: true });
+      localStorage.removeItem('reset_password_token');
+    })
+    .catch((error) => {
+      if (error.response) {
+        dispatch(ResetPasswordError(error.response.data.errors[0]));
+        return toast.error(
+          error.response.data.errors[0],
+          { autoClose: 3500, hideProgressBar: true },
+        );
+      }
+      return toast.error('Connection Error', { autoClose: 3500, hideProgressBar: true });
     });
 };

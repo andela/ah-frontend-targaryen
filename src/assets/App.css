@@ -482,3 +482,18 @@ button:focus {
 .btn-cancel:hover{
   background-color: rgb(107, 117, 126);
 }
+
+/* Reset password styles */
+.resetPasswordForm {
+  margin: 0 auto;
+  width: 400px;
+  padding: 40px;
+  background: #f5f5f5;
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, .5);
+  border-radius: 10px;
+}
+
+.reset-container {
+  margin-top: 40px;
+}
