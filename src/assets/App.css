@@ -334,7 +334,7 @@ header.uvp {
   width: 100%;
 }
 .quill-height{
-  height: 350px;
+  height: 300px;
 }
 .clear-box{
   border: none;
@@ -343,12 +343,6 @@ header.uvp {
 .clear-box:focus{
   outline: none;
   border-bottom: 2px solid #ece9e9;
-}
-.very-big-font{
-  font-size: 40px;
-}
-.bigger-font{
-  font-size: 20px;
 }
 .quill-height-comments {
   height: 80px;
@@ -399,6 +393,14 @@ header.uvp {
   word-spacing: 5px;
   margin-top: 20px;
 }
+.article-view-title{
+  background-color: #dcdcdc36;
+  padding: 20px;
+  line-height: 24px;
+  word-spacing: 5px;
+  margin-top: 20px;
+  font-size: larger;
+}
 .btn-follow{
   padding: 5px;
   border: 2px solid rgb(141, 189, 67);
@@ -414,6 +416,7 @@ header.uvp {
 }
 .btn-display{
   display: block;
+  float: right;
 }
 .btn-no-display{
   display: none;

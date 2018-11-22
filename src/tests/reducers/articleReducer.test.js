@@ -7,11 +7,16 @@ import {
   GET_COMMENTS_SUCCESS,
   GET_COMMENT_INITIATED,
   GET_ALL_ARTICLES_SUCCESS,
+  GET_ALL_ARTICLES_INITIATED,
   GET_SPECIFIC_ARTICLE_SUCCESS,
+  GET_SPECIFIC_ARTICLE_INITIATED,
   GET_USER_ARTICLES_SUCCESS,
   LIKE_DISLIKE_SUCCESS,
   LIKE_DISLIKE_ERROR,
   DELETE_ARTICLE_SUCCESS,
+  EDIT_ARTICLE_SUCCESS,
+  EDIT_ARTICLE_ERROR,
+  EDIT_ARTICLE_INITIATED,
 } from '../../actions/types';
 
 describe('articlesReducer', () => {
@@ -30,6 +35,7 @@ describe('articlesReducer', () => {
       likeDislikeSuccess: false,
       likeDislikeError: {},
       confirmDelete: false,
+      editArticleSuccess: false,
     };
   });
 
@@ -46,11 +52,22 @@ describe('articlesReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       articlesPayload: action.payload,
-
     });
   });
 
-  it('should add CREATE_ARTICLE_SUCCESS to true when an article is posted successfully', () => {
+  it('should set the loader when GET_ALL_ARTICLES_INITIATED is true', () => {
+    const action = {
+      type: GET_ALL_ARTICLES_INITIATED,
+      payload: true,
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      loading: true,
+    });
+  });
+
+  it('should set CREATE_ARTICLE_SUCCESS to true when an article is posted successfully', () => {
     const action = {
       type: CREATE_ARTICLE_SUCCESS,
       payload: true,
@@ -135,6 +152,18 @@ describe('articlesReducer', () => {
     });
   });
 
+  it('should set the loader when GET_SPECIFIC_ARTICLE_INITIATED is true', () => {
+    const action = {
+      type: GET_SPECIFIC_ARTICLE_INITIATED,
+      payload: true,
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      loading: true,
+    });
+  });
+
   it("should return a user's articles", () => {
     const action = {
       type: GET_USER_ARTICLES_SUCCESS,
@@ -147,7 +176,7 @@ describe('articlesReducer', () => {
     });
   });
 
-  it('should change likeDislikeSuccess to true when a reaction is added or removed from an', () => {
+  it('should change likeDislikeSuccess to true when a reaction is added or removed from an article', () => {
     const action = {
       type: LIKE_DISLIKE_SUCCESS,
       payload: true,
@@ -156,6 +185,8 @@ describe('articlesReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       likeDislikeSuccess: true,
+      likeDislikeError: {},
+      editArticleSuccess: false,
     });
   });
 
@@ -169,6 +200,44 @@ describe('articlesReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       likeDislikeError: connectionError,
+      editArticleSuccess: false,
+    });
+  });
+
+  it('should update EDIT_ARTICLE_SUCCESS to true when an article is updated successfully', () => {
+    const action = {
+      type: EDIT_ARTICLE_SUCCESS,
+      payload: true,
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      editArticleSuccess: true,
+    });
+  });
+
+  it('should add an error when an article update is not successful', () => {
+    const putError = 'Something went wrong';
+    const action = {
+      type: EDIT_ARTICLE_ERROR,
+      payload: putError,
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      editArticleError: putError,
+    });
+  });
+
+  it('should set the loader when EDIT_ARTICLE_INITIATED is true', () => {
+    const action = {
+      type: EDIT_ARTICLE_INITIATED,
+      payload: true,
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      loading: true,
     });
   });
 

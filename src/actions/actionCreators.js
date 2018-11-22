@@ -15,6 +15,10 @@ import {
   LIKE_DISLIKE_SUCCESS,
   LIKE_DISLIKE_ERROR,
   DELETE_ARTICLE_SUCCESS,
+  EDIT_ARTICLE_SUCCESS,
+  EDIT_ARTICLE_ERROR,
+  EDIT_ARTICLE_INITIATED,
+  GET_SPECIFIC_ARTICLE_INITIATED,
 } from './types';
 
 export const socialLoginInitiated = () => ({
@@ -29,7 +33,10 @@ export const getAllArticles = payload => ({
   type: GET_ALL_ARTICLES_SUCCESS,
   payload,
 });
-
+export const getSpecificArticleInitiated = payload => ({
+  type: GET_SPECIFIC_ARTICLE_INITIATED,
+  payload,
+});
 export const getSpecificArticle = payload => ({
   type: GET_SPECIFIC_ARTICLE_SUCCESS,
   payload,
@@ -85,5 +92,17 @@ export const likeDislikeError = payload => ({
 
 export const deleteArticleSuccess = payload => ({
   type: DELETE_ARTICLE_SUCCESS,
+  payload,
+});
+export const editArticleSuccess = payload => ({
+  type: EDIT_ARTICLE_SUCCESS,
+  payload,
+});
+export const editArticleError = payload => ({
+  type: EDIT_ARTICLE_ERROR,
+  payload,
+});
+export const editArticleInititated = payload => ({
+  type: EDIT_ARTICLE_INITIATED,
   payload,
 });

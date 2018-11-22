@@ -9,7 +9,9 @@ const articleCreated = articleDate => {
   return dateOnly;
 };
 
-const returnArticleURL = slug => `/articles/${slug}/comments/`;
+const returnArticleURL = slug => `/article/${slug}`;
+
+const returnArticleCommentURL = slug => `/articles/${slug}/comments/`;
 
 const SingleArticle = ({ article }) => {
   localStorage.setItem('current_article', article.slug);
@@ -20,7 +22,7 @@ const SingleArticle = ({ article }) => {
           <div className="col-sm-11 article-essentials">
             <div className="row">
               <div className="col-sm-5 author-name">
-                authorname
+                authorName
               </div>
             </div>
           </div>
@@ -44,7 +46,7 @@ const SingleArticle = ({ article }) => {
             <div className="card-block px-2">
               <h5 className="card-title">{article.title}</h5>
               <p className="card-text article-description">{article.description}</p>
-              <Link exact to={{ pathname: `/article/${article.slug}` }}>Read More</Link>
+              <Link exact to={returnArticleURL(article.slug)}>Read More</Link>
             </div>
           </div>
           <div className="card-footer w-100 text-muted">
@@ -52,7 +54,7 @@ const SingleArticle = ({ article }) => {
             <i className="reaction far fa-star icon" />
             <i className="reaction far fa-bookmark icon" />
             <i className="reaction fas fa-share-alt icon" />
-            <Link to={returnArticleURL(article.slug)}><i className="far fa-comment icon" /></Link>
+            <Link to={returnArticleCommentURL(article.slug)}><i className="far fa-comment icon" /></Link>
           </div>
         </div>
       </div>

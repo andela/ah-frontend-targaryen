@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
-import { NewArticle } from '../../components/Articles/NewArticle';
+import { CreateArticle } from '../../components/Articles/CreateArticle';
 
-describe('NewArticle component', () => {
+describe('CreateArticle component', () => {
   const mockStore = configureMockStore();
   let wrapper;
-  const createSpy = (toSpy) => jest.spyOn(wrapper.instance(), toSpy);
+
   const nextProps = {
     createArticleSuccess: true,
   };
@@ -14,6 +14,8 @@ describe('NewArticle component', () => {
     history: { push: jest.fn() },
     addArticle: jest.fn(),
     resetForm: jest.fn(),
+    handleChange: jest.fn(),
+    handleEditorChange: jest.fn(),
   };
   const getEvent = (name = '', value = '') => ({
     preventDefault: jest.fn(),
@@ -25,7 +27,9 @@ describe('NewArticle component', () => {
 
   beforeEach(() => {
     mockStore({});
-    wrapper = shallow(<NewArticle {...props} />);
+    wrapper = shallow(<CreateArticle
+      {...props}
+    />);
   });
 
 
@@ -33,31 +37,25 @@ describe('NewArticle component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should call handleSubmit function when the save button is clicked', () => {
-    wrapper.find('#add-article-form').simulate('submit', getEvent());
+
+  it('should call addArticle when handleSubmit is called', () => {
+    wrapper.instance().handleSubmit(getEvent());
     expect(props.addArticle).toBeCalled();
   });
 
   it('should call resetForm function when the clear button is clicked', () => {
-    const spy = createSpy('resetForm');
-    wrapper.instance().forceUpdate();
-    wrapper.find('#clear-button').simulate('click', getEvent());
-    expect(spy).toBeCalled();
+    wrapper.instance().resetForm();
+    expect(wrapper.state().title).toEqual('');
   });
 
-  it('should change state when onChange event is fired', () => {
-    wrapper
-      .find('#title').simulate('change', {
-        target: { name: 'title', value: 'This Is Andela' },
-      });
-    expect(wrapper.state().title).toEqual('This Is Andela');
+  it('should set state for article body when handleEditorChange is called', () => {
+    wrapper.instance().handleEditorChange('The Body of an article');
+    expect(wrapper.state().body).toEqual('The Body of an article');
   });
 
-  it('should change state when onChange event is fired in the editor', () => {
-    wrapper
-      .find('#text-editor')
-      .simulate('change', 'Testing the editor');
-    expect(wrapper.state().body).toEqual('Testing the editor');
+  it('should set state for title/description when handleChange event is called', () => {
+    wrapper.instance().handleChange(getEvent('title', 'The title'));
+    expect(wrapper.state().title).toEqual('The title');
   });
 
   it('should not redirect if article was not posted successfully', () => {

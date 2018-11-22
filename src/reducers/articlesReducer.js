@@ -7,11 +7,15 @@ import {
   GET_COMMENT_INITIATED,
   GET_ALL_ARTICLES_SUCCESS,
   GET_SPECIFIC_ARTICLE_SUCCESS,
+  GET_SPECIFIC_ARTICLE_INITIATED,
   GET_USER_ARTICLES_SUCCESS,
   GET_ALL_ARTICLES_INITIATED,
   LIKE_DISLIKE_ERROR,
   LIKE_DISLIKE_SUCCESS,
   DELETE_ARTICLE_SUCCESS,
+  EDIT_ARTICLE_SUCCESS,
+  EDIT_ARTICLE_ERROR,
+  EDIT_ARTICLE_INITIATED,
 } from '../actions/types';
 
 const initialState = {
@@ -26,6 +30,9 @@ const initialState = {
   likeDislikeSuccess: false,
   likeDislikeError: {},
   confirmDelete: false,
+  editArticleSuccess: false,
+  editArticleInitiated: false,
+  editArticleError: {},
 };
 
 export const articlesReducer = (state = initialState, action) => {
@@ -75,11 +82,18 @@ export const articlesReducer = (state = initialState, action) => {
         ...state,
         articlePayload: action.payload,
         loading: false,
+        editArticleSuccess: false,
+      };
+    case GET_SPECIFIC_ARTICLE_INITIATED:
+      return {
+        ...state,
+        loading: action.payload,
       };
     case GET_USER_ARTICLES_SUCCESS:
       return {
         ...state,
         userArticlesPayload: action.payload,
+        loading: false,
       };
     case GET_ALL_ARTICLES_INITIATED:
       return {
@@ -101,6 +115,24 @@ export const articlesReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         confirmDelete: action.payload,
+      };
+    case EDIT_ARTICLE_SUCCESS:
+      return {
+        ...state,
+        editArticleSuccess: action.payload,
+        loading: false,
+      };
+    case EDIT_ARTICLE_ERROR:
+      return {
+        ...state,
+        editArticleError: action.payload,
+        loading: false,
+      };
+    case EDIT_ARTICLE_INITIATED:
+      return {
+        ...state,
+        loading: action.payload,
+        editArticleSuccess: false,
       };
     default:
       return state;
