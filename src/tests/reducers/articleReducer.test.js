@@ -17,6 +17,8 @@ import {
   EDIT_ARTICLE_SUCCESS,
   EDIT_ARTICLE_ERROR,
   EDIT_ARTICLE_INITIATED,
+  RATE_SUCCESS,
+  RATE_ERROR,
 } from '../../actions/types';
 
 describe('articlesReducer', () => {
@@ -36,6 +38,8 @@ describe('articlesReducer', () => {
       likeDislikeError: {},
       confirmDelete: false,
       editArticleSuccess: false,
+      rateSuccessful: false,
+      rateError: {},
     };
   });
 
@@ -250,6 +254,30 @@ describe('articlesReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       confirmDelete: true,
+    });
+  });
+
+  it('should set RATE_SUCCESS to true when an article is rated', () => {
+    const action = {
+      type: RATE_SUCCESS,
+      payload: true,
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      rateSuccessful: true,
+    });
+  });
+
+  it('should get a RATE_ERROR when an article is not rated', () => {
+    const action = {
+      type: RATE_ERROR,
+      payload: { error: 'error' },
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      rateError: { error: 'error' },
     });
   });
 });

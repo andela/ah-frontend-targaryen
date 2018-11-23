@@ -1,7 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import user from '../../assets/images/user.png';
 import DeleteModal from './DeleteModal';
+import LikeDislike from './LikeDislike';
+import Rate from './Rate';
 
 const articleCreated = articleDate => {
   const dateTime = new Date(articleDate);
@@ -17,6 +20,7 @@ const getAuthor = author => {
   return 'btn-no-display';
 };
 
+const returnArticleURL = slug => `/articles/${slug}/comments/`;
 const Article = ({ article, slug, toggleEdit }) => (
   <div className="container view-article">
     <div className="row">
@@ -62,14 +66,38 @@ const Article = ({ article, slug, toggleEdit }) => (
         </div>
       </div>
     </div>
-    <div className="row">
-      <div className="col-12 article-view-title">
-        <div className="card-title">{article.title}</div>
-      </div>
-    </div>
-    <div className="row">
-      <div className="col-12">
-        <div className="article-body" dangerouslySetInnerHTML={{ __html: article.body }} />
+    <div>
+      <div className="row">
+        <div className="col-1 vertical-article-buttons">
+          <div className="row">
+            <div className="col-8 offset-2">
+              <div className="row">
+                <div className="col-12">
+                  <i className="reaction far fa-bookmark icon" />
+                  <i className="reaction fas fa-share-alt icon" />
+                  <Link to={returnArticleURL(article.slug)}><i className="far fa-comment icon" /></Link>
+                  <LikeDislike slug={article.slug} />
+                  <div className="col-12">
+                    <Rate slug={article.slug} article={article} />
+                  </div>
+                  <div className=" rating-number">{article.rating}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-11">
+          <div className="row">
+            <div className="col-12 article-view-description">
+              <div className="article-description">{article.description}</div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <div className="article-body" dangerouslySetInnerHTML={{ __html: article.body }} />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -56,8 +56,8 @@ export class Reactions extends Component {
     const dislikefill = disliked ? { hightlight: 'reaction icon far fa fa-thumbs-down' } : { hightlight: 'reaction icon far fa-thumbs-down' };
     return (
       <React.Fragment>
-        <button type="button" className={dislikefill.hightlight} value="Dislike" onClick={this.handleClick} />
         <button type="button" className={likefill.hightlight} value="Like" onClick={this.handleClick} />
+        <button type="button" className={dislikefill.hightlight} value="Dislike" onClick={this.handleClick} />
       </React.Fragment>
     );
   }
@@ -75,7 +75,7 @@ const matchDispatchToProps = (dispatch) => bindActionCreators({
 Reactions.propTypes = {
   slug: PropTypes.string.isRequired,
   history: PropTypes.object.isRequired,
-  isLoggedIn: PropTypes.object.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
   likeDislike: PropTypes.func.isRequired,
 };
 
