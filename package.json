@@ -14,8 +14,8 @@
     "moment": "^2.22.2",
     "node-sass": "^4.9.4",
     "prop-types": "^15.6.2",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^3.2.1",
     "react-loader": "^2.4.5",
@@ -26,6 +26,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.5",
     "react-toastify": "^4.4.0",
+    "reactstrap": "^6.5.0",
     "redux": "^4.0.1",
     "redux-mock-store": "^1.5.3",
     "redux-thunk": "^2.3.0"

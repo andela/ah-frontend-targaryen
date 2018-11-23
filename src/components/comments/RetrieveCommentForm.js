@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import user from '../../assets/images/user.png';
+import UpdateComment from './UpdateComment';
 
-export const RetrieveCommentForm = ({ comment }) => (
+export const RetrieveCommentForm = ({ comment, article }) => (
   <div className="row comment">
     <div className="col-12">
       <div className="row entire-article">
@@ -34,6 +35,7 @@ export const RetrieveCommentForm = ({ comment }) => (
           </div>
         </div>
         <div className="card-footer w-100 text-muted">
+          <UpdateComment slug={article} comment={comment} />
           <i className="far fa-thumbs-down icon" />
           <i className="far fa-thumbs-up icon" />
           <i className="far fa-star icon" />
@@ -58,6 +60,7 @@ export const RetrieveCommentForm = ({ comment }) => (
 
 RetrieveCommentForm.propTypes = {
   comment: PropTypes.object.isRequired,
+  article: PropTypes.string.isRequired,
 };
 
 export default RetrieveCommentForm;

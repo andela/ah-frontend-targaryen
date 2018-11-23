@@ -17,6 +17,9 @@ import {
   EDIT_ARTICLE_SUCCESS,
   EDIT_ARTICLE_ERROR,
   EDIT_ARTICLE_INITIATED,
+  UPDATE_COMMENT_INITIATED,
+  UPDATE_COMMENT_SUCCESS,
+  UPDATE_COMMENT_ERROR,
 } from '../../actions/types';
 
 describe('articlesReducer', () => {
@@ -28,14 +31,16 @@ describe('articlesReducer', () => {
       createArticleSuccess: false,
       createArticleError: {},
       loading: false,
-      addCommentSuccess: false,
-      commentsPayload: {},
+      addCommentSuccess: {},
+      commentsPayload: [],
       articlePayload: {},
       userArticlesPayload: {},
       likeDislikeSuccess: false,
       likeDislikeError: {},
       confirmDelete: false,
       editArticleSuccess: false,
+      updateCommentError: {},
+      updateCommentSuccess: false,
     };
   });
 
@@ -116,15 +121,19 @@ describe('articlesReducer', () => {
     });
   });
 
-  it('should set addCommentSuccess to true when ADD_COMMENT_SUCCESS is true', () => {
+  it('should add a payload to addCommentSuccess when ADD_COMMENT_SUCCESS is dispatched', () => {
     const action = {
       type: ADD_COMMENT_SUCCESS,
-      payload: true,
+      payload: { comment: 'comments' },
     };
     const currentState = articlesReducer(initialState, action);
     expect(currentState).toEqual({
       ...initialState,
-      addCommentSuccess: true,
+      addCommentSuccess: action.payload,
+      commentsPayload: [
+        ...initialState.commentsPayload,
+        action.payload,
+      ],
     });
   });
 
@@ -238,6 +247,43 @@ describe('articlesReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       loading: true,
+    });
+  });
+
+  it('should set loading to true when UPDATE_COMMENT_INITIATED is dispatched', () => {
+    const action = {
+      type: UPDATE_COMMENT_INITIATED,
+      payload: true,
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      loading: true,
+    });
+  });
+
+  it('should set updateCommentSuccess to true when UPDATE_COMMENT_SUCCESS is dispatched', () => {
+    const action = {
+      type: UPDATE_COMMENT_SUCCESS,
+      payload: true,
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      updateCommentSuccess: true,
+    });
+  });
+
+  it('should pass a payload to updateCommentError when UPDATE_COMMENT_ERROR is dispatched', () => {
+    const errorMessage = 'Re-login and try again';
+    const action = {
+      type: UPDATE_COMMENT_ERROR,
+      payload: errorMessage,
+    };
+    const currentState = articlesReducer(initialState, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      updateCommentError: errorMessage,
     });
   });
 
