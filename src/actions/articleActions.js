@@ -19,9 +19,6 @@ import {
   editArticleSuccess,
   editArticleError,
   getSpecificArticleInitiated,
-  updateCommentInitiated,
-  updateCommentSuccess,
-  updateCommentError,
 } from './actionCreators';
 
 export const postArticle = postData => dispatch => {
@@ -49,8 +46,8 @@ export const postArticle = postData => dispatch => {
 export const addComment = (postData, article) => dispatch => {
   axiosInstance
     .post(`/api/articles/${article}/comments/`, postData)
-    .then((response) => {
-      dispatch(addCommentSuccess(response.data.comments));
+    .then(() => {
+      dispatch(addCommentSuccess(true));
     });
 };
 
@@ -59,13 +56,12 @@ export const fetchComments = article => dispatch => {
   axiosInstance
     .get(`/api/articles/${article}/comments/`)
     .then((response) => {
-      dispatch(getCommentsSuccess(response.data.comments));
+      dispatch(getCommentsSuccess(response.data));
     })
     .catch(() => {
       localStorage.removeItem('auth_token');
-      localStorage.removeItem('username');
       dispatch(logoutUser(false));
-      toast.error('Please login', { autoClose: false, hideProgressBar: true });
+      toast.error('Please login to view comments', { autoClose: false, hideProgressBar: true });
     });
 };
 
@@ -156,31 +152,6 @@ export const updateArticle = (slug, newData) => dispatch => {
         errorMessage = 'Please enter valid text in the body';
       }
       dispatch(editArticleError(errorMessage));
-      toast.error(errorMessage, { autoClose: false, hideProgressBar: true });
-    });
-};
-
-export const editComment = (payload, slug, comment) => dispatch => {
-  toast.dismiss();
-  dispatch(updateCommentInitiated(true));
-  axiosInstance
-    .put(`/api/articles/${slug}/comments/${comment}/`, payload)
-    .then(() => {
-      const success_message = 'Comment updated successfully';
-      dispatch(updateCommentSuccess(true));
-      toast.success(
-        success_message,
-        { autoClose: 3500, hideProgressBar: true },
-      );
-    })
-    .catch((error) => {
-      let errorMessage = '';
-      if (error.response.status === 403) {
-        errorMessage = 'Re-login and try again';
-      } else {
-        errorMessage = 'This comment is non existent';
-      }
-      dispatch(updateCommentError(errorMessage));
       toast.error(errorMessage, { autoClose: false, hideProgressBar: true });
     });
 };

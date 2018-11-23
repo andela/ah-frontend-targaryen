@@ -376,20 +376,6 @@ header.uvp {
 .no-gutters-comments {
   margin-left: 5%;
 }
-.modal-display{
-  display: block;
-}
-.modal-no-display{
-  display: none;
-}
-.can-not-edit {
-  margin: 10%;
-  display: block;
-}
-.can-edit {
-  margin: 10%;
-  display: none;
-}
 .article-body {
   font-family: "Open Sans", sans-serif;
   font-size: 16px;

@@ -80,6 +80,11 @@ describe('Comments component', () => {
     expect(props.history.push).toBeCalledWith('/login');
   });
 
+  it('should reload if addCommentSuccess is true', () => {
+    wrapper.setProps({ ...nextProps });
+    expect(window.location.reload).toBeCalled();
+  });
+
   it('should call addComment when handleSubmit is called', () => {
     wrapper.instance().handleSubmit(getEvent());
     expect(addComment).toBeCalled();
