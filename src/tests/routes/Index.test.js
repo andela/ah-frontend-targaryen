@@ -18,7 +18,7 @@ describe('Routes component', () => {
   beforeEach(() => {
     const data = {
       user: {
-        isLoggedIn: true,
+        isLoginSuccess: true,
       },
     };
     store = mockStore(data);

@@ -82,8 +82,8 @@ export const googleLoginUser = (serviceProvider, userData) => (dispatch) => {
   return axiosInstance.post(serviceProvider, userData)
     .then((res) => {
       localStorage.setItem('auth_token', res.data.user.access_token);
-      dispatch(socialLoginSuccess(true));
-      toast.success('Signup successful', { autoClose: 3500, hideProgressBar: true });
+      dispatch({ type: LOGIN_USER_SUCCESS, payload: true });
+      toast.success('Login successful', { autoClose: 3500, hideProgressBar: true });
     })
     .catch(() => {
       toast.error('Connection error', { autoClose: 3500, hideProgressBar: true }, {
@@ -97,8 +97,8 @@ export const facebookLoginUser = (serviceProvider, userData) => (dispatch) => {
   return axiosInstance.post(serviceProvider, userData)
     .then((res) => {
       localStorage.setItem('auth_token', res.data.user.access_token);
-      dispatch(socialLoginSuccess(true));
-      toast.success('Signup successful', { autoClose: 3500, hideProgressBar: true });
+      dispatch({ type: LOGIN_USER_SUCCESS, payload: true });
+      toast.success('Login successful', { autoClose: 3500, hideProgressBar: true });
     })
     .catch(() => {
       toast.error('Connection error', { autoClose: 3500, hideProgressBar: true }, {
