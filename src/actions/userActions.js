@@ -18,6 +18,8 @@ import {
   sendResetLinkError,
   ResetPasswordSuccess,
   ResetPasswordError,
+  updateProfileInitiated,
+  updateProfileSuccess,
 } from './actionCreators';
 
 import axiosInstance from '../config/axiosInstance';
@@ -171,5 +173,19 @@ export const resetPassword = (passwordDetails) => dispatch => {
         );
       }
       return toast.error('Connection Error', { autoClose: 3500, hideProgressBar: true });
+    });
+};
+
+export const updateProfile = profileData => dispatch => {
+  dispatch(updateProfileInitiated());
+  return axiosInstance
+    .put('api/profiles/update/', profileData)
+    .then((response) => {
+      dispatch(updateProfileSuccess());
+      dispatch({ type: GET_PROFILE_PAYLOAD, payload: response.data.profile });
+      localStorage.setItem('username', response.data.profile.username);
+      toast.success('Profile update successful', { autoClose: 3500, hideProgressBar: true });
+    }).catch(() => {
+      toast.error('Profile update failed', { autoClose: 3500, hideProgressBar: true });
     });
 };

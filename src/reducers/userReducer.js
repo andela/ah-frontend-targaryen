@@ -7,6 +7,8 @@ import {
   SOCIAL_LOGIN_SUCCESS,
   GET_PROFILE_PAYLOAD,
   GET_PROFILE_INITIATED,
+  UPDATE_PROFILE_INITIATED,
+  UPDATE_PROFILE_SUCCESS,
   LOGOUT_USER,
   SEND_RESET_LINK_INITIATED,
   SEND_RESET_LINK_SUCCESS,
@@ -27,6 +29,7 @@ const initialState = {
   sendLinkError: {},
   resetPasswordSuccess: false,
   resetPasswordError: {},
+  profileUpdateSuccessful: false,
 };
 
 
@@ -75,6 +78,17 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: action.payload,
+      };
+    case UPDATE_PROFILE_INITIATED:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        profileUpdateSuccessful: true,
       };
     case LOGOUT_USER:
       return {

@@ -7,6 +7,7 @@ import profileImage from '../../assets/images/profileImage.png';
 import { getProfile } from '../../actions/userActions';
 import { fetchUserArticles } from '../../actions/articleActions';
 import ArticlesList from '../Articles/ArticlesList';
+import EditProfile from './EditProfile';
 
 export class Profile extends Component {
   componentDidMount() {
@@ -25,7 +26,7 @@ export class Profile extends Component {
   render() {
     const {
       loading, profilePayload: {
-        followers, following, username, bio,
+        followers, following, username, bio, avatar,
       }, userArticlesPayload,
     } = this.props;
 
@@ -71,7 +72,12 @@ export class Profile extends Component {
                     </div>
                     <div className="row">
                       <div className="col-12">
-                        <button type="button" className="btn ah-btn">Edit</button>
+                        <button type="button" className="btn-edit" data-toggle="modal" data-target="#editProfileModal">Edit</button>
+                        <EditProfile
+                          username={username}
+                          bio={bio}
+                          avatar={avatar}
+                        />
                       </div>
                     </div>
                   </div>
