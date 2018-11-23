@@ -497,3 +497,7 @@ button:focus {
 .reset-container {
   margin-top: 40px;
 }
+
+.reaction-number{
+  font-size: 12px;
+}

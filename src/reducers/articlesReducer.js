@@ -16,6 +16,7 @@ import {
   EDIT_ARTICLE_SUCCESS,
   EDIT_ARTICLE_ERROR,
   EDIT_ARTICLE_INITIATED,
+  DISPLAY_ARTICLE_REACTION,
 } from '../actions/types';
 
 const initialState = {
@@ -35,8 +36,42 @@ const initialState = {
   editArticleError: {},
 };
 
+const changeReactionStatus = (articlesArray, slug, reaction, interaction) => {
+  const newArticlesArray = articlesArray.map(article => {
+    if (article.slug === slug) {
+      if (interaction) {
+        return {
+          ...article,
+          [reaction]: article[reaction] + 1,
+        };
+      }
+      return {
+        ...article,
+        [reaction]: article[reaction] - 1,
+      };
+    }
+    return article;
+  });
+  return newArticlesArray;
+};
+
 export const articlesReducer = (state = initialState, action) => {
   switch (action.type) {
+    case DISPLAY_ARTICLE_REACTION: {
+      const newPayload = changeReactionStatus(
+        state.articlesPayload.results,
+        action.payload,
+        action.reaction,
+        action.interaction,
+      );
+      return {
+        ...state,
+        articlesPayload: {
+          ...state.articlesPayload,
+          results: newPayload,
+        },
+      };
+    }
     case GET_ALL_ARTICLES_SUCCESS:
       return {
         ...state,

@@ -1,5 +1,6 @@
 import MockAdapter from 'axios-mock-adapter';
 import configureMockStore from 'redux-mock-store';
+import { toast } from 'react-toastify';
 import thunk from 'redux-thunk';
 import axiosInstance from '../../config/axiosInstance';
 import {
@@ -32,6 +33,7 @@ import {
   EDIT_ARTICLE_ERROR,
   EDIT_ARTICLE_INITIATED,
   GET_ALL_ARTICLES_INITIATED,
+  DISPLAY_ARTICLE_REACTION,
 } from '../../actions/types';
 
 let store;
@@ -231,6 +233,7 @@ describe('likeDislikeAction', () => {
       description: 'Testing',
     },
   };
+  const reaction = 'likes';
 
   it('should like an article', async () => {
     const response = {
@@ -241,8 +244,11 @@ describe('likeDislikeAction', () => {
     mock
       .onPost(`/api/articles/${slug}/reaction/`, payload)
       .reply(200, response);
-    await store.dispatch(likeDislike(payload, slug));
+    await store.dispatch(likeDislike(payload, slug, reaction));
     expect(store.getActions()).toEqual([
+      {
+        type: DISPLAY_ARTICLE_REACTION, payload: slug, reaction, interaction: true,
+      },
       { type: LIKE_DISLIKE_SUCCESS, payload: true },
     ]);
   });
@@ -255,8 +261,11 @@ describe('likeDislikeAction', () => {
     mock
       .onDelete(`/api/articles/${slug}/reaction/`, payload)
       .reply(204);
-    await store.dispatch(likeDislike(payload, slug));
+    await store.dispatch(likeDislike(payload, slug, reaction));
     expect(store.getActions()).toEqual([
+      {
+        type: DISPLAY_ARTICLE_REACTION, payload: slug, reaction, interaction: false,
+      },
       { type: LIKE_DISLIKE_SUCCESS, payload: true },
     ]);
   });
@@ -267,7 +276,7 @@ describe('likeDislikeAction', () => {
     mock
       .onPost(`/api/articles/${slug}/reaction/`, payload)
       .reply(400, error);
-    await store.dispatch(likeDislike(payload, slug));
+    await store.dispatch(likeDislike(payload, slug, reaction));
     expect(store.getActions()).toEqual([
       { type: LIKE_DISLIKE_ERROR, payload: detail },
     ]);
@@ -309,5 +318,22 @@ describe('likeDislikeAction', () => {
         { type: EDIT_ARTICLE_ERROR, payload: error },
       ],
     );
+  });
+
+  it('should display a warn toast for disliking', async () => {
+    const reply = 'You have disliked this article';
+    const response = { Message: reply };
+    toast.warn = jest.fn();
+    mock
+      .onPost(`/api/articles/${slug}/reaction/`, payload)
+      .reply(200, response);
+    await store.dispatch(likeDislike(payload, slug, reaction));
+    expect(store.getActions()).toEqual([
+      {
+        type: DISPLAY_ARTICLE_REACTION, payload: slug, reaction, interaction: true,
+      },
+      { type: LIKE_DISLIKE_SUCCESS, payload: true },
+    ]);
+    expect(toast.warn).toBeCalled();
   });
 });

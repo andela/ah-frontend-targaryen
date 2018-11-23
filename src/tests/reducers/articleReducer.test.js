@@ -17,6 +17,7 @@ import {
   EDIT_ARTICLE_SUCCESS,
   EDIT_ARTICLE_ERROR,
   EDIT_ARTICLE_INITIATED,
+  DISPLAY_ARTICLE_REACTION,
 } from '../../actions/types';
 
 describe('articlesReducer', () => {
@@ -250,6 +251,92 @@ describe('articlesReducer', () => {
     expect(currentState).toEqual({
       ...initialState,
       confirmDelete: true,
+    });
+  });
+
+  it('should return the updated Article payload ', () => {
+    const articles = [{
+      title: 'testing',
+      likes: 1,
+      slug: 'testing',
+    },
+    {
+      title: 'testing 1',
+      likes: 1,
+      slug: 'testing-1',
+    },
+    ];
+    const state = {
+      ...initialState,
+      articlesPayload: { results: articles },
+    };
+    const newPayload = [{
+      title: 'testing',
+      likes: 2,
+      slug: 'testing',
+    },
+    {
+      title: 'testing 1',
+      likes: 1,
+      slug: 'testing-1',
+    },
+    ];
+    const action = {
+      type: DISPLAY_ARTICLE_REACTION,
+      payload: 'testing',
+      reaction: 'likes',
+      interaction: true,
+    };
+    const currentState = articlesReducer(state, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      articlesPayload: {
+        ...state.articlesPayload,
+        results: newPayload,
+      },
+    });
+  });
+
+  it('should decrease number of likes by one', () => {
+    const articles = [{
+      title: 'testing',
+      likes: 1,
+      slug: 'testing',
+    },
+    {
+      title: 'testing 1',
+      likes: 1,
+      slug: 'testing-1',
+    },
+    ];
+    const state = {
+      ...initialState,
+      articlesPayload: { results: articles },
+    };
+    const newPayload = [{
+      title: 'testing',
+      likes: 0,
+      slug: 'testing',
+    },
+    {
+      title: 'testing 1',
+      likes: 1,
+      slug: 'testing-1',
+    },
+    ];
+    const action = {
+      type: DISPLAY_ARTICLE_REACTION,
+      payload: 'testing',
+      reaction: 'likes',
+      interaction: false,
+    };
+    const currentState = articlesReducer(state, action);
+    expect(currentState).toEqual({
+      ...initialState,
+      articlesPayload: {
+        ...state.articlesPayload,
+        results: newPayload,
+      },
     });
   });
 });
