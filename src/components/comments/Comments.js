@@ -26,6 +26,9 @@ export class Comments extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.addCommentSuccess === true) {
+      window.location.reload();
+    }
     if (nextProps.isLoggedIn === false) {
       const { history } = this.props;
       history.push('/login');
@@ -77,7 +80,7 @@ export class Comments extends Component {
         />
         <Loader loaded={!loading}>
           {Object.keys(commentsPayload).length > 0
-            && <CommentList comments={commentsPayload} article={article} />
+            && <CommentList comments={commentsPayload.comments} />
           }
         </Loader>
       </div>
@@ -92,6 +95,7 @@ const matchDispatchToProps = (dispatch) => bindActionCreators({
 
 const mapStateToProps = (state) => ({
   commentsPayload: state.article.commentsPayload,
+  addCommentSuccess: state.article.addCommentSuccess,
   isLoggedIn: state.user.isLoggedIn,
   loading: state.user.loading,
 });
@@ -101,12 +105,14 @@ Comments.propTypes = {
   match: PropTypes.object.isRequired,
   fetchComments: PropTypes.func.isRequired,
   commentsPayload: PropTypes.object.isRequired,
+  addCommentSuccess: PropTypes.bool,
   loading: PropTypes.bool,
   isLoggedIn: PropTypes.bool,
   history: PropTypes.object.isRequired,
 };
 
 Comments.defaultProps = {
+  addCommentSuccess: false,
   loading: false,
   isLoggedIn: true,
 };

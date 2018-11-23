@@ -54,7 +54,7 @@ const SingleArticle = ({ article }) => {
             <i className="reaction far fa-star icon" />
             <i className="reaction far fa-bookmark icon" />
             <i className="reaction fas fa-share-alt icon" />
-            <Link exact to={returnArticleCommentURL(article.slug)}><i className="far fa-comment icon" /></Link>
+            <Link to={returnArticleCommentURL(article.slug)}><i className="far fa-comment icon" /></Link>
           </div>
         </div>
       </div>

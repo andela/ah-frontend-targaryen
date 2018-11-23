@@ -132,7 +132,6 @@ export const getProfile = () => dispatch => {
     })
     .catch(() => {
       localStorage.removeItem('auth_token');
-      localStorage.removeItem('username');
       dispatch({ type: LOGOUT_USER, payload: false });
     });
 };

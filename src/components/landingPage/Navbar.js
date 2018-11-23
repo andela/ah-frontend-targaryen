@@ -59,10 +59,10 @@ export class Navbar extends Component {
                           <i className="fas fa-user" />
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <NavLink className="dropdown-item" exact to="/create-article/">New Article</NavLink>
-                          <NavLink className="dropdown-item" exact to={`/profiles/${username}`}>Profile</NavLink>
+                          <NavLink className="dropdown-item" to="/create-article/">New Article</NavLink>
+                          <NavLink className="dropdown-item" to={`/profiles/${username}`}>Profile</NavLink>
                           <div className="dropdown-divider" />
-                          <NavLink className="dropdown-item" exact to="#">Logout</NavLink>
+                          <NavLink className="dropdown-item" to="#">Logout</NavLink>
                         </div>
                       </div>
                     </li>
@@ -71,12 +71,12 @@ export class Navbar extends Component {
                 : (
                   <React.Fragment>
                     <li className="nav-item active">
-                      <NavLink className="btn ah-btn ah-btn-nav js-scroll-trigger nav-link nav-text" exact to="/signup">
+                      <NavLink className="btn ah-btn ah-btn-nav js-scroll-trigger nav-link nav-text" to="signup">
                         Signup
                       </NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink className="btn ah-btn ah-btn-nav js-scroll-trigger nav-link nav-text" exact to="/login">Login</NavLink>
+                      <NavLink className="btn ah-btn ah-btn-nav js-scroll-trigger nav-link nav-text" to="login">Login</NavLink>
                     </li>
                   </React.Fragment>
                 )

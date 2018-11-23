@@ -16,9 +16,6 @@ import {
   EDIT_ARTICLE_SUCCESS,
   EDIT_ARTICLE_ERROR,
   EDIT_ARTICLE_INITIATED,
-  UPDATE_COMMENT_INITIATED,
-  UPDATE_COMMENT_SUCCESS,
-  UPDATE_COMMENT_ERROR,
 } from '../actions/types';
 
 const initialState = {
@@ -26,8 +23,8 @@ const initialState = {
   articlesPayload: {},
   createArticleSuccess: false,
   createArticleError: {},
-  addCommentSuccess: {},
-  commentsPayload: [],
+  addCommentSuccess: false,
+  commentsPayload: {},
   userArticlesPayload: {},
   articlePayload: {},
   likeDislikeSuccess: false,
@@ -36,8 +33,6 @@ const initialState = {
   editArticleSuccess: false,
   editArticleInitiated: false,
   editArticleError: {},
-  updateCommentError: {},
-  updateCommentSuccess: false,
 };
 
 export const articlesReducer = (state = initialState, action) => {
@@ -70,10 +65,6 @@ export const articlesReducer = (state = initialState, action) => {
       return {
         ...state,
         addCommentSuccess: action.payload,
-        commentsPayload: [
-          ...state.commentsPayload,
-          action.payload,
-        ],
       };
     case GET_COMMENT_INITIATED:
       return {
@@ -142,23 +133,6 @@ export const articlesReducer = (state = initialState, action) => {
         ...state,
         loading: action.payload,
         editArticleSuccess: false,
-      };
-    case UPDATE_COMMENT_INITIATED:
-      return {
-        ...state,
-        loading: action.payload,
-      };
-    case UPDATE_COMMENT_SUCCESS:
-      return {
-        ...state,
-        updateCommentSuccess: action.payload,
-        loading: false,
-      };
-    case UPDATE_COMMENT_ERROR:
-      return {
-        ...state,
-        updateCommentError: action.payload,
-        loading: false,
       };
     default:
       return state;
