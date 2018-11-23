@@ -12,6 +12,7 @@ import {
   likeDislike,
   deleteArticle,
   updateArticle,
+  editComment,
 } from '../../actions/articleActions';
 import {
   CREATE_ARTICLE_SUCCESS,
@@ -32,6 +33,10 @@ import {
   EDIT_ARTICLE_ERROR,
   EDIT_ARTICLE_INITIATED,
   GET_ALL_ARTICLES_INITIATED,
+  UPDATE_COMMENT_INITIATED,
+  UPDATE_COMMENT_SUCCESS,
+  UPDATE_COMMENT_ERROR,
+  UPDATING_COMMENTS,
 } from '../../actions/types';
 
 let store;
@@ -89,6 +94,7 @@ describe('articleActions', () => {
 
   it('should not post an article if not logged in or token is expired', async () => {
     localStorage.removeItem('auth_token');
+    localStorage.removeItem('username');
     mock.onPost('/api/articles/').reply(403);
     postArticle()(store.dispatch);
     await flushAllPromises();
@@ -112,7 +118,7 @@ describe('articleActions', () => {
 
   it('should retrieve comments', async () => {
     const article = 'react-redux';
-    const response_data = {
+    const request_data = {
       comments: {
         id: 14,
         author: 3,
@@ -124,7 +130,17 @@ describe('articleActions', () => {
         thread_count: 0,
       },
     };
-    mock.onGet('/api/articles/react-redux/comments/').reply(200, response_data);
+    const response_data = {
+      id: 14,
+      author: 3,
+      article: 139,
+      body: 'Backend comment react redux',
+      parent: null,
+      created_at: '2018-11-14T18:17:23.209744Z',
+      updated_at: '2018-11-14T18:17:23.209796Z',
+      thread_count: 0,
+    };
+    mock.onGet('/api/articles/react-redux/comments/').reply(200, request_data);
     fetchComments(article)(store.dispatch);
     await flushAllPromises();
     expect(store.getActions()).toEqual(
@@ -162,7 +178,7 @@ describe('articleActions', () => {
 
   it('should post a comment', async () => {
     const article = 'react-redux';
-    const response_data = {
+    const request_data = {
       comments: {
         id: 14,
         author: 3,
@@ -174,12 +190,80 @@ describe('articleActions', () => {
         thread_count: 0,
       },
     };
-    mock.onPost('/api/articles/react-redux/comments/').reply(201, response_data);
+    const response_data = {
+      id: 14,
+      author: 3,
+      article: 139,
+      body: 'Backend comment react redux',
+      parent: null,
+      created_at: '2018-11-14T18:17:23.209744Z',
+      updated_at: '2018-11-14T18:17:23.209796Z',
+      thread_count: 0,
+    };
+    mock.onPost('/api/articles/react-redux/comments/').reply(201, request_data);
     addComment(response_data, article)(store.dispatch);
     await flushAllPromises();
     expect(store.getActions()).toEqual(
       [
-        { type: ADD_COMMENT_SUCCESS, payload: true },
+        { type: ADD_COMMENT_SUCCESS, payload: response_data },
+      ],
+    );
+  });
+
+  it('should update a comment', async () => {
+    const comment = 1;
+    const slug = 'react-redux';
+    const response_data = {
+      comment: {
+        body: 'react-redux',
+      },
+    };
+    mock.onPut('/api/articles/react-redux/comments/1/').reply(200, response_data);
+    editComment(response_data, slug, comment)(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(
+      [
+        { type: UPDATE_COMMENT_INITIATED, payload: true },
+        { type: UPDATING_COMMENTS, comment: 1, payload: { comment: { body: 'react-redux' } } },
+        { type: UPDATE_COMMENT_SUCCESS, payload: true },
+      ],
+    );
+  });
+
+  it('should not update a comment when a user is not logged in', async () => {
+    const comment = 1;
+    const slug = 'react-redux';
+    const response_data = {
+      comment: {
+        body: 'react-redux',
+      },
+    };
+    mock.onPut('/api/articles/react-redux/comments/1/').reply(403, response_data);
+    editComment(response_data, slug, comment)(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(
+      [
+        { type: UPDATE_COMMENT_INITIATED, payload: true },
+        { type: UPDATE_COMMENT_ERROR, payload: 'Re-login and try again' },
+      ],
+    );
+  });
+
+  it('should not update a comment when a non existent comment is selected', async () => {
+    const comment = 1;
+    const slug = 'react-redux';
+    const response_data = {
+      comment: {
+        body: 'react-redux',
+      },
+    };
+    mock.onPut('/api/articles/react-redux/comments/1/').reply(404, response_data);
+    editComment(response_data, slug, comment)(store.dispatch);
+    await flushAllPromises();
+    expect(store.getActions()).toEqual(
+      [
+        { type: UPDATE_COMMENT_INITIATED, payload: true },
+        { type: UPDATE_COMMENT_ERROR, payload: 'This comment is non existent' },
       ],
     );
   });

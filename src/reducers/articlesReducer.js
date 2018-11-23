@@ -16,6 +16,10 @@ import {
   EDIT_ARTICLE_SUCCESS,
   EDIT_ARTICLE_ERROR,
   EDIT_ARTICLE_INITIATED,
+  UPDATE_COMMENT_INITIATED,
+  UPDATE_COMMENT_SUCCESS,
+  UPDATE_COMMENT_ERROR,
+  UPDATING_COMMENTS,
 } from '../actions/types';
 
 const initialState = {
@@ -23,8 +27,8 @@ const initialState = {
   articlesPayload: {},
   createArticleSuccess: false,
   createArticleError: {},
-  addCommentSuccess: false,
-  commentsPayload: {},
+  addCommentSuccess: {},
+  commentsPayload: [],
   userArticlesPayload: {},
   articlePayload: {},
   likeDislikeSuccess: false,
@@ -33,10 +37,36 @@ const initialState = {
   editArticleSuccess: false,
   editArticleInitiated: false,
   editArticleError: {},
+  updateCommentError: {},
+  updateCommentSuccess: false,
+};
+
+const changeCommentData = (commentsArray, comment, payload) => {
+  const updatedCommentArray = commentsArray.map(singleComment => {
+    if (singleComment.id === comment) {
+      return {
+        ...singleComment,
+        body: payload.comment.body,
+      };
+    }
+    return singleComment;
+  });
+  return updatedCommentArray;
 };
 
 export const articlesReducer = (state = initialState, action) => {
   switch (action.type) {
+    case UPDATING_COMMENTS: {
+      const newCommentsPayload = changeCommentData(
+        state.commentsPayload,
+        action.comment,
+        action.payload,
+      );
+      return {
+        ...state,
+        commentsPayload: newCommentsPayload,
+      };
+    }
     case GET_ALL_ARTICLES_SUCCESS:
       return {
         ...state,
@@ -65,6 +95,10 @@ export const articlesReducer = (state = initialState, action) => {
       return {
         ...state,
         addCommentSuccess: action.payload,
+        commentsPayload: [
+          ...state.commentsPayload,
+          action.payload,
+        ],
       };
     case GET_COMMENT_INITIATED:
       return {
@@ -133,6 +167,23 @@ export const articlesReducer = (state = initialState, action) => {
         ...state,
         loading: action.payload,
         editArticleSuccess: false,
+      };
+    case UPDATE_COMMENT_INITIATED:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case UPDATE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        updateCommentSuccess: action.payload,
+        loading: false,
+      };
+    case UPDATE_COMMENT_ERROR:
+      return {
+        ...state,
+        updateCommentError: action.payload,
+        loading: false,
       };
     default:
       return state;
