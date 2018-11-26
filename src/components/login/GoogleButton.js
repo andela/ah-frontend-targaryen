@@ -41,7 +41,7 @@ class GoogleloginButton extends PureComponent {
   render() {
     const value = this.state;
     if (value.redirect) {
-      const to = { pathname: '/' };
+      const to = { pathname: '/dashboard' };
       return (
         <Redirect to={to} />
       );
@@ -50,7 +50,7 @@ class GoogleloginButton extends PureComponent {
       <div>
         <GoogleLogin
           clientId="1040550554735-0lfo665jrpgkprjkqdvh9njlc46mu6rg.apps.googleusercontent.com"
-          redirectUri="/"
+          redirectUri="/dashboard"
           onSuccess={this.handleGoogleResponse}
           onFailure={this.handleGoogleResponse}
           className="google"

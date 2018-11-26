@@ -173,3 +173,9 @@ export const resetPassword = (passwordDetails) => dispatch => {
       return toast.error('Connection Error', { autoClose: 3500, hideProgressBar: true });
     });
 };
+
+export const logOut = () => dispatch => {
+  localStorage.removeItem('auth_token');
+  localStorage.removeItem('username');
+  dispatch({ type: LOGOUT_USER, payload: false });
+};

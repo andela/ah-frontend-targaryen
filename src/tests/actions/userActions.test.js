@@ -9,6 +9,7 @@ import {
   facebookLoginUser,
   getProfile,
   updateLoginStatus,
+  logOut,
 } from '../../actions/userActions';
 import {
   REGISTER_USER_SUCCESS,
@@ -19,6 +20,7 @@ import {
   SOCIAL_LOGIN_SUCCESS,
   GET_PROFILE_PAYLOAD,
   GET_PROFILE_INITIATED,
+  LOGOUT_USER,
 } from '../../actions/types';
 import axiosInstance from '../../config/axiosInstance';
 
@@ -254,5 +256,21 @@ describe('userAction', () => {
         { type: LOGIN_USER_SUCCESS, payload: false },
       ],
     );
+  });
+
+  it('should logout user when he/she clicks on LogOut menu', () => {
+    localStorage.setItem('auth_token', 'token');
+    store.dispatch(logOut());
+    expect(store.getActions()).toEqual(
+      [
+        { type: LOGOUT_USER, payload: false },
+      ],
+    );
+  });
+
+  it('should remove the auth_token when a user clicks on LogOut NavLink', () => {
+    localStorage.setItem('auth_token', 'token');
+    store.dispatch(logOut());
+    expect(!(localStorage.getItem('auth_token')));
   });
 });

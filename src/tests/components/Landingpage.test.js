@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
-import LandingPage from '../../components/landingPage/LandingPage';
+import { LandingPage } from '../../components/landingPage/LandingPage';
 import { Navbar } from '../../components/landingPage/Navbar';
 
 it('renders the LandingPage component correctly', () => {
